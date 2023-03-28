@@ -1,7 +1,9 @@
 package com.example.dotametrics.presentation.view.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.presentation.adapter.SearchResultAdapter
 import com.example.dotametrics.data.model.search.SearchResult
 import com.example.dotametrics.databinding.ActivityMainBinding
+import com.example.dotametrics.presentation.view.account.AccountActivity
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +24,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val openAccount: (SearchResult) -> Unit = {
-        // TODO: open main profile info
+        val intent = Intent(this, AccountActivity::class.java)
+        intent.putExtra("id", it.accountId)
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         initRecyclerView()
         observe()
@@ -47,10 +52,14 @@ class MainActivity : AppCompatActivity() {
         viewModel.results.observe(this) {
             adapter.submitList(it) {
                 binding.rcMain.scrollToPosition(0)
+                binding.btSearch.visibility = View.VISIBLE
+                binding.pbSearch.visibility = View.INVISIBLE
             }
         }
         viewModel.error.observe(this) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+            binding.btSearch.visibility = View.VISIBLE
+            binding.pbSearch.visibility = View.INVISIBLE
         }
     }
 
@@ -61,7 +70,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-//        binding.btMainSearch.setOnClickListener { search() }
         binding.btSearch.setOnClickListener { search() }
     }
 
@@ -69,6 +77,8 @@ class MainActivity : AppCompatActivity() {
     private fun search() {
         val user = binding.edMainUsername.text.toString()
         viewModel.search(user)
+        binding.btSearch.visibility = View.INVISIBLE
+        binding.pbSearch.visibility = View.VISIBLE
     }
 
 }
