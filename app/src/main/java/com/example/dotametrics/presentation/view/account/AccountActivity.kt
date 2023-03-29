@@ -49,31 +49,50 @@ class AccountActivity : AppCompatActivity() {
         }
     }
 
-    private fun showData(player: PlayersResult) =
-        with(binding) {
-            Glide.with(this@AccountActivity)
-                .load(player.profile?.avatarfull)
-                .placeholder(R.drawable.ic_person)
-                .into(profileImage)
-            tvAccountName.text = player.profile?.personaname
-            tvAccountId.text = player.profile?.accountId.toString()
-            ivAccountDotaplus.visibility = if (player.profile?.plus == true) {
-                View.VISIBLE
-            } else {
-                View.INVISIBLE
-            }
+    private fun showData(player: PlayersResult) = with(binding) {
+        Glide.with(this@AccountActivity)
+            .load(player.profile?.avatarfull)
+            .placeholder(R.drawable.ic_person)
+            .into(profileImage)
+        tvAccountName.text = player.profile?.personaname
+        tvAccountId.text = player.profile?.accountId.toString()
+        ivAccountDotaplus.visibility = if (player.profile?.plus == true) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
         }
+        setRank(player)
+    }
 
 
-    private fun showData(player: WLResult) =
-        with(binding) {
-            tvAccountWinsNumber.text = player.win.toString()
-            tvAccountLosesNumber.text = player.lose.toString()
-            if (player.win != null && player.lose != null) {
-                val winrate =
-                    player.win!!.toDouble() / (player.lose!! + player.win!!).toDouble() * 100
-                tvAccountWinrateNumber.text = "${String.format("%.2f", winrate)}%"
+    private fun showData(player: WLResult) = with(binding) {
+        tvAccountWinsNumber.text = player.win.toString()
+        tvAccountLosesNumber.text = player.lose.toString()
+        if (player.win != null && player.lose != null) {
+            val winrate =
+                player.win!!.toDouble() / (player.lose!! + player.win!!).toDouble() * 100
+            tvAccountWinrateNumber.text = "${String.format("%.2f", winrate)}%"
+        }
+    }
+
+    private fun setRank(player: PlayersResult) = with(binding) {
+        val id = when {
+            player.rankTier == null -> R.drawable.r00
+            player.leaderboardRank == null -> resources.getIdentifier(
+                "r${player.rankTier}",
+                "drawable",
+                packageName
+            )
+            player.leaderboardRank!!.toInt() <= 100 -> {
+                tvAccountPosition.text = player.leaderboardRank
+                R.drawable.r81
+            }
+            else -> {
+                tvAccountPosition.text = player.leaderboardRank
+                R.drawable.r82
             }
         }
+        binding.ivAccountRank.setImageResource(id)
+    }
 
 }
