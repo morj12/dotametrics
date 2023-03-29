@@ -10,4 +10,36 @@
     <string name="loses">Loses</string>
     <string name="wins">Wins</string>
     <string name="winrate">Winrate</string>
+
+    <!--    totals  -->
+    <string name="kills">Kills</string>
+    <string name="deaths">Deaths</string>
+    <string name="assists">Assists</string>
+    <string name="kda">KDA</string>
+    <string name="gold_per_min">GPM</string>
+    <string name="xp_per_min">XPM</string>
+    <string name="last_hits">Last hits</string>
+    <string name="denies">Denies</string>
+    <string name="lane_efficiency_pct">Lane efficiency</string>
+    <string name="duration">Duration</string>
+    <string name="level">Level</string>
+    <string name="hero_damage">Hero damage</string>
+    <string name="tower_damage">Tower damage</string>
+    <string name="hero_healing">Hero healing</string>
+    <string name="stuns">Stuns</string>
+    <string name="tower_kills">Tower kills</string>
+    <string name="neutral_kills">Neutral kills</string>
+    <string name="courier_kills">Courier kills</string>
+    <string name="purchase_tpscroll">TP scroll purchases</string>
+    <string name="purchase_ward_observer">Observer ward purchases</string>
+    <string name="purchase_ward_sentry">Sentry ward purchases</string>
+    <string name="purchase_gem">Gem purchases</string>
+    <string name="purchase_rapier">Rapier purchases</string>
+    <string name="pings">Pings</string>
+    <string name="totals_throw">Throw</string>
+    <string name="comeback">Comeback</string>
+    <string name="stomp">Stomp</string>
+    <string name="loss">Loss</string>
+    <string name="actions_per_min">Actions per minute</string>
+
 </resources>

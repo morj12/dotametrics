@@ -1,6 +1,7 @@
 package com.example.dotametrics.data.service
 
 import com.example.dotametrics.data.model.players.PlayersResult
+import com.example.dotametrics.data.model.players.totals.TotalsResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.data.model.search.SearchResult
 import retrofit2.Call
@@ -19,5 +20,8 @@ interface DotaService {
 
     @GET("players/{id}/wl")
     fun getWLResults(@Path("id") id: String): Call<WLResult>
+
+    @GET("players/{id}/totals")
+    fun getTotals(@Path("id") id: String): Call<List<TotalsResult>>
 
 }

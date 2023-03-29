@@ -9,14 +9,14 @@ import com.bumptech.glide.Glide
 import com.example.dotametrics.util.Datetime
 import com.example.dotametrics.R
 import com.example.dotametrics.data.model.search.SearchResult
-import com.example.dotametrics.databinding.SearchResultBinding
+import com.example.dotametrics.databinding.SearchResultItemBinding
 
 class SearchResultAdapter :
-    ListAdapter<SearchResult, SearchResultAdapter.ViewHolder>(CartCallback()) {
+    ListAdapter<SearchResult, SearchResultAdapter.ViewHolder>(SearchResultCallback()) {
 
     var onItemClickedListener: ((SearchResult) -> Unit)? = null
 
-    class CartCallback : DiffUtil.ItemCallback<SearchResult>() {
+    class SearchResultCallback : DiffUtil.ItemCallback<SearchResult>() {
         override fun areItemsTheSame(oldItem: SearchResult, newItem: SearchResult) =
             oldItem.accountId == newItem.accountId
 
@@ -24,10 +24,10 @@ class SearchResultAdapter :
             oldItem == newItem
     }
 
-    class ViewHolder(val binding: SearchResultBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: SearchResultItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = SearchResultBinding.inflate(
+        val binding = SearchResultItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

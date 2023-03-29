@@ -56,7 +56,7 @@
             android:id="@+id/rc_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/search_result" />
+            tools:listitem="@layout/search_result_item" />
 
     </androidx.cardview.widget.CardView>
 

@@ -6,12 +6,19 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.dotametrics.R
 import com.example.dotametrics.presentation.view.account.StatsFragment
+import com.example.dotametrics.presentation.view.account.TotalsFragment
 
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        return StatsFragment.newInstance(position + 1)
+        return when(position) {
+            0 -> StatsFragment.newInstance(position + 1)
+            1 -> StatsFragment.newInstance(position + 1)
+            2 -> StatsFragment.newInstance(position + 1)
+            3 -> TotalsFragment.newInstance()
+            else -> throw RuntimeException("Incorrect position")
+        }
     }
 
     override fun getPageTitle(position: Int): CharSequence {

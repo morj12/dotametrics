@@ -27,7 +27,10 @@ class AccountActivity : AppCompatActivity() {
 
         initTabs()
         val id = intent.getIntExtra("id", 0)
-        if (id != 0) viewModel.loadUser(id.toString())
+        if (id != 0) {
+            viewModel.userId = id.toString()
+            viewModel.loadUser(id.toString())
+        }
         observe()
     }
 
