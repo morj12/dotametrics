@@ -9,7 +9,7 @@ import com.example.dotametrics.R
 import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.databinding.ActivityAccountBinding
-import com.example.dotametrics.presentation.view.adapter.SectionsPagerAdapter
+import com.example.dotametrics.presentation.adapter.SectionsPagerAdapter
 import com.google.android.material.snackbar.Snackbar
 
 class AccountActivity : AppCompatActivity() {

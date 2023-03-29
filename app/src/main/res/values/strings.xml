@@ -3,9 +3,10 @@
     <string name="last_match_time">Last match: %1$s</string>
     <string name="search">Search</string>
     <string name="name_or_steam_id">Name or Steam ID</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
+    <string name="tab_text_1">Matches</string>
+    <string name="tab_text_2">Heroes</string>
+    <string name="tab_text_3">Peers</string>
+    <string name="tab_text_4">Totals</string>
     <string name="loses">Loses</string>
     <string name="wins">Wins</string>
     <string name="winrate">Winrate</string>
