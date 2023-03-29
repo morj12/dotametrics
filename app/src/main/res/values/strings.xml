@@ -6,7 +6,7 @@
     <string name="tab_text_1">Matches</string>
     <string name="tab_text_2">Heroes</string>
     <string name="tab_text_3">Peers</string>
-    <string name="tab_text_4">Totals</string>
+    <string name="tab_text_4">Averages</string>
     <string name="loses">Loses</string>
     <string name="wins">Wins</string>
     <string name="winrate">Winrate</string>
@@ -41,5 +41,7 @@
     <string name="stomp">Stomp</string>
     <string name="loss">Loss</string>
     <string name="actions_per_min">Actions per minute</string>
+
+    <string name="totals_in_games">%1$s in %2$d games</string>
 
 </resources>
