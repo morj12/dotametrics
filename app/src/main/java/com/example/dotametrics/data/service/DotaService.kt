@@ -3,6 +3,7 @@ package com.example.dotametrics.data.service
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
+import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.data.model.players.totals.TotalsResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.data.model.search.SearchResult
@@ -32,5 +33,8 @@ interface DotaService {
     // Use map because of multiple classes with same data
     @GET("constants/heroes")
     fun getConstHeroes(): Call<Map<String, HeroResult>>
+
+    @GET("players/{id}/peers")
+    fun getPeers(@Path("id") id: String): Call<List<PeersResult>>
 
 }

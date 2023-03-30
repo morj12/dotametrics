@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.dotametrics.R
 import com.example.dotametrics.presentation.view.account.HeroesFragment
+import com.example.dotametrics.presentation.view.account.PeersFragment
 import com.example.dotametrics.presentation.view.account.StatsFragment
 import com.example.dotametrics.presentation.view.account.TotalsFragment
 
@@ -16,7 +17,7 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
         return when(position) {
             0 -> StatsFragment.newInstance(position + 1)
             1 -> HeroesFragment.newInstance()
-            2 -> StatsFragment.newInstance(position + 1)
+            2 -> PeersFragment.newInstance()
             3 -> TotalsFragment.newInstance()
             else -> throw RuntimeException("Incorrect position")
         }

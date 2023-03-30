@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
+import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.data.model.players.totals.TotalsResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.data.service.RetrofitInstance
@@ -41,6 +42,10 @@ class AccountViewModel : ViewModel() {
     private val _constHeroes = MutableLiveData<List<HeroResult>>()
     val constHeroes: LiveData<List<HeroResult>>
         get() = _constHeroes
+
+    private val _peers = MutableLiveData<List<PeersResult>>()
+    val peers: LiveData<List<PeersResult>>
+        get() = _peers
 
     private val retrofit = RetrofitInstance.getService()
 
@@ -124,6 +129,25 @@ class AccountViewModel : ViewModel() {
             }
 
         })
+    }
+
+    fun loadPeers() {
+        if (userId.isNotBlank()) {
+            retrofit.getPeers(userId)
+                .enqueue(object : Callback<List<PeersResult>> {
+                    override fun onResponse(
+                        call: Call<List<PeersResult>>,
+                        response: Response<List<PeersResult>>
+                    ) {
+                        _peers.value = response.body()
+                    }
+
+                    override fun onFailure(call: Call<List<PeersResult>>, t: Throwable) {
+                        _error.value = t.message.toString()
+                    }
+
+                })
+        }
     }
 
 }

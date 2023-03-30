@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".presentation.view.account.HeroesFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.view.account.PeersFragment">
 
     <TextView
-        android:id="@+id/title_hero"
+        android:id="@+id/title_hero_peer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hero"
+        android:text="@string/player"
         android:textSize="18sp"
         android:layout_marginStart="12dp"
         android:paddingVertical="12dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/title_count"
+        android:id="@+id/title_count_peer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/games_count"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/title_winrate"
+        android:id="@+id/title_winrate_peer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/winrate"
@@ -45,12 +45,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rc_player_heroes"
+        android:id="@+id/rc_peers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_hero"
-        tools:listitem="@layout/acc_hero_item" />
+        app:layout_constraintTop_toBottomOf="@id/title_hero_peer"
+        tools:listitem="@layout/peers_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
