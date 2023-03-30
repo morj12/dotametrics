@@ -7,13 +7,13 @@ object RetrofitInstance {
 
     private var retrofit: Retrofit? = null
 
-    private var BASE_URL = "https://api.opendota.com/api/"
+    private var URL = "https://api.opendota.com/api/"
 
     fun getService(): DotaService {
 
         if (retrofit == null)
             retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 

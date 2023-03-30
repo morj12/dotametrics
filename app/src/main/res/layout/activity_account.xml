@@ -9,26 +9,27 @@
     <ImageView
         android:id="@+id/bkg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:adjustViewBounds="true"
-        android:cropToPadding="true"
-        android:scaleType="fitStart"
+        android:src="@drawable/bkg"
+        app:layout_constraintBottom_toBottomOf="@id/tv_account_loses_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/profile_bkg" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profile_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="20dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginHorizontal="12dp"
+        android:padding="3dp"
+        app:layout_constraintBottom_toTopOf="@id/tabs"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
         app:srcCompat="@drawable/ic_person"
         app:strokeColor="@color/white"
-        app:strokeWidth="1dp" />
+        app:strokeWidth="2dp" />
 
     <TextView
         android:id="@+id/tv_account_name"
@@ -39,19 +40,10 @@
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/profile_image"
-        app:layout_constraintTop_toTopOf="@+id/profile_image"
+        app:layout_constraintEnd_toStartOf="@+id/iv_account_rank"
+        app:layout_constraintStart_toEndOf="@+id/profile_image"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Account name" />
-
-    <TextView
-        android:id="@+id/tv_account_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/tv_account_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_account_name"
-        tools:text="298003403" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
@@ -73,12 +65,13 @@
 
     <ImageView
         android:id="@+id/iv_account_rank"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/profile_image"
-        app:layout_constraintStart_toStartOf="@+id/profile_image"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bkg"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/r82" />
 
     <TextView
@@ -87,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_account_rank"
         app:layout_constraintEnd_toEndOf="@id/iv_account_rank"
@@ -98,34 +91,38 @@
         android:id="@+id/tv_account_wins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
         android:text="@string/wins"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_account_loses"
         app:layout_constraintEnd_toStartOf="@+id/tv_account_loses"
+        app:layout_constraintStart_toEndOf="@+id/profile_image"
         app:layout_constraintTop_toTopOf="@+id/tv_account_loses" />
 
     <TextView
         android:id="@+id/tv_account_loses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/loses"
         android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iv_account_rank"
-        app:layout_constraintTop_toTopOf="@+id/iv_account_rank" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/tv_account_wins"
+        app:layout_constraintEnd_toStartOf="@id/tv_account_wr"
+        app:layout_constraintTop_toBottomOf="@+id/tv_account_name"
+        tools:layout_editor_absoluteX="296dp" />
 
     <TextView
         android:id="@+id/tv_account_wr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/winrate"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_account_loses"
+        app:layout_constraintEnd_toStartOf="@+id/iv_account_rank"
         app:layout_constraintStart_toEndOf="@+id/tv_account_loses"
         app:layout_constraintTop_toTopOf="@+id/tv_account_loses" />
 
@@ -134,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/green"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tv_account_wins"
         app:layout_constraintStart_toStartOf="@+id/tv_account_wins"
@@ -145,8 +142,9 @@
         android:id="@+id/tv_account_loses_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
         android:textColor="@color/red"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tv_account_loses"
         app:layout_constraintStart_toStartOf="@+id/tv_account_loses"
@@ -158,22 +156,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tv_account_wr"
         app:layout_constraintStart_toStartOf="@+id/tv_account_wr"
         app:layout_constraintTop_toBottomOf="@+id/tv_account_wr"
         tools:text="60%" />
-
-    <ImageView
-        android:id="@+id/iv_account_dotaplus"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_account_name"
-        app:layout_constraintEnd_toEndOf="@+id/bkg"
-        app:layout_constraintStart_toEndOf="@+id/tv_account_name"
-        app:layout_constraintTop_toTopOf="@+id/tv_account_name"
-        app:srcCompat="@drawable/dota_plus" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,6 +26,8 @@ class AccountActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initTabs()
+        initConstants()
+
         val id = intent.getIntExtra("id", 0)
         if (id != 0) {
             viewModel.userId = id.toString()
@@ -38,6 +40,11 @@ class AccountActivity : AppCompatActivity() {
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         binding.viewPager.adapter = sectionsPagerAdapter
         binding.tabs.setupWithViewPager(binding.viewPager)
+    }
+
+    // TODO: add more constants
+    private fun initConstants() {
+        viewModel.loadHeroes()
     }
 
     private fun observe() {
@@ -58,12 +65,6 @@ class AccountActivity : AppCompatActivity() {
             .placeholder(R.drawable.ic_person)
             .into(profileImage)
         tvAccountName.text = player.profile?.personaname
-        tvAccountId.text = player.profile?.accountId.toString()
-        ivAccountDotaplus.visibility = if (player.profile?.plus == true) {
-            View.VISIBLE
-        } else {
-            View.INVISIBLE
-        }
         setRank(player)
     }
 

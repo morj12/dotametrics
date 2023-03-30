@@ -1,9 +1,12 @@
 package com.example.dotametrics.presentation.view.account
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.players.PlayersResult
+import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
 import com.example.dotametrics.data.model.players.totals.TotalsResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.data.service.RetrofitInstance
@@ -27,9 +30,17 @@ class AccountViewModel : ViewModel() {
     val totals: LiveData<List<TotalsResult>>
         get() = _totals
 
+    private val _heroes = MutableLiveData<List<PlayerHeroResult>>()
+    val heroes: LiveData<List<PlayerHeroResult>>
+        get() = _heroes
+
     private val _error = MutableLiveData<String>()
     val error: LiveData<String>
         get() = _error
+
+    private val _constHeroes = MutableLiveData<List<HeroResult>>()
+    val constHeroes: LiveData<List<HeroResult>>
+        get() = _constHeroes
 
     private val retrofit = RetrofitInstance.getService()
 
@@ -78,6 +89,41 @@ class AccountViewModel : ViewModel() {
 
             })
         }
+    }
+
+    fun loadPlayerHeroesResults() {
+        if (userId.isNotBlank()) {
+            retrofit.getPlayerHeroesResults(userId)
+                .enqueue(object : Callback<List<PlayerHeroResult>> {
+                    override fun onResponse(
+                        call: Call<List<PlayerHeroResult>>,
+                        response: Response<List<PlayerHeroResult>>
+                    ) {
+                        _heroes.value = response.body()
+                    }
+
+                    override fun onFailure(call: Call<List<PlayerHeroResult>>, t: Throwable) {
+                        _error.value = t.message.toString()
+                    }
+
+                })
+        }
+    }
+
+    fun loadHeroes() {
+        retrofit.getConstHeroes().enqueue(object : Callback<Map<String, HeroResult>> {
+            override fun onResponse(
+                call: Call<Map<String, HeroResult>>,
+                response: Response<Map<String, HeroResult>>
+            ) {
+                _constHeroes.value = response.body()?.values?.toList()
+            }
+
+            override fun onFailure(call: Call<Map<String, HeroResult>>, t: Throwable) {
+                Log.d("loadHeroes", "onFailure: ${t.message.toString()}")
+            }
+
+        })
     }
 
 }

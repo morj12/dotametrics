@@ -43,5 +43,7 @@
     <string name="actions_per_min">Actions per minute</string>
 
     <string name="totals_in_games">%1$s in %2$d games</string>
+    <string name="hero">Hero</string>
+    <string name="games_count">Games</string>
 
 </resources>
