@@ -40,7 +40,7 @@ class SearchResultAdapter :
         with(holder.binding) {
             searchResultName.text = item.personaname
             searchResultId.text = item.accountId.toString()
-            val date = Datetime.formatTime(item.lastMatchTime)
+            val date = Datetime.formatDate(item.lastMatchTime)
             searchResultLastMatch.text = root.context.getString(R.string.last_match_time, date)
             Glide.with(this.root)
                 .load(item.avatarfull)

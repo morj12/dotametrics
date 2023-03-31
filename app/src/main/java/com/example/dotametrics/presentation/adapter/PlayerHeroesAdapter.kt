@@ -10,6 +10,7 @@ import com.example.dotametrics.R
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
 import com.example.dotametrics.databinding.AccHeroItemBinding
+import com.example.dotametrics.util.Datetime
 
 class PlayerHeroesAdapter :
     ListAdapter<PlayerHeroResult, PlayerHeroesAdapter.ViewHolder>(HeroesCallback()) {
@@ -56,6 +57,8 @@ class PlayerHeroesAdapter :
                         else -> root.context.getColor(R.color.gray)
                     }
                 )
+                val date = Datetime.getDateTime(item.lastPlayed!!)
+                tvHeroLastDate.text = root.context.getString(R.string.last_match_time, date)
             }
         }
     }

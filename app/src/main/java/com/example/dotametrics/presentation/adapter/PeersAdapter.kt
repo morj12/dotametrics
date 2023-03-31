@@ -51,7 +51,8 @@ class PeersAdapter : ListAdapter<PeersResult, PeersAdapter.ViewHolder>(PeersCall
                     else -> root.context.getColor(R.color.gray)
                 }
             )
-            tvPeerLastDate.text = Datetime.getDateTime(item.lastPlayed!!)
+            val date = Datetime.getDateTime(item.lastPlayed!!)
+            tvPeerLastDate.text = root.context.getString(R.string.last_match_time, date)
         }
     }
 }
