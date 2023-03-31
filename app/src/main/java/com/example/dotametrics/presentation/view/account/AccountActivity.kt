@@ -45,6 +45,7 @@ class AccountActivity : AppCompatActivity() {
     // TODO: add more constants
     private fun initConstants() {
         viewModel.loadHeroes()
+        viewModel.loadLobbyTypes()
     }
 
     private fun observe() {

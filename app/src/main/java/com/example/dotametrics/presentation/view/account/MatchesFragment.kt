@@ -1,6 +1,7 @@
 package com.example.dotametrics.presentation.view.account
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.databinding.FragmentMatchesBinding
 import com.example.dotametrics.presentation.adapter.MatchesResultAdapter
-import com.example.dotametrics.presentation.adapter.PlayerHeroesAdapter
 import com.google.android.material.snackbar.Snackbar
 
 class MatchesFragment : Fragment() {
@@ -34,13 +34,14 @@ class MatchesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadData()
         initRecyclerView()
         observe()
     }
 
     private fun loadData() {
-        viewModel.loadMatches()
+        if (adapter.heroes.isNotEmpty() && adapter.lobbies.isNotEmpty()) {
+            viewModel.loadMatches(::observeMatches)
+        }
     }
 
     private fun initRecyclerView() = with(binding) {
@@ -50,13 +51,26 @@ class MatchesFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.matches.observe(viewLifecycleOwner) {
-            adapter.submitList(it) {
-                binding.rcMatches.scrollToPosition(0)
-            }
+        viewModel.constHeroes.observe(viewLifecycleOwner) {
+            adapter.heroes = it
+            loadData()
+        }
+        viewModel.constLobbyTypes.observe(viewLifecycleOwner) {
+            adapter.lobbies = it
+            loadData()
         }
         viewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun observeMatches() {
+        viewModel.matches.observe(viewLifecycleOwner) {
+            if (it.size > 0) {
+                adapter.submitList(it) {
+                    binding.rcMatches.scrollToPosition(0)
+                }
+            }
         }
     }
 

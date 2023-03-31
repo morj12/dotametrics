@@ -33,7 +33,6 @@ class HeroesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        loadData()
         initRecyclerView()
         observe()
     }

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
+import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
 import com.example.dotametrics.data.model.players.matches.MatchDataSource
@@ -55,10 +56,15 @@ class AccountViewModel : ViewModel() {
     val peers: LiveData<List<PeersResult>>
         get() = _peers
 
+    private val _constLobbyTypes = MutableLiveData<List<LobbyTypeResult>>()
+    val constLobbyTypes: LiveData<List<LobbyTypeResult>>
+        get() = _constLobbyTypes
+
+    private val _matches = MutableLiveData<PagedList<MatchesResult>>()
+    var matches: LiveData<PagedList<MatchesResult>> = _matches
+
     private lateinit var matchDataSource: LiveData<MatchDataSource>
     private var executor = Executors.newCachedThreadPool()
-    lateinit var matches: LiveData<PagedList<MatchesResult>>
-        private set
 
     private val retrofit = RetrofitInstance.getService()
 
@@ -140,7 +146,6 @@ class AccountViewModel : ViewModel() {
             override fun onFailure(call: Call<Map<String, HeroResult>>, t: Throwable) {
                 Log.d("loadHeroes", "onFailure: ${t.message.toString()}")
             }
-
         })
     }
 
@@ -163,7 +168,7 @@ class AccountViewModel : ViewModel() {
         }
     }
 
-    fun loadMatches() {
+    fun loadMatches(callback: () -> Unit) {
         if (userId.isNotBlank()) {
             val factory = MatchDataSourceFactory(userId, errorListener)
             matchDataSource = factory.mutableLiveData
@@ -175,9 +180,25 @@ class AccountViewModel : ViewModel() {
                 .build()
 
             matches = LivePagedListBuilder(factory, config).setFetchExecutor(executor).build()
+            callback()
         }
     }
 
     private val errorListener: ((String) -> Unit) = { _error.value = it }
+
+    fun loadLobbyTypes() {
+        retrofit.getConstLobbyTypes().enqueue(object : Callback<Map<String, LobbyTypeResult>> {
+            override fun onResponse(
+                call: Call<Map<String, LobbyTypeResult>>,
+                response: Response<Map<String, LobbyTypeResult>>
+            ) {
+                _constLobbyTypes.value = response.body()?.values?.toList()
+            }
+
+            override fun onFailure(call: Call<Map<String, LobbyTypeResult>>, t: Throwable) {
+                Log.d("loadLobbyTypes", "onFailure: ${t.message.toString()}")
+            }
+        })
+    }
 
 }

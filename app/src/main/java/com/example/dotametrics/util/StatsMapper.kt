@@ -12,9 +12,6 @@ object StatsMapper {
                 R.string.totals_throw
             } else
                 context.resources.getIdentifier(field, "string", context.packageName)
-        if (resId == 0) {
-            Log.d("TAG", "getStatsResource: hello")
-        }
         return resId
     }
 

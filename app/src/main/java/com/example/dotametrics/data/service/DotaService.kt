@@ -1,6 +1,7 @@
 package com.example.dotametrics.data.service
 
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
+import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
 import com.example.dotametrics.data.model.players.matches.MatchesResult
@@ -44,5 +45,8 @@ interface DotaService {
         @Query("limit") limit: Int,
         @Query("offset") offset: Long
     ): Call<List<MatchesResult>>
+
+    @GET("constants/lobby_type")
+    fun getConstLobbyTypes(): Call<Map<String, LobbyTypeResult>>
 
 }

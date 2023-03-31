@@ -46,5 +46,31 @@
     <string name="hero">Hero</string>
     <string name="games_count">Games</string>
     <string name="player">Player</string>
+    <string name="sample_kda">15/4/9</string>
+    <string name="win">Won</string>
+    <string name="lose">Lost</string>
+    <string name="sample_date">28-05-2022</string>
+    <string name="ranked">Ranked</string>
+
+    <!--    lobby types  -->
+    <string name="lobby_type_normal">Normal</string>
+    <string name="lobby_type_practice">Practice</string>
+    <string name="lobby_type_tournament">Tournament</string>
+    <string name="lobby_type_tutorial">Tutorial</string>
+    <string name="lobby_type_coop_bots">Coop bots</string>
+    <string name="lobby_type_ranked_team_mm">Team ranked</string>
+    <string name="lobby_type_ranked_solo_mm">Solo ranked</string>
+    <string name="lobby_type_ranked">Ranked</string>
+    <string name="lobby_type_1v1_mid">1v1 mid</string>
+    <string name="lobby_type_battle_cup">Battle Cup</string>
+    <string name="lobby_type_local_bots">Local bots</string>
+    <string name="lobby_type_spectator">Spectator</string>
+    <string name="lobby_type_event">Event</string>
+    <string name="lobby_type_gauntlet">Gauntlet</string>
+    <string name="lobby_type_new_player">New player</string>
+    <string name="lobby_type_featured">Featured</string>
+    <string name="average_rank">Avg rank</string>
+    <string name="result">Result</string>
+    <string name="lobby">Lobby</string>
 
 </resources>
