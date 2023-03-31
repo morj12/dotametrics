@@ -4,9 +4,15 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
+import com.example.dotametrics.data.model.players.matches.MatchDataSource
+import com.example.dotametrics.data.model.players.matches.MatchDataSource.Companion.PAGE_SIZE
+import com.example.dotametrics.data.model.players.matches.MatchDataSourceFactory
+import com.example.dotametrics.data.model.players.matches.MatchesResult
 import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.data.model.players.totals.TotalsResult
 import com.example.dotametrics.data.model.players.wl.WLResult
@@ -14,6 +20,8 @@ import com.example.dotametrics.data.service.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class AccountViewModel : ViewModel() {
 
@@ -46,6 +54,11 @@ class AccountViewModel : ViewModel() {
     private val _peers = MutableLiveData<List<PeersResult>>()
     val peers: LiveData<List<PeersResult>>
         get() = _peers
+
+    private lateinit var matchDataSource: LiveData<MatchDataSource>
+    private var executor = Executors.newCachedThreadPool()
+    lateinit var matches: LiveData<PagedList<MatchesResult>>
+        private set
 
     private val retrofit = RetrofitInstance.getService()
 
@@ -149,5 +162,22 @@ class AccountViewModel : ViewModel() {
                 })
         }
     }
+
+    fun loadMatches() {
+        if (userId.isNotBlank()) {
+            val factory = MatchDataSourceFactory(userId, errorListener)
+            matchDataSource = factory.mutableLiveData
+            val config = PagedList.Config.Builder()
+                .setEnablePlaceholders(true)
+                .setInitialLoadSizeHint(PAGE_SIZE)
+                .setPageSize(PAGE_SIZE)
+                .setPrefetchDistance(PAGE_SIZE / 2)
+                .build()
+
+            matches = LivePagedListBuilder(factory, config).setFetchExecutor(executor).build()
+        }
+    }
+
+    private val errorListener: ((String) -> Unit) = { _error.value = it }
 
 }

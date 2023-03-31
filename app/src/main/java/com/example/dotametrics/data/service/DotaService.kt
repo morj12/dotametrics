@@ -3,6 +3,7 @@ package com.example.dotametrics.data.service
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
+import com.example.dotametrics.data.model.players.matches.MatchesResult
 import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.data.model.players.totals.TotalsResult
 import com.example.dotametrics.data.model.players.wl.WLResult
@@ -36,5 +37,12 @@ interface DotaService {
 
     @GET("players/{id}/peers")
     fun getPeers(@Path("id") id: String): Call<List<PeersResult>>
+
+    @GET("players/{id}/matches")
+    fun getMatches(
+        @Path("id") id: String,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Long
+    ): Call<List<MatchesResult>>
 
 }

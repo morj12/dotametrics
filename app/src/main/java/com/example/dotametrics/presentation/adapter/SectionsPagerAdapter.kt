@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.example.dotametrics.R
 import com.example.dotametrics.presentation.view.account.HeroesFragment
 import com.example.dotametrics.presentation.view.account.PeersFragment
-import com.example.dotametrics.presentation.view.account.StatsFragment
+import com.example.dotametrics.presentation.view.account.MatchesFragment
 import com.example.dotametrics.presentation.view.account.TotalsFragment
 
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
@@ -15,7 +15,7 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
 
     override fun getItem(position: Int): Fragment {
         return when(position) {
-            0 -> StatsFragment.newInstance(position + 1)
+            0 -> MatchesFragment.newInstance()
             1 -> HeroesFragment.newInstance()
             2 -> PeersFragment.newInstance()
             3 -> TotalsFragment.newInstance()
