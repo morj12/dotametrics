@@ -1,5 +1,6 @@
 package com.example.dotametrics.presentation.view.account
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.databinding.FragmentPeersBinding
 import com.example.dotametrics.presentation.adapter.PeersAdapter
 import com.google.android.material.snackbar.Snackbar
@@ -46,6 +48,13 @@ class PeersFragment : Fragment() {
         adapter = PeersAdapter()
         rcPeers.layoutManager = LinearLayoutManager(activity)
         rcPeers.adapter = adapter
+        adapter.onItemClickedListener = openAccount
+    }
+
+    private val openAccount: (PeersResult) -> Unit = {
+        val intent = Intent(requireActivity(), AccountActivity::class.java)
+        intent.putExtra("id", it.accountId)
+        startActivity(intent)
     }
 
     private fun observe() {

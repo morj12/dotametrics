@@ -13,6 +13,8 @@ import com.example.dotametrics.util.Datetime
 
 class PeersAdapter : ListAdapter<PeersResult, PeersAdapter.ViewHolder>(PeersCallback()) {
 
+    var onItemClickedListener: ((PeersResult) -> Unit)? = null
+
     class PeersCallback : DiffUtil.ItemCallback<PeersResult>() {
         override fun areItemsTheSame(oldItem: PeersResult, newItem: PeersResult) =
             oldItem.accountId == newItem.accountId
@@ -53,6 +55,9 @@ class PeersAdapter : ListAdapter<PeersResult, PeersAdapter.ViewHolder>(PeersCall
             )
             val date = Datetime.getDateTime(item.lastPlayed!!)
             tvPeerLastDate.text = root.context.getString(R.string.last_match_time, date)
+            root.setOnClickListener {
+                onItemClickedListener?.invoke(item)
+            }
         }
     }
 }

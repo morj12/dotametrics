@@ -1,11 +1,14 @@
 package com.example.dotametrics.presentation.view.account
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.example.dotametrics.R
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.data.model.players.PlayersResult
@@ -21,10 +24,9 @@ import com.example.dotametrics.data.service.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-class AccountViewModel : ViewModel() {
+class AccountViewModel(var app: Application) : AndroidViewModel(app) {
 
     var userId: String = ""
 
@@ -104,7 +106,8 @@ class AccountViewModel : ViewModel() {
                     call: Call<List<TotalsResult>>,
                     response: Response<List<TotalsResult>>
                 ) {
-                    _totals.value = response.body()
+                    val usefulTotals = app.resources.getStringArray(R.array.totals_array)
+                    _totals.value = response.body()?.filter { usefulTotals.contains(it.field) }
                 }
 
                 override fun onFailure(call: Call<List<TotalsResult>>, t: Throwable) {

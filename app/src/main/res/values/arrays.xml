@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="totals_array">
+        <item>kills</item>
+        <item>deaths</item>
+        <item>assists</item>
+        <item>kda</item>
+        <item>gold_per_min</item>
+        <item>xp_per_min</item>
+        <item>last_hits</item>
+        <item>denies</item>
+        <item>duration</item>
+        <item>hero_damage</item>
+        <item>tower_damage</item>
+        <item>hero_healing</item>
+    </string-array>
+</resources>
