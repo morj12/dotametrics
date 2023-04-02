@@ -1,5 +1,6 @@
 package com.example.dotametrics.presentation.view.account
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,8 +9,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dotametrics.data.model.players.matches.MatchesResult
+import com.example.dotametrics.data.model.search.SearchResult
 import com.example.dotametrics.databinding.FragmentMatchesBinding
 import com.example.dotametrics.presentation.adapter.MatchesResultAdapter
+import com.example.dotametrics.presentation.view.match.MatchActivity
 import com.google.android.material.snackbar.Snackbar
 
 class MatchesFragment : Fragment() {
@@ -22,6 +26,12 @@ class MatchesFragment : Fragment() {
 
     private val viewModel: AccountViewModel by lazy {
         ViewModelProvider(requireActivity())[AccountViewModel::class.java]
+    }
+
+    private val openMatch: (MatchesResult) -> Unit = {
+        val intent = Intent(requireActivity(), MatchActivity::class.java)
+        intent.putExtra("id", it.matchId)
+        startActivity(intent)
     }
 
     override fun onCreateView(
@@ -48,6 +58,7 @@ class MatchesFragment : Fragment() {
         adapter = MatchesResultAdapter()
         rcMatches.layoutManager = LinearLayoutManager(activity)
         rcMatches.adapter = adapter
+        adapter.onItemClickedListener = openMatch
     }
 
     private fun observe() {

@@ -2,7 +2,6 @@ package com.example.dotametrics.presentation.view.account
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.dotametrics.R

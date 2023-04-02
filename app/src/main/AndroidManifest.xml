@@ -15,6 +15,13 @@
         android:theme="@style/Theme.DotaMetrics"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.view.match.MatchActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".presentation.view.account.AccountActivity"
             android:exported="false">
             <meta-data

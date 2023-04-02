@@ -20,6 +20,8 @@ class MatchesResultAdapter :
     var heroes = listOf<HeroResult>()
     var lobbies = listOf<LobbyTypeResult>()
 
+    var onItemClickedListener: ((MatchesResult) -> Unit)? = null
+
     class MatchesCallback : DiffUtil.ItemCallback<MatchesResult>() {
         override fun areItemsTheSame(oldItem: MatchesResult, newItem: MatchesResult) =
             oldItem.matchId == newItem.matchId
@@ -49,6 +51,9 @@ class MatchesResultAdapter :
             setLobbyType(item, lobbyInfo, this)
             setResult(item, this)
             setRank(item, this)
+            root.setOnClickListener {
+                onItemClickedListener?.invoke(item)
+            }
         }
     }
 
