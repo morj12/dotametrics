@@ -66,5 +66,12 @@
     <string name="radiant">Radiant</string>
     <string name="dire">Dire</string>
     <string name="items">Items</string>
+    <string name="gold">Gold</string>
+    <string name="lasthits">Last\nhits</string>
+    <string name="denies_stat">Denies</string>
+    <string name="gpm">GPM</string>
+    <string name="xpm">XPM</string>
+    <string name="tower_dmg">Tower\ndmg</string>
+    <string name="hero_dmg">Hero\ndmg</string>
 
 </resources>

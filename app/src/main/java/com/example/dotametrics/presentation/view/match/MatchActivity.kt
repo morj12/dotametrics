@@ -83,8 +83,6 @@ class MatchActivity : AppCompatActivity() {
                 )
             tvMatchRegion.text = ConstData.regions[it.region]
             /**
-             * main: picture, name, rank, kda, items, perm buffs, lvl
-             * stats: gold, last hits, denies, gpm, xpm, dmg, dmg towers
              * skills: skill builds
              */
         }
