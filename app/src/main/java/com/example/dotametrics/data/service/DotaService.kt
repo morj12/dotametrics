@@ -1,6 +1,7 @@
 package com.example.dotametrics.data.service
 
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
+import com.example.dotametrics.data.model.constants.items.ItemResult
 import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.data.model.matches.MatchDataResult
 import com.example.dotametrics.data.model.players.PlayersResult
@@ -33,7 +34,6 @@ interface DotaService {
     @GET("players/{id}/heroes")
     fun getPlayerHeroesResults(@Path("id") id: String): Call<List<PlayerHeroResult>>
 
-    // Use map because of multiple classes with same data
     @GET("constants/heroes")
     fun getConstHeroes(): Call<Map<String, HeroResult>>
 
@@ -55,5 +55,8 @@ interface DotaService {
 
     @GET("constants/region")
     fun getRegions(): Call<Map<String, String>>
+
+    @GET("constants/items")
+    fun getItems(): Call<Map<String, ItemResult>>
 
 }

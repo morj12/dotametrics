@@ -15,7 +15,7 @@
     <string name="kills">Kills</string>
     <string name="deaths">Deaths</string>
     <string name="assists">Assists</string>
-    <string name="kda">KDA</string>
+    <string name="kda">K/D/A</string>
     <string name="gold_per_min">GPM</string>
     <string name="xp_per_min">XPM</string>
     <string name="last_hits">Last hits</string>
@@ -62,5 +62,9 @@
     <string name="tab_match_1">Overview</string>
     <string name="tab_match_2">Stats</string>
     <string name="tab_match_3">Skills</string>
+    <string name="anonymous">Anonymous</string>
+    <string name="radiant">Radiant</string>
+    <string name="dire">Dire</string>
+    <string name="items">Items</string>
 
 </resources>

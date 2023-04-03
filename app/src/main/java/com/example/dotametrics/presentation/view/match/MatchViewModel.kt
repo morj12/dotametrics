@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.dotametrics.data.model.constants.items.ItemResult
 import com.example.dotametrics.data.model.matches.MatchDataResult
 import com.example.dotametrics.data.service.RetrofitInstance
 import com.example.dotametrics.util.ConstData
@@ -22,6 +23,10 @@ class MatchViewModel(val app: Application) : AndroidViewModel(app) {
     private val _constRegions = MutableLiveData<Unit>()
     val constRegions: LiveData<Unit>
         get() = _constRegions
+
+    private val _constItems = MutableLiveData<Unit>()
+    val constItems: LiveData<Unit>
+        get() = _constItems
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String>
@@ -61,6 +66,26 @@ class MatchViewModel(val app: Application) : AndroidViewModel(app) {
             }
 
             override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
+                _error.value = t.message.toString()
+            }
+
+        })
+    }
+
+    fun loadItems() {
+        retrofit.getItems().enqueue(object : Callback<Map<String, ItemResult>> {
+            override fun onResponse(
+                call: Call<Map<String, ItemResult>>,
+                response: Response<Map<String, ItemResult>>
+            ) {
+                val body = response.body()
+                if (body != null) {
+                    ConstData.items = body.values.toList()
+                    _constItems.value = Unit
+                }
+            }
+
+            override fun onFailure(call: Call<Map<String, ItemResult>>, t: Throwable) {
                 _error.value = t.message.toString()
             }
 

@@ -2,10 +2,10 @@ package com.example.dotametrics.presentation.view.match
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.example.dotametrics.R
 import com.example.dotametrics.databinding.ActivityMatchBinding
+import com.example.dotametrics.presentation.adapter.MatchSectionsPagerAdapter
 import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.Datetime
 import com.example.dotametrics.util.LobbyTypeMapper
@@ -26,17 +26,45 @@ class MatchActivity : AppCompatActivity() {
         binding = ActivityMatchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initTabs()
+
         id = intent.getLongExtra("id", 0L)
         if (id != 0L) {
             viewModel.matchId = id.toString()
-            viewModel.loadRegions()
+            initConstants()
             observe()
         }
     }
 
+    private fun initConstants() {
+        viewModel.loadRegions()
+        viewModel.loadItems()
+    }
+
+    private fun loadData() {
+        val regionsLoaded = ConstData.regions.isNotEmpty()
+        val itemsLoaded = ConstData.items.isNotEmpty()
+
+        if (regionsLoaded && itemsLoaded) {
+            viewModel.loadMatch(id.toString())
+        } else {
+            if (!regionsLoaded) viewModel.loadRegions()
+            if (!itemsLoaded) viewModel.loadItems()
+        }
+    }
+
+    private fun initTabs() {
+        val sectionsPagerAdapter = MatchSectionsPagerAdapter(this, supportFragmentManager)
+        binding.matchViewPager.adapter = sectionsPagerAdapter
+        binding.matchTabs.setupWithViewPager(binding.matchViewPager)
+    }
+
     private fun observe() = with(binding) {
         viewModel.constRegions.observe(this@MatchActivity) {
-            viewModel.loadMatch(id.toString())
+            loadData()
+        }
+        viewModel.constItems.observe(this@MatchActivity) {
+            loadData()
         }
         viewModel.result.observe(this@MatchActivity) {
             tvMatchDuration.text = Datetime.getStringTime(it.duration!!)
@@ -55,10 +83,8 @@ class MatchActivity : AppCompatActivity() {
                 )
             tvMatchRegion.text = ConstData.regions[it.region]
             /**
-             * maybe: parse button
-             *
-             * main: picture, name, rank, kda, items, perm buffs
-             * stats: lvl, gold, last hits, denies, gpm, xpm, dmg, dmg towers
+             * main: picture, name, rank, kda, items, perm buffs, lvl
+             * stats: gold, last hits, denies, gpm, xpm, dmg, dmg towers
              * skills: skill builds
              */
         }

@@ -45,7 +45,7 @@ class MatchesResultAdapter :
             if (heroInfo != null) Glide.with(root).load("${URL}${heroInfo.img}")
                 .placeholder(R.drawable.ic_person).into(ivMatchHero)
             tvMatchDate.text = Datetime.getDateTime(item.startTime!!)
-            tvMatchKda.text = "${item.kills}/${item.deaths}/${item.assists}"
+            tvMatchKda.text = "${item.kills} / ${item.deaths} / ${item.assists}"
             setLobbyType(item, lobbyInfo, this)
             setResult(item, this)
             setRank(item, this)

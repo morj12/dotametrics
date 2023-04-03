@@ -8,13 +8,14 @@ import com.example.dotametrics.R
 import com.example.dotametrics.presentation.view.account.HeroesFragment
 import com.example.dotametrics.presentation.view.account.MatchesFragment
 import com.example.dotametrics.presentation.view.account.PeersFragment
+import com.example.dotametrics.presentation.view.match.MatchOverviewFragment
 
 class MatchSectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
         return when(position) {
-            0 -> MatchesFragment.newInstance()
+            0 -> MatchOverviewFragment.newInstance()
             1 -> HeroesFragment.newInstance()
             2 -> PeersFragment.newInstance()
             else -> throw RuntimeException("Incorrect position")
@@ -25,7 +26,7 @@ class MatchSectionsPagerAdapter(private val context: Context, fm: FragmentManage
         return context.resources.getString(TAB_TITLES[position])
     }
 
-    override fun getCount() = TAB_TITLES.size
+    override fun getCount() = 1
 
     companion object {
         private val TAB_TITLES = arrayOf(
