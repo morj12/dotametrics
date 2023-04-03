@@ -9,6 +9,7 @@ import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.databinding.ActivityAccountBinding
 import com.example.dotametrics.presentation.adapter.SectionsPagerAdapter
+import com.example.dotametrics.util.GlideRequestOptions.requestOptions
 import com.google.android.material.snackbar.Snackbar
 
 class AccountActivity : AppCompatActivity() {
@@ -61,7 +62,7 @@ class AccountActivity : AppCompatActivity() {
     private fun showData(player: PlayersResult) = with(binding) {
         Glide.with(this@AccountActivity)
             .load(player.profile?.avatarfull)
-            .placeholder(R.drawable.ic_person)
+            .apply(requestOptions())
             .into(profileImage)
         tvAccountName.text = player.profile?.personaname
         setRank(player)

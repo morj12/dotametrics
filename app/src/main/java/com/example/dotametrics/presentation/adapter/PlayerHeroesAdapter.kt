@@ -6,12 +6,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.example.dotametrics.R
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
 import com.example.dotametrics.databinding.AccHeroItemBinding
 import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.Datetime
+import com.example.dotametrics.util.GlideRequestOptions.requestOptions
 
 class PlayerHeroesAdapter :
     ListAdapter<PlayerHeroResult, PlayerHeroesAdapter.ViewHolder>(HeroesCallback()) {
@@ -42,7 +45,7 @@ class PlayerHeroesAdapter :
             if (heroInfo != null && item.games != 0) {
                 Glide.with(root)
                     .load("$URL${heroInfo.img}")
-                    .placeholder(R.drawable.ic_person)
+                    .apply(requestOptions())
                     .into(ivAccHeroImg)
                 tvAccHeroName.text = heroInfo?.localizedName ?: item.heroId
                 tvAccHeroCount.text = item.games.toString()

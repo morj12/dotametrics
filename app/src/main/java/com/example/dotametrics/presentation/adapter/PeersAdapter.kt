@@ -6,10 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.example.dotametrics.R
 import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.databinding.PeersItemBinding
 import com.example.dotametrics.util.Datetime
+import com.example.dotametrics.util.GlideRequestOptions.requestOptions
 
 class PeersAdapter : ListAdapter<PeersResult, PeersAdapter.ViewHolder>(PeersCallback()) {
 
@@ -39,7 +42,7 @@ class PeersAdapter : ListAdapter<PeersResult, PeersAdapter.ViewHolder>(PeersCall
         with(holder.binding) {
             Glide.with(root)
                 .load(item.avatarfull)
-                .placeholder(R.drawable.ic_person)
+                .apply(requestOptions())
                 .into(ivPeerImg)
             tvPeerName.text = item.personaname
             tvPeerCount.text = item.withGames.toString()
