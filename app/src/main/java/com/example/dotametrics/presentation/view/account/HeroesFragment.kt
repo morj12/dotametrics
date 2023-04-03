@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.databinding.FragmentHeroesBinding
 import com.example.dotametrics.presentation.adapter.PlayerHeroesAdapter
+import com.example.dotametrics.util.ConstData
 import com.google.android.material.snackbar.Snackbar
 
 class HeroesFragment : Fragment() {
@@ -38,7 +39,9 @@ class HeroesFragment : Fragment() {
     }
 
     private fun loadData() {
-        viewModel.loadPlayerHeroesResults()
+        if (ConstData.heroes.isNotEmpty())
+            viewModel.loadPlayerHeroesResults()
+        else viewModel.loadHeroes()
     }
 
     private fun initRecyclerView() = with(binding) {
@@ -49,7 +52,6 @@ class HeroesFragment : Fragment() {
 
     private fun observe() {
         viewModel.constHeroes.observe(viewLifecycleOwner) {
-            adapter.heroes = it
             loadData()
         }
         viewModel.heroes.observe(viewLifecycleOwner) {

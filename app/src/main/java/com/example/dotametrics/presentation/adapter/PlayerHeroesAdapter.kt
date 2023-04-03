@@ -10,12 +10,11 @@ import com.example.dotametrics.R
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
 import com.example.dotametrics.databinding.AccHeroItemBinding
+import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.Datetime
 
 class PlayerHeroesAdapter :
     ListAdapter<PlayerHeroResult, PlayerHeroesAdapter.ViewHolder>(HeroesCallback()) {
-
-    var heroes = listOf<HeroResult>()
 
     class HeroesCallback : DiffUtil.ItemCallback<PlayerHeroResult>() {
         override fun areItemsTheSame(oldItem: PlayerHeroResult, newItem: PlayerHeroResult) =
@@ -38,7 +37,7 @@ class PlayerHeroesAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        val heroInfo = heroes.firstOrNull { it.id == item.heroId?.toInt() }
+        val heroInfo = ConstData.heroes.firstOrNull { it.id == item.heroId?.toInt() }
         with(holder.binding) {
             if (heroInfo != null && item.games != 0) {
                 Glide.with(root)

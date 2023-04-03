@@ -53,4 +53,7 @@ interface DotaService {
     @GET("matches/{id}")
     fun getMatchData(@Path("id") id: String): Call<MatchDataResult>
 
+    @GET("constants/region")
+    fun getRegions(): Call<Map<String, String>>
+
 }

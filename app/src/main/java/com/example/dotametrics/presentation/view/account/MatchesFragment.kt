@@ -14,6 +14,7 @@ import com.example.dotametrics.data.model.search.SearchResult
 import com.example.dotametrics.databinding.FragmentMatchesBinding
 import com.example.dotametrics.presentation.adapter.MatchesResultAdapter
 import com.example.dotametrics.presentation.view.match.MatchActivity
+import com.example.dotametrics.util.ConstData
 import com.google.android.material.snackbar.Snackbar
 
 class MatchesFragment : Fragment() {
@@ -49,8 +50,14 @@ class MatchesFragment : Fragment() {
     }
 
     private fun loadData() {
-        if (adapter.heroes.isNotEmpty() && adapter.lobbies.isNotEmpty()) {
+        val heroesLoaded = ConstData.heroes.isNotEmpty()
+        val lobbiesLoaded = ConstData.lobbies.isNotEmpty()
+
+        if (heroesLoaded && lobbiesLoaded) {
             viewModel.loadMatches(::observeMatches)
+        } else {
+            if (!heroesLoaded) viewModel.loadHeroes()
+            if (!lobbiesLoaded) viewModel.loadLobbyTypes()
         }
     }
 
@@ -63,11 +70,9 @@ class MatchesFragment : Fragment() {
 
     private fun observe() {
         viewModel.constHeroes.observe(viewLifecycleOwner) {
-            adapter.heroes = it
             loadData()
         }
         viewModel.constLobbyTypes.observe(viewLifecycleOwner) {
-            adapter.lobbies = it
             loadData()
         }
         viewModel.error.observe(viewLifecycleOwner) {

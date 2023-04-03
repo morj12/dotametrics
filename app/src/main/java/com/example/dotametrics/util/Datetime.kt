@@ -19,4 +19,13 @@ object Datetime {
         return SimpleDateFormat(DEFAULT_TIME_FORMAT, Locale.getDefault()).format(date)
     }
 
+    fun getStringTime(duration: Int): String {
+        val hours = duration / 3600
+        val minutes = (duration % 3600) / 60
+        val seconds = duration % 60
+
+        return if (hours > 0) String.format("%02d:%02d:%02d", hours, minutes, seconds)
+        else String.format("%02d:%02d", minutes, seconds)
+    }
+
 }

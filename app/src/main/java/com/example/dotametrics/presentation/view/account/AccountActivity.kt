@@ -41,7 +41,6 @@ class AccountActivity : AppCompatActivity() {
         binding.tabs.setupWithViewPager(binding.viewPager)
     }
 
-    // TODO: add more constants
     private fun initConstants() {
         viewModel.loadHeroes()
         viewModel.loadLobbyTypes()

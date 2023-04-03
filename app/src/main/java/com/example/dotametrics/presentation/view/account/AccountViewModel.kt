@@ -21,6 +21,7 @@ import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.data.model.players.totals.TotalsResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.data.service.RetrofitInstance
+import com.example.dotametrics.util.ConstData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,16 +51,16 @@ class AccountViewModel(var app: Application) : AndroidViewModel(app) {
     val error: LiveData<String>
         get() = _error
 
-    private val _constHeroes = MutableLiveData<List<HeroResult>>()
-    val constHeroes: LiveData<List<HeroResult>>
+    private val _constHeroes = MutableLiveData<Unit>()
+    val constHeroes: LiveData<Unit>
         get() = _constHeroes
 
     private val _peers = MutableLiveData<List<PeersResult>>()
     val peers: LiveData<List<PeersResult>>
         get() = _peers
 
-    private val _constLobbyTypes = MutableLiveData<List<LobbyTypeResult>>()
-    val constLobbyTypes: LiveData<List<LobbyTypeResult>>
+    private val _constLobbyTypes = MutableLiveData<Unit>()
+    val constLobbyTypes: LiveData<Unit>
         get() = _constLobbyTypes
 
     private val _matches = MutableLiveData<PagedList<MatchesResult>>()
@@ -69,6 +70,7 @@ class AccountViewModel(var app: Application) : AndroidViewModel(app) {
     private var executor = Executors.newCachedThreadPool()
 
     private val retrofit = RetrofitInstance.getService()
+
 
     fun loadUser(id: String) {
         if (id.isNotBlank()) {
@@ -143,7 +145,11 @@ class AccountViewModel(var app: Application) : AndroidViewModel(app) {
                 call: Call<Map<String, HeroResult>>,
                 response: Response<Map<String, HeroResult>>
             ) {
-                _constHeroes.value = response.body()?.values?.toList()
+                val body = response.body()
+                if (body != null) {
+                    ConstData.heroes = body.values.toList()
+                    _constHeroes.value = Unit
+                }
             }
 
             override fun onFailure(call: Call<Map<String, HeroResult>>, t: Throwable) {
@@ -195,11 +201,17 @@ class AccountViewModel(var app: Application) : AndroidViewModel(app) {
                 call: Call<Map<String, LobbyTypeResult>>,
                 response: Response<Map<String, LobbyTypeResult>>
             ) {
-                _constLobbyTypes.value = response.body()?.values?.toList()
+                val body = response.body()
+                if (body != null) {
+                    ConstData.lobbies = body.values.toList()
+                    _constLobbyTypes.value = Unit
+
+                }
+
             }
 
             override fun onFailure(call: Call<Map<String, LobbyTypeResult>>, t: Throwable) {
-                Log.d("loadLobbyTypes", "onFailure: ${t.message.toString()}")
+                _error.value = t.message.toString()
             }
         })
     }

@@ -11,14 +11,12 @@ import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.data.model.players.matches.MatchesResult
 import com.example.dotametrics.databinding.MatchItemBinding
+import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.Datetime
 import com.example.dotametrics.util.LobbyTypeMapper
 
 class MatchesResultAdapter :
     PagedListAdapter<MatchesResult, MatchesResultAdapter.ViewHolder>(MatchesCallback()) {
-
-    var heroes = listOf<HeroResult>()
-    var lobbies = listOf<LobbyTypeResult>()
 
     var onItemClickedListener: ((MatchesResult) -> Unit)? = null
 
@@ -41,8 +39,8 @@ class MatchesResultAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)!!
-        val heroInfo = heroes.firstOrNull { it.id == item.heroId }
-        val lobbyInfo = lobbies.firstOrNull { it.id == item.lobbyType }
+        val heroInfo = ConstData.heroes.firstOrNull { it.id == item.heroId }
+        val lobbyInfo = ConstData.lobbies.firstOrNull { it.id == item.lobbyType }
         with(holder.binding) {
             if (heroInfo != null) Glide.with(root).load("${URL}${heroInfo.img}")
                 .placeholder(R.drawable.ic_person).into(ivMatchHero)

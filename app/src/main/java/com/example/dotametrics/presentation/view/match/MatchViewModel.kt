@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.dotametrics.data.model.matches.MatchDataResult
 import com.example.dotametrics.data.service.RetrofitInstance
+import com.example.dotametrics.util.ConstData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,6 +18,10 @@ class MatchViewModel(val app: Application) : AndroidViewModel(app) {
     private val _result = MutableLiveData<MatchDataResult>()
     val result: LiveData<MatchDataResult>
         get() = _result
+
+    private val _constRegions = MutableLiveData<Unit>()
+    val constRegions: LiveData<Unit>
+        get() = _constRegions
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String>
@@ -39,5 +44,26 @@ class MatchViewModel(val app: Application) : AndroidViewModel(app) {
                 }
             })
         }
+    }
+
+    fun loadRegions() {
+        retrofit.getRegions().enqueue(object : Callback<Map<String, String>> {
+            override fun onResponse(
+                call: Call<Map<String, String>>,
+                response: Response<Map<String, String>>
+            ) {
+                val body = response.body()
+                if (body != null) {
+                    ConstData.regions = body.mapKeys { it.key.toInt() }
+                    _constRegions.value = Unit
+                }
+
+            }
+
+            override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
+                _error.value = t.message.toString()
+            }
+
+        })
     }
 }

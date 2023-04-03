@@ -56,4 +56,11 @@
     <string name="result">Result</string>
     <string name="lobby">Lobby</string>
 
+    <string name="radiant_won">Radiant won</string>
+    <string name="dire_won">Dire won</string>
+
+    <string name="tab_match_1">Overview</string>
+    <string name="tab_match_2">Stats</string>
+    <string name="tab_match_3">Skills</string>
+
 </resources>
