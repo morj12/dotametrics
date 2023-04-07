@@ -73,5 +73,6 @@
     <string name="xpm">XPM</string>
     <string name="tower_dmg">Tower\ndmg</string>
     <string name="hero_dmg">Hero\ndmg</string>
+    <string name="skill_build">Skillbuild</string>
 
 </resources>

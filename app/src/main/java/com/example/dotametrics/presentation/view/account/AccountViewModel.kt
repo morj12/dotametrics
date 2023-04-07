@@ -153,7 +153,7 @@ class AccountViewModel(var app: Application) : AndroidViewModel(app) {
             }
 
             override fun onFailure(call: Call<Map<String, HeroResult>>, t: Throwable) {
-                Log.d("loadHeroes", "onFailure: ${t.message.toString()}")
+                _error.value = t.message.toString()
             }
         })
     }

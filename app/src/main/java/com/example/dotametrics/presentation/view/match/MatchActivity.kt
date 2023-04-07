@@ -39,6 +39,8 @@ class MatchActivity : AppCompatActivity() {
     private fun initConstants() {
         viewModel.loadRegions()
         viewModel.loadItems()
+        viewModel.loadAbilityIds()
+        viewModel.loadAbilities()
     }
 
     private fun loadData() {

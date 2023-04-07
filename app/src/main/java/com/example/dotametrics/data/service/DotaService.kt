@@ -1,5 +1,6 @@
 package com.example.dotametrics.data.service
 
+import com.example.dotametrics.data.model.constants.abilities.AbilityResult
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.constants.items.ItemResult
 import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
@@ -58,5 +59,11 @@ interface DotaService {
 
     @GET("constants/items")
     fun getItems(): Call<Map<String, ItemResult>>
+
+    @GET("constants/ability_ids")
+    fun getAbilityIds(): Call<Map<String, String>>
+
+    @GET("constants/abilities")
+    fun getAbilities(): Call<Map<String, AbilityResult>>
 
 }

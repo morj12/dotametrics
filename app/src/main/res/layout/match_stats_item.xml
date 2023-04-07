@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="76dp">
 
-    <!--  stats: gold, last hits, denies, gpm, xpm, dmg, dmg towers -->
-
     <TextView
         android:id="@+id/tv_match_stats_gold"
         android:layout_width="wrap_content"

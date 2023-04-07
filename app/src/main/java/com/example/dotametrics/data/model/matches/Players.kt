@@ -10,7 +10,6 @@ data class Players(
     @SerializedName("ability_uses") var abilityUses: String? = null,
     @SerializedName("account_id") var accountId: Long? = null,
     @SerializedName("actions") var actions: String? = null,
-    @SerializedName("additional_units") var additionalUnits: String? = null,
     @SerializedName("assists") var assists: Int? = null,
     @SerializedName("backpack_0") var backpack0: Int? = null,
     @SerializedName("backpack_1") var backpack1: Int? = null,
