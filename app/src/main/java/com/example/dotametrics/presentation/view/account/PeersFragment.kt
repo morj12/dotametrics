@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dotametrics.App
 import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.databinding.FragmentPeersBinding
 import com.example.dotametrics.presentation.adapter.PeersAdapter
@@ -21,10 +23,9 @@ class PeersFragment : Fragment() {
 
     private lateinit var adapter: PeersAdapter
 
-    private val viewModel: AccountViewModel by lazy {
-        ViewModelProvider(requireActivity())[AccountViewModel::class.java]
+    private val viewModel: AccountViewModel by activityViewModels {
+        AccountViewModel.AccountViewModelFactory((context?.applicationContext as App))
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

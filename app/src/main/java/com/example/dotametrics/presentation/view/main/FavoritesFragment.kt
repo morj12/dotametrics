@@ -1,0 +1,73 @@
+package com.example.dotametrics.presentation.view.main
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dotametrics.App
+import com.example.dotametrics.data.db.dbmodel.PlayerDbModel
+import com.example.dotametrics.databinding.FragmentFavoritesBinding
+import com.example.dotametrics.presentation.adapter.FavoriteAdapter
+import com.example.dotametrics.presentation.view.account.AccountActivity
+
+class FavoritesFragment : Fragment() {
+
+    private var _binding: FragmentFavoritesBinding? = null
+    private val binding: FragmentFavoritesBinding
+        get() = _binding ?: throw RuntimeException("FragmentFavoritesBinding is null")
+
+    private lateinit var adapter: FavoriteAdapter
+
+    private val viewModel: MainViewModel by activityViewModels {
+        MainViewModel.MainViewModelFactory((context?.applicationContext as App))
+    }
+
+    private val openAccount: (PlayerDbModel) -> Unit = {
+        val intent = Intent(requireActivity(), AccountActivity::class.java)
+        intent.putExtra("id", it.id)
+        startActivity(intent)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
+        observe()
+    }
+
+    private fun initRecyclerView() {
+        adapter = FavoriteAdapter()
+        binding.rcFav.layoutManager = LinearLayoutManager(requireActivity())
+        binding.rcFav.adapter = adapter
+        adapter.onItemClickedListener = openAccount
+    }
+
+    private fun observe() {
+        viewModel.players.observe(viewLifecycleOwner) {
+            adapter.submitList(it) {
+                binding.rcFav.scrollToPosition(0)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = FavoritesFragment()
+    }
+}

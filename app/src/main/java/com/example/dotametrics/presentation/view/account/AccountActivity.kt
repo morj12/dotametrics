@@ -2,9 +2,11 @@ package com.example.dotametrics.presentation.view.account
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import com.bumptech.glide.Glide
+import com.example.dotametrics.App
 import com.example.dotametrics.R
+import com.example.dotametrics.data.db.dbmodel.PlayerDbModel
 import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.databinding.ActivityAccountBinding
@@ -16,9 +18,11 @@ class AccountActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAccountBinding
 
-    private val viewModel: AccountViewModel by lazy {
-        ViewModelProvider(this)[AccountViewModel::class.java]
+    private val viewModel: AccountViewModel by viewModels {
+        AccountViewModel.AccountViewModelFactory(applicationContext as App)
     }
+
+    private var isFav = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,11 +31,13 @@ class AccountActivity : AppCompatActivity() {
 
         initTabs()
         initConstants()
+        initListeners()
 
         val id = intent.getLongExtra("id", 0L)
         if (id != 0L) {
             viewModel.userId = id.toString()
             viewModel.loadUser(id.toString())
+            viewModel.checkFavorite(id)
         }
         observe()
     }
@@ -47,6 +53,25 @@ class AccountActivity : AppCompatActivity() {
         viewModel.loadLobbyTypes()
     }
 
+    private fun initListeners() {
+        binding.ivAccountFav.setOnClickListener {
+            val currentPlayer = viewModel.result.value
+            if (currentPlayer != null) {
+                if (!isFav) {
+                    viewModel.insertPlayer(
+                        PlayerDbModel(
+                            currentPlayer.profile!!.accountId!!.toLong(),
+                            currentPlayer.profile!!.personaname,
+                            currentPlayer.profile!!.avatarfull
+                        )
+                    )
+                } else {
+                    viewModel.deletePlayer(currentPlayer.profile!!.accountId!!.toLong())
+                }
+            }
+        }
+    }
+
     private fun observe() {
         viewModel.result.observe(this) {
             showData(it)
@@ -56,6 +81,14 @@ class AccountActivity : AppCompatActivity() {
         }
         viewModel.error.observe(this) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+        }
+        viewModel.isFav.observe(this) {
+            isFav = it
+            if (isFav) {
+                binding.ivAccountFav.setImageResource(R.drawable.ic_fav)
+            } else {
+                binding.ivAccountFav.setImageResource(R.drawable.ic_fav_border)
+            }
         }
     }
 

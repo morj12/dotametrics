@@ -73,4 +73,7 @@
     <string name="hero_dmg">Hero\ndmg</string>
     <string name="skill_build">Skillbuild</string>
 
+    <string name="tab_main_1">Search</string>
+    <string name="tab_main_2">Favorites</string>
+
 </resources>

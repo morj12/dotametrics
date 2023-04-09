@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dotametrics.App
 import com.example.dotametrics.data.model.players.matches.MatchesResult
 import com.example.dotametrics.data.model.search.SearchResult
 import com.example.dotametrics.databinding.FragmentMatchesBinding
@@ -25,8 +27,8 @@ class MatchesFragment : Fragment() {
 
     private lateinit var adapter: MatchesResultAdapter
 
-    private val viewModel: AccountViewModel by lazy {
-        ViewModelProvider(requireActivity())[AccountViewModel::class.java]
+    private val viewModel: AccountViewModel by activityViewModels {
+        AccountViewModel.AccountViewModelFactory((context?.applicationContext as App))
     }
 
     private val openMatch: (MatchesResult) -> Unit = {

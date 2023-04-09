@@ -14,8 +14,10 @@
         android:src="@drawable/bkg"
         app:layout_constraintBottom_toBottomOf="@id/tv_account_loses_number"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profile_image"
@@ -64,14 +66,22 @@
         app:layout_constraintTop_toBottomOf="@id/tabs" />
 
     <ImageView
-        android:id="@+id/iv_account_rank"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginHorizontal="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/bkg"
+        android:id="@+id/iv_account_fav"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_account_name"
+        app:layout_constraintEnd_toEndOf="@+id/iv_account_rank"
+        app:layout_constraintStart_toStartOf="@+id/iv_account_rank"
+        app:layout_constraintTop_toTopOf="@+id/tv_account_name"
+        tools:srcCompat="@drawable/ic_fav" />
 
+    <ImageView
+        android:id="@+id/iv_account_rank"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bkg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/r82" />
 
     <TextView
@@ -108,8 +118,8 @@
         android:text="@string/loses"
         android:textColor="@color/white"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@id/tv_account_wins"
         app:layout_constraintEnd_toStartOf="@id/tv_account_wr"
+        app:layout_constraintStart_toEndOf="@id/tv_account_wins"
         app:layout_constraintTop_toBottomOf="@+id/tv_account_name"
         tools:layout_editor_absoluteX="296dp" />
 

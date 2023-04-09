@@ -1,14 +1,12 @@
 package com.example.dotametrics.presentation.view.account
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.example.dotametrics.App
 import com.example.dotametrics.R
+import com.example.dotametrics.data.db.dbmodel.PlayerDbModel
+import com.example.dotametrics.data.db.repository.PlayerRepository
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.data.model.players.PlayersResult
@@ -22,12 +20,13 @@ import com.example.dotametrics.data.model.players.totals.TotalsResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.data.service.RetrofitInstance
 import com.example.dotametrics.util.ConstData
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.Executors
 
-class AccountViewModel(var app: Application) : AndroidViewModel(app) {
+class AccountViewModel(private val app: App) : ViewModel() {
 
     var userId: String = ""
 
@@ -66,11 +65,16 @@ class AccountViewModel(var app: Application) : AndroidViewModel(app) {
     private val _matches = MutableLiveData<PagedList<MatchesResult>>()
     var matches: LiveData<PagedList<MatchesResult>> = _matches
 
+    private val _isFav = MutableLiveData<Boolean>()
+    val isFav: LiveData<Boolean>
+        get() = _isFav
+
     private lateinit var matchDataSource: LiveData<MatchDataSource>
     private var executor = Executors.newCachedThreadPool()
 
     private val retrofit = RetrofitInstance.getService()
 
+    private val repository = PlayerRepository(app.db)
 
     fun loadUser(id: String) {
         if (id.isNotBlank()) {
@@ -205,15 +209,38 @@ class AccountViewModel(var app: Application) : AndroidViewModel(app) {
                 if (body != null) {
                     ConstData.lobbies = body.values.toList()
                     _constLobbyTypes.value = Unit
-
                 }
-
             }
 
             override fun onFailure(call: Call<Map<String, LobbyTypeResult>>, t: Throwable) {
                 _error.value = t.message.toString()
             }
         })
+    }
+
+    fun checkFavorite(id: Long) = viewModelScope.launch {
+        val player = repository.getPlayer(id)
+        _isFav.value = player != null
+    }
+
+    fun insertPlayer(playerDbModel: PlayerDbModel) = viewModelScope.launch {
+        repository.insertPlayer(playerDbModel)
+        _isFav.value = true
+    }
+
+    fun deletePlayer(id: Long) = viewModelScope.launch {
+        repository.deletePlayer(id)
+        _isFav.value = false
+    }
+
+    class AccountViewModelFactory(private val app: App) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(AccountViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return AccountViewModel(app) as T
+            }
+            throw IllegalArgumentException("Unknown view model class")
+        }
     }
 
 }

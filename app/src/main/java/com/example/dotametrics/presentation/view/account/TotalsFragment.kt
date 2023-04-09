@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dotametrics.App
 import com.example.dotametrics.databinding.FragmentTotalsBinding
 import com.example.dotametrics.presentation.adapter.TotalsAdapter
 import com.google.android.material.snackbar.Snackbar
@@ -19,8 +21,8 @@ class TotalsFragment : Fragment() {
 
     private lateinit var adapter: TotalsAdapter
 
-    private val viewModel: AccountViewModel by lazy {
-        ViewModelProvider(requireActivity())[AccountViewModel::class.java]
+    private val viewModel: AccountViewModel by activityViewModels {
+        AccountViewModel.AccountViewModelFactory((context?.applicationContext as App))
     }
 
     override fun onCreateView(

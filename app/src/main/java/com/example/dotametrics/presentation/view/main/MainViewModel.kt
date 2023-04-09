@@ -1,15 +1,15 @@
 package com.example.dotametrics.presentation.view.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.dotametrics.App
+import com.example.dotametrics.data.db.repository.PlayerRepository
 import com.example.dotametrics.data.model.search.SearchResult
 import com.example.dotametrics.data.service.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val application: App) : ViewModel() {
 
     private val _results = MutableLiveData<List<SearchResult>>()
     val results: LiveData<List<SearchResult>>
@@ -20,6 +20,10 @@ class MainViewModel : ViewModel() {
         get() = _error
 
     private val retrofit = RetrofitInstance.getService()
+
+    private val repository = PlayerRepository(application.db)
+
+    val players = repository.getPlayers().asLiveData()
 
     fun search(user: String) {
         if (user.isNotBlank()) {
@@ -35,6 +39,16 @@ class MainViewModel : ViewModel() {
                     _error.value = t.message.toString()
                 }
             })
+        }
+    }
+
+    class MainViewModelFactory(private val app: App) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return MainViewModel(app) as T
+            }
+            throw IllegalArgumentException("Unknown view model class")
         }
     }
 
