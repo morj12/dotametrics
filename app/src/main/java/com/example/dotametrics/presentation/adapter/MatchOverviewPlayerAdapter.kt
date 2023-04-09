@@ -16,6 +16,7 @@ import com.example.dotametrics.util.GlideRequestOptions.requestOptions
 class MatchOverviewPlayerAdapter :
     ListAdapter<Players, MatchOverviewPlayerAdapter.ViewHolder>(MatchOverviewPlayerCallback()) {
 
+    var onItemClickedListener: ((Players) -> Unit)? = null
 
     class MatchOverviewPlayerCallback : DiffUtil.ItemCallback<Players>() {
         override fun areItemsTheSame(oldItem: Players, newItem: Players) =
@@ -53,6 +54,11 @@ class MatchOverviewPlayerAdapter :
                 item.personaname ?: root.context.getString(R.string.anonymous)
             tvMatchOverviewKda.text = "${item.kills} / ${item.deaths} / ${item.assists}"
             setItems(item, this)
+            if (item.personaname != null) {
+                root.setOnClickListener {
+                    onItemClickedListener?.invoke(item)
+                }
+            }
         }
     }
 

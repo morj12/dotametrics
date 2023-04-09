@@ -24,8 +24,6 @@
     <string name="hero_damage">Hero damage</string>
     <string name="tower_damage">Tower damage</string>
     <string name="hero_healing">Hero healing</string>
-
-    <string name="totals_in_games">%1$s in %2$d games</string>
     <string name="hero">Hero</string>
     <string name="games_count">Games</string>
     <string name="player">Player</string>

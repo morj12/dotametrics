@@ -36,11 +36,7 @@ class TotalsAdapter : ListAdapter<TotalsResult, TotalsAdapter.ViewHolder>(Totals
         with(holder.binding) {
             tvTotalsName.text =
                 root.context.getString(StatsMapper.getStatsResource(item.field!!, root.context))
-            tvTotalsValue.text = root.context.getString(
-                R.string.totals_in_games,
-                String.format("%.2f", item.sum!! / item.n!!),
-                item.n!!
-            )
+            tvTotalsValue.text = String.format("%.2f", item.sum!! / item.n!!)
         }
     }
 }

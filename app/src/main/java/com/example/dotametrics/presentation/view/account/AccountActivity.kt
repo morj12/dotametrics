@@ -28,8 +28,8 @@ class AccountActivity : AppCompatActivity() {
         initTabs()
         initConstants()
 
-        val id = intent.getIntExtra("id", 0)
-        if (id != 0) {
+        val id = intent.getLongExtra("id", 0L)
+        if (id != 0L) {
             viewModel.userId = id.toString()
             viewModel.loadUser(id.toString())
         }
