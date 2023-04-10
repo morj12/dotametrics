@@ -84,9 +84,6 @@ class MatchActivity : AppCompatActivity() {
                     )
                 )
             tvMatchRegion.text = ConstData.regions[it.region]
-            /**
-             * skills: skill builds
-             */
         }
         viewModel.error.observe(this@MatchActivity) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
