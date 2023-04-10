@@ -44,6 +44,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/pb_rc_player_heroes"
+        style="@style/DotaMetricsProgressBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_hero" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_player_heroes"
         android:layout_width="match_parent"

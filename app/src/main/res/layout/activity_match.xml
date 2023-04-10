@@ -25,6 +25,14 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="34:15" />
 
+        <ProgressBar
+            android:id="@+id/pb_tv_match_result"
+            style="@style/DotaMetricsProgressBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tv_match_result"
+            app:layout_constraintStart_toStartOf="@id/tv_match_result"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tv_match_datetime"
             android:layout_width="wrap_content"

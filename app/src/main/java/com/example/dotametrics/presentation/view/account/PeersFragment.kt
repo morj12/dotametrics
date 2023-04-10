@@ -13,6 +13,8 @@ import com.example.dotametrics.App
 import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.databinding.FragmentPeersBinding
 import com.example.dotametrics.presentation.adapter.PeersAdapter
+import com.example.dotametrics.util.startLoading
+import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
 
 class PeersFragment : Fragment() {
@@ -36,6 +38,7 @@ class PeersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rcPeers.startLoading(binding.pbRcPeers)
         loadData()
         initRecyclerView()
         observe()
@@ -63,6 +66,7 @@ class PeersFragment : Fragment() {
             adapter.submitList(it) {
                 binding.rcPeers.scrollToPosition(0)
             }
+            binding.rcPeers.stopLoading(binding.pbRcPeers)
         }
         viewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()

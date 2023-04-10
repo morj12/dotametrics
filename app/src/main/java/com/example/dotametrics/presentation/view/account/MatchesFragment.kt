@@ -17,6 +17,8 @@ import com.example.dotametrics.databinding.FragmentMatchesBinding
 import com.example.dotametrics.presentation.adapter.MatchesResultAdapter
 import com.example.dotametrics.presentation.view.match.MatchActivity
 import com.example.dotametrics.util.ConstData
+import com.example.dotametrics.util.startLoading
+import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
 
 class MatchesFragment : Fragment() {
@@ -47,6 +49,7 @@ class MatchesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rcMatches.startLoading(binding.pbRcMatches)
         initRecyclerView()
         observe()
     }
@@ -88,6 +91,7 @@ class MatchesFragment : Fragment() {
                 adapter.submitList(it) {
                     binding.rcMatches.scrollToPosition(0)
                 }
+                binding.rcMatches.stopLoading(binding.pbRcMatches)
             }
         }
     }

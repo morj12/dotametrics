@@ -12,6 +12,8 @@ import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.databinding.ActivityAccountBinding
 import com.example.dotametrics.presentation.adapter.SectionsPagerAdapter
 import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.startLoading
+import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
 
 class AccountActivity : AppCompatActivity() {
@@ -37,6 +39,8 @@ class AccountActivity : AppCompatActivity() {
         if (id != 0L) {
             viewModel.userId = id.toString()
             viewModel.loadUser(id.toString())
+            binding.profileImage.startLoading(binding.pbProfileImage)
+            binding.tvAccountLosesNumber.startLoading(binding.pbTvAccountLoses)
             viewModel.checkFavorite(id)
         }
         observe()
@@ -81,10 +85,12 @@ class AccountActivity : AppCompatActivity() {
     private fun observe() {
         viewModel.result.observe(this) {
             showData(it)
+            binding.profileImage.stopLoading(binding.pbProfileImage)
             updateFavorite()
         }
         viewModel.wl.observe(this) {
             showData(it)
+            binding.tvAccountLosesNumber.stopLoading(binding.pbTvAccountLoses)
         }
         viewModel.error.observe(this) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()

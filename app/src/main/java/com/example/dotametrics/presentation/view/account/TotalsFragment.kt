@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
 import com.example.dotametrics.databinding.FragmentTotalsBinding
 import com.example.dotametrics.presentation.adapter.TotalsAdapter
+import com.example.dotametrics.util.startLoading
+import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
 
 class TotalsFragment : Fragment() {
@@ -35,6 +37,7 @@ class TotalsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rcTotals.startLoading(binding.pbRcTotals)
         loadData()
         initRecyclerView()
         observe()
@@ -55,6 +58,7 @@ class TotalsFragment : Fragment() {
             adapter.submitList(it) {
                 binding.rcTotals.scrollToPosition(0)
             }
+            binding.rcTotals.stopLoading(binding.pbRcTotals)
         }
         viewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()

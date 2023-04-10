@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.databinding.FragmentMatchSkillsBinding
 import com.example.dotametrics.presentation.adapter.MatchSkillsPlayerAdapter
 import com.example.dotametrics.util.ConstData
+import com.example.dotametrics.util.startLoading
+import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
 
 class MatchSkillsFragment : Fragment() {
@@ -36,6 +38,8 @@ class MatchSkillsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rcMatchSkillsRadiant.startLoading(binding.pbRcMatchSkillsRadiant)
+        binding.pbRcMatchSkillsDire.startLoading(binding.pbRcMatchSkillsDire)
         initRecyclerView()
         observe()
     }
@@ -50,6 +54,8 @@ class MatchSkillsFragment : Fragment() {
                     .filter { player -> player.playerSlot!! < 100 })
                 direAdapter.submitList(match.players.sortedBy { it.playerSlot }
                     .filter { player -> player.playerSlot!! >= 100 })
+                binding.rcMatchSkillsRadiant.stopLoading(binding.pbRcMatchSkillsRadiant)
+                binding.pbRcMatchSkillsDire.stopLoading(binding.pbRcMatchSkillsDire)
             }
         } else {
             if (!abilityIdsLoaded) viewModel.loadAbilityIds()

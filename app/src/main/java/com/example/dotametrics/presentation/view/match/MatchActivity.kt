@@ -6,9 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.dotametrics.R
 import com.example.dotametrics.databinding.ActivityMatchBinding
 import com.example.dotametrics.presentation.adapter.MatchSectionsPagerAdapter
-import com.example.dotametrics.util.ConstData
-import com.example.dotametrics.util.Datetime
-import com.example.dotametrics.util.LobbyTypeMapper
+import com.example.dotametrics.util.*
 import com.google.android.material.snackbar.Snackbar
 
 class MatchActivity : AppCompatActivity() {
@@ -32,6 +30,7 @@ class MatchActivity : AppCompatActivity() {
         if (id != 0L) {
             viewModel.matchId = id.toString()
             initConstants()
+            binding.tvMatchResult.startLoading(binding.pbTvMatchResult)
             observe()
         }
     }
@@ -84,6 +83,7 @@ class MatchActivity : AppCompatActivity() {
                     )
                 )
             tvMatchRegion.text = ConstData.regions[it.region]
+            binding.tvMatchResult.stopLoading(binding.pbTvMatchResult)
         }
         viewModel.error.observe(this@MatchActivity) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()

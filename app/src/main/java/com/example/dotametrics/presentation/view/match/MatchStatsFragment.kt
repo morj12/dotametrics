@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.databinding.FragmentMatchStatsBinding
 import com.example.dotametrics.presentation.adapter.MatchStatsPlayerAdapter
+import com.example.dotametrics.util.startLoading
+import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
 
 class MatchStatsFragment : Fragment() {
@@ -34,6 +36,8 @@ class MatchStatsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rcMatchStatsRadiant.startLoading(binding.pbRcMatchStatsRadiant)
+        binding.rcMatchStatsDire.startLoading(binding.pbRcMatchStatsDire)
         initRecyclerView()
         observe()
     }
@@ -54,6 +58,8 @@ class MatchStatsFragment : Fragment() {
                 .filter { player -> player.playerSlot!! < 100 })
             direAdapter.submitList(match.players.sortedBy { it.playerSlot }
                 .filter { player -> player.playerSlot!! >= 100 })
+            binding.rcMatchStatsRadiant.stopLoading(binding.pbRcMatchStatsRadiant)
+            binding.rcMatchStatsDire.stopLoading(binding.pbRcMatchStatsDire)
         }
         viewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()

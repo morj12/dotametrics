@@ -112,6 +112,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_match_stats_gold" />
 
+        <ProgressBar
+            android:id="@+id/pb_rc_match_stats_radiant"
+            style="@style/DotaMetricsProgressBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_match_stats_gold" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_match_stats_radiant"
             android:layout_width="match_parent"
@@ -223,6 +230,13 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_match_stats_gold_dire" />
+
+        <ProgressBar
+            android:id="@+id/pb_rc_match_stats_dire"
+            style="@style/DotaMetricsProgressBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_match_stats_gold_dire" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_match_stats_dire"

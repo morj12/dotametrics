@@ -12,6 +12,8 @@ import com.example.dotametrics.App
 import com.example.dotametrics.databinding.FragmentHeroesBinding
 import com.example.dotametrics.presentation.adapter.PlayerHeroesAdapter
 import com.example.dotametrics.util.ConstData
+import com.example.dotametrics.util.startLoading
+import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
 
 class HeroesFragment : Fragment() {
@@ -36,6 +38,7 @@ class HeroesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rcPlayerHeroes.startLoading(binding.pbRcPlayerHeroes)
         initRecyclerView()
         observe()
     }
@@ -60,6 +63,7 @@ class HeroesFragment : Fragment() {
             adapter.submitList(it) {
                 binding.rcPlayerHeroes.scrollToPosition(0)
             }
+            binding.rcPlayerHeroes.stopLoading(binding.pbRcPlayerHeroes)
         }
         viewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()

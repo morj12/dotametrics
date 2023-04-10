@@ -12,6 +12,8 @@ import com.example.dotametrics.data.model.matches.Players
 import com.example.dotametrics.databinding.FragmentMatchOverviewBinding
 import com.example.dotametrics.presentation.adapter.MatchOverviewPlayerAdapter
 import com.example.dotametrics.presentation.view.account.AccountActivity
+import com.example.dotametrics.util.startLoading
+import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
 
 class MatchOverviewFragment : Fragment() {
@@ -43,6 +45,8 @@ class MatchOverviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rcMatchOverviewRadiant.startLoading(binding.pbRcMatchOverviewRadiant)
+        binding.pbRcMatchOverviewDire.startLoading(binding.pbRcMatchOverviewDire)
         initRecyclerView()
         observe()
     }
@@ -67,6 +71,8 @@ class MatchOverviewFragment : Fragment() {
                 .filter { player -> player.playerSlot!! < 100 })
             direAdapter.submitList(match.players.sortedBy { it.playerSlot }
                 .filter { player -> player.playerSlot!! >= 100 })
+            binding.rcMatchOverviewRadiant.stopLoading(binding.pbRcMatchOverviewRadiant)
+            binding.pbRcMatchOverviewDire.stopLoading(binding.pbRcMatchOverviewDire)
         }
         viewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
