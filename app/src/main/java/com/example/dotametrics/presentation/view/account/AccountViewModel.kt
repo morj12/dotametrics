@@ -223,9 +223,9 @@ class AccountViewModel(private val app: App) : ViewModel() {
         _isFav.value = player != null
     }
 
-    fun insertPlayer(playerDbModel: PlayerDbModel) = viewModelScope.launch {
+    fun insertPlayer(playerDbModel: PlayerDbModel, observe: Boolean) = viewModelScope.launch {
         repository.insertPlayer(playerDbModel)
-        _isFav.value = true
+        if (observe) _isFav.value = true
     }
 
     fun deletePlayer(id: Long) = viewModelScope.launch {

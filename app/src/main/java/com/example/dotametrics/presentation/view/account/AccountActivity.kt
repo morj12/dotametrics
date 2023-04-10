@@ -58,13 +58,7 @@ class AccountActivity : AppCompatActivity() {
             val currentPlayer = viewModel.result.value
             if (currentPlayer != null) {
                 if (!isFav) {
-                    viewModel.insertPlayer(
-                        PlayerDbModel(
-                            currentPlayer.profile!!.accountId!!.toLong(),
-                            currentPlayer.profile!!.personaname,
-                            currentPlayer.profile!!.avatarfull
-                        )
-                    )
+                    insertPlayer(true)
                 } else {
                     viewModel.deletePlayer(currentPlayer.profile!!.accountId!!.toLong())
                 }
@@ -72,9 +66,22 @@ class AccountActivity : AppCompatActivity() {
         }
     }
 
+    private fun insertPlayer(observe: Boolean) {
+        val currentPlayer = viewModel.result.value!!
+        viewModel.insertPlayer(
+            PlayerDbModel(
+                currentPlayer.profile!!.accountId!!.toLong(),
+                currentPlayer.profile!!.personaname,
+                currentPlayer.profile!!.avatarfull
+            ),
+            observe
+        )
+    }
+
     private fun observe() {
         viewModel.result.observe(this) {
             showData(it)
+            updateFavorite()
         }
         viewModel.wl.observe(this) {
             showData(it)
@@ -85,11 +92,17 @@ class AccountActivity : AppCompatActivity() {
         viewModel.isFav.observe(this) {
             isFav = it
             if (isFav) {
+                updateFavorite()
                 binding.ivAccountFav.setImageResource(R.drawable.ic_fav)
             } else {
                 binding.ivAccountFav.setImageResource(R.drawable.ic_fav_border)
             }
         }
+    }
+
+    private fun updateFavorite() {
+        if (viewModel.result.value != null && isFav)
+            insertPlayer(false)
     }
 
     private fun showData(player: PlayersResult) = with(binding) {
