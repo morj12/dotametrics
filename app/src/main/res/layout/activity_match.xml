@@ -112,14 +112,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_match" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/match_view_pager"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/match_tabs" />
+        app:layout_constraintTop_toBottomOf="@id/match_tabs">
+
+        <com.example.dotametrics.util.CustomWrapContentViewPager
+            android:id="@+id/match_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
