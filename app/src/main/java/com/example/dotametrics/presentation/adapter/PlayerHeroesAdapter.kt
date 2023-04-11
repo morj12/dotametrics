@@ -40,27 +40,34 @@ class PlayerHeroesAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
+
         val heroInfo = ConstData.heroes.firstOrNull { it.id == item.heroId?.toInt() }
+
         with(holder.binding) {
             if (heroInfo != null && item.games != 0) {
                 Glide.with(root)
                     .load("$URL${heroInfo.img}")
                     .apply(requestOptions())
                     .into(ivAccHeroImg)
-                tvAccHeroName.text = heroInfo?.localizedName ?: item.heroId
+                tvAccHeroName.text = heroInfo.localizedName
                 tvAccHeroCount.text = item.games.toString()
-                val winrate = item.win!!.toDouble() / item.games!! * 100
-                tvAccHeroWinrate.text =
-                    "${String.format("%.2f", winrate)}%"
-                tvAccHeroWinrate.setTextColor(
-                    when {
-                        winrate > 55 -> root.context.getColor(R.color.green)
-                        winrate < 45 -> root.context.getColor(R.color.red)
-                        else -> root.context.getColor(R.color.gray)
-                    }
-                )
-                val date = Datetime.getDateTime(item.lastPlayed!!)
-                tvHeroLastDate.text = root.context.getString(R.string.last_match_time, date)
+                if (item.win != null && item.games != null) {
+                    val winrate = item.win!!.toDouble() / item.games!! * 100
+                    tvAccHeroWinrate.text =
+                        "${String.format("%.2f", winrate)}%"
+                    tvAccHeroWinrate.setTextColor(
+                        when {
+                            winrate > 55 -> root.context.getColor(R.color.green)
+                            winrate < 45 -> root.context.getColor(R.color.red)
+                            else -> root.context.getColor(R.color.gray)
+                        }
+                    )
+                }
+                item.lastPlayed?.let {
+                    val date = Datetime.getDateTime(it)
+                    tvHeroLastDate.text = root.context.getString(R.string.last_match_time, date)
+                }
+
             }
         }
     }

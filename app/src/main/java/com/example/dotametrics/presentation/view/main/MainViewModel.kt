@@ -1,5 +1,6 @@
 package com.example.dotametrics.presentation.view.main
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.dotametrics.App
 import com.example.dotametrics.data.db.repository.PlayerRepository
@@ -32,6 +33,7 @@ class MainViewModel(private val application: App) : ViewModel() {
                     call: Call<List<SearchResult>>,
                     response: Response<List<SearchResult>>
                 ) {
+                    Log.d("RETROFIT_CALL", "MainViewModel: search")
                     _results.value = response.body()
                 }
 

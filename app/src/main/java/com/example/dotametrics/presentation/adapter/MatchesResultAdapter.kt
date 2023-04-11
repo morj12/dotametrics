@@ -13,6 +13,7 @@ import com.example.dotametrics.data.model.players.matches.MatchesResult
 import com.example.dotametrics.databinding.MatchItemBinding
 import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.Datetime
+import com.example.dotametrics.util.GlideRequestOptions.requestOptions
 import com.example.dotametrics.util.LobbyTypeMapper
 
 class MatchesResultAdapter :
@@ -39,16 +40,22 @@ class MatchesResultAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)!!
+
         val heroInfo = ConstData.heroes.firstOrNull { it.id == item.heroId }
         val lobbyInfo = ConstData.lobbies.firstOrNull { it.id == item.lobbyType }
+
         with(holder.binding) {
-            if (heroInfo != null) Glide.with(root).load("${URL}${heroInfo.img}")
-                .placeholder(R.drawable.ic_person).into(ivMatchHero)
-            tvMatchDate.text = Datetime.getDateTime(item.startTime!!)
+            if (heroInfo != null)
+                Glide.with(root)
+                    .load("${URL}${heroInfo.img}")
+                    .apply(requestOptions())
+                    .into(ivMatchHero)
+            item.startTime?.let { tvMatchDate.text = Datetime.getDateTime(it) }
             tvMatchKda.text = "${item.kills} / ${item.deaths} / ${item.assists}"
             setLobbyType(item, lobbyInfo, this)
             setResult(item, this)
             setRank(item, this)
+
             root.setOnClickListener {
                 onItemClickedListener?.invoke(item)
             }
@@ -80,10 +87,12 @@ class MatchesResultAdapter :
 
     }
 
-    private fun isWin(item: MatchesResult): Boolean {
-        return (item.radiantWin == true && item.playerSlot!! < 100)
-                || (item.radiantWin == false && item.playerSlot!! > 100)
-    }
+    private fun isWin(item: MatchesResult) =
+        if (item.playerSlot != null && item.radiantWin != null)
+            ((item.radiantWin!! && item.playerSlot!! < 100)
+                    || (item.radiantWin == false && item.playerSlot!! > 100))
+        else false
+
 
     private fun setRank(item: MatchesResult, binding: MatchItemBinding) = with(binding) {
         val id = when (item.averageRank) {

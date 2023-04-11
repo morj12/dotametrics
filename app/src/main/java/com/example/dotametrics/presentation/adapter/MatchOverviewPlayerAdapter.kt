@@ -39,7 +39,9 @@ class MatchOverviewPlayerAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
+
         val heroInfo = ConstData.heroes.firstOrNull { it.id == item.heroId }
+
         with(holder.binding) {
             if (heroInfo != null) {
                 Glide.with(root)
@@ -47,13 +49,13 @@ class MatchOverviewPlayerAdapter :
                     .apply(requestOptions())
                     .into(ivMatchOverviewHero)
             }
-
             setRank(item, this)
             tvMatchOverviewLvl.text = item.level.toString()
             tvMatchOverviewName.text =
                 item.personaname ?: root.context.getString(R.string.anonymous)
             tvMatchOverviewKda.text = "${item.kills} / ${item.deaths} / ${item.assists}"
             setItems(item, this)
+
             if (item.personaname != null) {
                 root.setOnClickListener {
                     onItemClickedListener?.invoke(item)

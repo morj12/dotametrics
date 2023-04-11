@@ -1,6 +1,7 @@
 package com.example.dotametrics.presentation.view.match
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -50,6 +51,7 @@ class MatchViewModel(val app: Application) : AndroidViewModel(app) {
                     call: Call<MatchDataResult>,
                     response: Response<MatchDataResult>
                 ) {
+                    Log.d("RETROFIT_CALL", "MatchViewModel: loadMatch")
                     _result.value = response.body()
                 }
 
@@ -66,12 +68,12 @@ class MatchViewModel(val app: Application) : AndroidViewModel(app) {
                 call: Call<Map<String, String>>,
                 response: Response<Map<String, String>>
             ) {
+                Log.d("RETROFIT_CALL", "MatchViewModel: loadRegions")
                 val body = response.body()
                 if (body != null) {
                     ConstData.regions = body.mapKeys { it.key.toInt() }
                     _constRegions.value = Unit
                 }
-
             }
 
             override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
@@ -87,6 +89,7 @@ class MatchViewModel(val app: Application) : AndroidViewModel(app) {
                 call: Call<Map<String, ItemResult>>,
                 response: Response<Map<String, ItemResult>>
             ) {
+                Log.d("RETROFIT_CALL", "MatchViewModel: loadItems")
                 val body = response.body()
                 if (body != null) {
                     ConstData.items = body.values.toList()
@@ -107,6 +110,7 @@ class MatchViewModel(val app: Application) : AndroidViewModel(app) {
                 call: Call<Map<String, String>>,
                 response: Response<Map<String, String>>
             ) {
+                Log.d("RETROFIT_CALL", "MatchViewModel: loadAbilityIds")
                 val body = response.body()
                 if (body != null) {
                     ConstData.abilityIds = body
@@ -127,6 +131,7 @@ class MatchViewModel(val app: Application) : AndroidViewModel(app) {
                 call: Call<Map<String, AbilityResult>>,
                 response: Response<Map<String, AbilityResult>>
             ) {
+                Log.d("RETROFIT_CALL", "MatchViewModel: loadAbilities")
                 val body = response.body()
                 if (body != null) {
                     ConstData.abilities = body

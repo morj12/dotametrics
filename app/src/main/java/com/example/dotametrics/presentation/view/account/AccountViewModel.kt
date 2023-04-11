@@ -1,5 +1,6 @@
 package com.example.dotametrics.presentation.view.account
 
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -76,14 +77,14 @@ class AccountViewModel(private val app: App) : ViewModel() {
 
     private val repository = PlayerRepository(app.db)
 
-    fun loadUser(id: String) {
-        if (id.isNotBlank()) {
-            // main results
-            retrofit.getPlayersResults(id).enqueue(object : Callback<PlayersResult> {
+    fun loadUser() {
+        if (userId.isNotBlank()) {
+            retrofit.getPlayersResults(userId).enqueue(object : Callback<PlayersResult> {
                 override fun onResponse(
                     call: Call<PlayersResult>,
                     response: Response<PlayersResult>
                 ) {
+                    Log.d("RETROFIT_CALL", "AccountViewModel: loadUser")
                     _result.value = response.body()
                 }
 
@@ -91,9 +92,9 @@ class AccountViewModel(private val app: App) : ViewModel() {
                     _error.value = t.message.toString()
                 }
             })
-            // winrate results
-            retrofit.getWLResults(id).enqueue(object : Callback<WLResult> {
+            retrofit.getWLResults(userId).enqueue(object : Callback<WLResult> {
                 override fun onResponse(call: Call<WLResult>, response: Response<WLResult>) {
+                    Log.d("RETROFIT_CALL", "AccountViewModel: loadUser")
                     _wl.value = response.body()
                 }
 
@@ -112,6 +113,7 @@ class AccountViewModel(private val app: App) : ViewModel() {
                     call: Call<List<TotalsResult>>,
                     response: Response<List<TotalsResult>>
                 ) {
+                    Log.d("RETROFIT_CALL", "AccountViewModel: loadTotals")
                     val usefulTotals = app.resources.getStringArray(R.array.totals_array)
                     _totals.value = response.body()?.filter { usefulTotals.contains(it.field) }
                 }
@@ -132,6 +134,7 @@ class AccountViewModel(private val app: App) : ViewModel() {
                         call: Call<List<PlayerHeroResult>>,
                         response: Response<List<PlayerHeroResult>>
                     ) {
+                        Log.d("RETROFIT_CALL", "AccountViewModel: loadPlayerHeroesResults")
                         _heroes.value = response.body()
                     }
 
@@ -149,6 +152,7 @@ class AccountViewModel(private val app: App) : ViewModel() {
                 call: Call<Map<String, HeroResult>>,
                 response: Response<Map<String, HeroResult>>
             ) {
+                Log.d("RETROFIT_CALL", "AccountViewModel: loadHeroes")
                 val body = response.body()
                 if (body != null) {
                     ConstData.heroes = body.values.toList()
@@ -170,6 +174,7 @@ class AccountViewModel(private val app: App) : ViewModel() {
                         call: Call<List<PeersResult>>,
                         response: Response<List<PeersResult>>
                     ) {
+                        Log.d("RETROFIT_CALL", "AccountViewModel: loadPeers")
                         _peers.value = response.body()
                     }
 
@@ -189,7 +194,7 @@ class AccountViewModel(private val app: App) : ViewModel() {
                 .setEnablePlaceholders(true)
                 .setInitialLoadSizeHint(PAGE_SIZE)
                 .setPageSize(PAGE_SIZE)
-                .setPrefetchDistance(PAGE_SIZE / 2)
+                .setPrefetchDistance(PAGE_SIZE / 4)
                 .build()
 
             matches = LivePagedListBuilder(factory, config).setFetchExecutor(executor).build()
@@ -205,6 +210,7 @@ class AccountViewModel(private val app: App) : ViewModel() {
                 call: Call<Map<String, LobbyTypeResult>>,
                 response: Response<Map<String, LobbyTypeResult>>
             ) {
+                Log.d("RETROFIT_CALL", "AccountViewModel: loadLobbyTypes")
                 val body = response.body()
                 if (body != null) {
                     ConstData.lobbies = body.values.toList()

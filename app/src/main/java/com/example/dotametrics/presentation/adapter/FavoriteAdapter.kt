@@ -37,6 +37,7 @@ class FavoriteAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
+
         with(holder.binding) {
             favResultName.text = item.name
             favResultId.text = item.id.toString()
@@ -44,6 +45,7 @@ class FavoriteAdapter :
                 .load(item.avatar)
                 .apply(requestOptions())
                 .into(favIcon)
+
             root.setOnClickListener {
                 onItemClickedListener?.invoke(item)
             }

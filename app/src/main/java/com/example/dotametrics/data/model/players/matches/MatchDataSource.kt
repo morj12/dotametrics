@@ -1,5 +1,6 @@
 package com.example.dotametrics.data.model.players.matches
 
+import android.util.Log
 import androidx.paging.PageKeyedDataSource
 import com.example.dotametrics.data.service.RetrofitInstance
 import retrofit2.Call
@@ -18,6 +19,7 @@ class MatchDataSource(private val id: String, private val errorListener: (String
                     call: Call<List<MatchesResult>>,
                     response: Response<List<MatchesResult>>
                 ) {
+                    Log.d("RETROFIT_CALL", "MatchDataSource: loadAfter")
                     callback.onResult(response.body() ?: listOf(), params.key + PAGE_SIZE)
                 }
 
@@ -43,6 +45,7 @@ class MatchDataSource(private val id: String, private val errorListener: (String
                 call: Call<List<MatchesResult>>,
                 response: Response<List<MatchesResult>>
             ) {
+                Log.d("RETROFIT_CALL", "MatchDataSource: loadInitial")
                 callback.onResult(response.body() ?: listOf(), null, PAGE_SIZE.toLong())
             }
 
@@ -55,7 +58,7 @@ class MatchDataSource(private val id: String, private val errorListener: (String
 
     companion object {
 
-        const val PAGE_SIZE = 30
+        const val PAGE_SIZE = 100
 
     }
 }

@@ -34,9 +34,11 @@ class TotalsAdapter : ListAdapter<TotalsResult, TotalsAdapter.ViewHolder>(Totals
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         with(holder.binding) {
-            tvTotalsName.text =
-                root.context.getString(StatsMapper.getStatsResource(item.field!!, root.context))
-            tvTotalsValue.text = String.format("%.2f", item.sum!! / item.n!!)
+            if (item.field != null && item.sum != null && item.n != null) {
+                tvTotalsName.text =
+                    root.context.getString(StatsMapper.getStatsResource(item.field!!, root.context))
+                tvTotalsValue.text = String.format("%.2f", item.sum!! / item.n!!)
+            }
         }
     }
 }

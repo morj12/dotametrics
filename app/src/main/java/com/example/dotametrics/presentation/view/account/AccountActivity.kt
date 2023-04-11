@@ -11,6 +11,7 @@ import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.databinding.ActivityAccountBinding
 import com.example.dotametrics.presentation.adapter.SectionsPagerAdapter
+import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.GlideRequestOptions.requestOptions
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
@@ -38,7 +39,7 @@ class AccountActivity : AppCompatActivity() {
         val id = intent.getLongExtra("id", 0L)
         if (id != 0L) {
             viewModel.userId = id.toString()
-            viewModel.loadUser(id.toString())
+            viewModel.loadUser()
             binding.profileImage.startLoading(binding.pbProfileImage)
             binding.tvAccountLosesNumber.startLoading(binding.pbTvAccountLoses)
             viewModel.checkFavorite(id)

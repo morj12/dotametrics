@@ -40,6 +40,7 @@ class SearchResultAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
+
         with(holder.binding) {
             searchResultName.text = item.personaname
             searchResultId.text = item.accountId.toString()

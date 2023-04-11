@@ -1,6 +1,6 @@
 package com.example.dotametrics.presentation.adapter
 
-import android.util.Log
+import android.content.res.Configuration
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View.TEXT_ALIGNMENT_CENTER
@@ -46,57 +46,68 @@ class MatchSkillsPlayerAdapter(private val activity: AppCompatActivity) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
+
         with(holder.binding) {
+            // get orientation
+            val orientation: Int = this.root.resources.configuration.orientation
+            ITEMS_PER_ROW = if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                30
+            } else {
+                15
+            }
+
             // Get cell size
             val width = activity.windowManager.defaultDisplay.width
             val dpWidth = (width / activity.resources.displayMetrics.density)
             val cellSize = (dpWidth / ITEMS_PER_ROW)
-
 
             for (i in 0..1) {
                 val tableRow = TableRow(root.context)
                 for (j in 0 until ITEMS_PER_ROW) {
                     if (skillCount < item.abilityUpgradesArr.size) {
                         val abilityId = item.abilityUpgradesArr[skillCount]
-                        val abilityName = ConstData.abilityIds[abilityId.toString()]!!
-                        val ability = ConstData.abilities[abilityName]!!
-                        val type =
-                            when {
+                        val abilityName = ConstData.abilityIds[abilityId.toString()]
+                        var ability: AbilityResult? = null
+                        var type: String? = null
+                        abilityName?.let {
+                            ability = ConstData.abilities[it]
+                            type = when {
                                 abilityName.contains("attributes") -> "attributes"
                                 abilityName.contains("special_bonus") -> "talent"
                                 else -> "ability"
                             }
+                        }
+                        ability?.let {
+                            val cell =
+                                if (type == "talent" || type == "attributes") TextView(root.context)
+                                else ImageView(root.context)
 
-                        val cell =
-                            if (type == "talent" || type == "attributes") TextView(root.context)
-                            else ImageView(root.context)
+                            val typedSize = TypedValue.applyDimension(
+                                TypedValue.COMPLEX_UNIT_DIP,
+                                cellSize,
+                                activity.resources.displayMetrics
+                            ).toInt()
+                            cell.layoutParams = TableRow.LayoutParams(typedSize, typedSize)
 
-                        val typedSize = TypedValue.applyDimension(
-                            TypedValue.COMPLEX_UNIT_DIP,
-                            cellSize,
-                            activity.resources.displayMetrics
-                        ).toInt()
-                        cell.layoutParams = TableRow.LayoutParams(typedSize, typedSize)
-
-                        if (cell is TextView) {
-                            if (type == "talent") {
-                                cell.text = ability.dname
-                                cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6f)
-                                cell.setBackgroundResource(R.drawable.talent)
-                                cell.textAlignment = TEXT_ALIGNMENT_CENTER
-                            } else {
-                                cell.setBackgroundResource(R.drawable.attr)
+                            if (cell is TextView) {
+                                if (type == "talent") {
+                                    cell.text = ability!!.dname
+                                    cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6f)
+                                    cell.setBackgroundResource(R.drawable.talent)
+                                    cell.textAlignment = TEXT_ALIGNMENT_CENTER
+                                } else {
+                                    cell.setBackgroundResource(R.drawable.attr)
+                                }
+                            } else if (cell is ImageView) {
+                                Glide.with(root)
+                                    .load("${URL}${ability!!.img}")
+                                    .apply(GlideRequestOptions.requestOptions())
+                                    .into(cell)
                             }
-                        } else if (cell is ImageView) {
-                            Glide.with(root)
-                                .load("${URL}${ability.img}")
-                                .apply(GlideRequestOptions.requestOptions())
-                                .into(cell)
+                            tableRow.addView(cell)
                         }
                         skillCount++
-                        tableRow.addView(cell)
                     }
-
                 }
                 tlSkills.addView(tableRow)
             }
@@ -107,6 +118,6 @@ class MatchSkillsPlayerAdapter(private val activity: AppCompatActivity) :
 
     companion object {
         private const val URL = "https://api.opendota.com"
-        private const val ITEMS_PER_ROW = 15
+        private var ITEMS_PER_ROW = 15
     }
 }

@@ -2,17 +2,14 @@ package com.example.dotametrics.presentation.view.account
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
 import com.example.dotametrics.data.model.players.matches.MatchesResult
-import com.example.dotametrics.data.model.search.SearchResult
 import com.example.dotametrics.databinding.FragmentMatchesBinding
 import com.example.dotametrics.presentation.adapter.MatchesResultAdapter
 import com.example.dotametrics.presentation.view.match.MatchActivity

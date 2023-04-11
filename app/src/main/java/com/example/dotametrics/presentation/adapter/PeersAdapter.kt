@@ -39,6 +39,7 @@ class PeersAdapter : ListAdapter<PeersResult, PeersAdapter.ViewHolder>(PeersCall
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
+
         with(holder.binding) {
             Glide.with(root)
                 .load(item.avatarfull)
@@ -46,18 +47,23 @@ class PeersAdapter : ListAdapter<PeersResult, PeersAdapter.ViewHolder>(PeersCall
                 .into(ivPeerImg)
             tvPeerName.text = item.personaname
             tvPeerCount.text = item.withGames.toString()
-            val winrate = item.withWin!!.toDouble() / item.withGames!! * 100
-            tvPeerWinrate.text =
-                "${String.format("%.2f", winrate)}%"
-            tvPeerWinrate.setTextColor(
-                when {
-                    winrate > 55 -> root.context.getColor(R.color.green)
-                    winrate < 45 -> root.context.getColor(R.color.red)
-                    else -> root.context.getColor(R.color.gray)
-                }
-            )
-            val date = Datetime.getDateTime(item.lastPlayed!!)
-            tvPeerLastDate.text = root.context.getString(R.string.last_match_time, date)
+            if (item.withWin != null && item.withGames != null) {
+                val winrate = item.withWin!!.toDouble() / item.withGames!! * 100
+                tvPeerWinrate.text =
+                    "${String.format("%.2f", winrate)}%"
+                tvPeerWinrate.setTextColor(
+                    when {
+                        winrate > 55 -> root.context.getColor(R.color.green)
+                        winrate < 45 -> root.context.getColor(R.color.red)
+                        else -> root.context.getColor(R.color.gray)
+                    }
+                )
+            }
+            item.lastPlayed?.let {
+                val date = Datetime.getDateTime(it)
+                tvPeerLastDate.text = root.context.getString(R.string.last_match_time, date)
+            }
+
             root.setOnClickListener {
                 onItemClickedListener?.invoke(item)
             }

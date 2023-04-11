@@ -32,11 +32,12 @@ class MatchStatsPlayerAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
+
         with(holder.binding) {
             tvMatchStatsGold.text = item.totalGold.toString()
             tvMatchStatsLasthits.text = item.lastHits.toString()
             tvMatchStatsDenies.text = item.denies.toString()
-            tvMatchStatsGpm.text = item.goldPerMin!!.toInt().toString()
+            item.goldPerMin?.let { tvMatchStatsGpm.text = it.toString() }
             tvMatchStatsXpm.text = item.xpPerMin.toString()
             tvMatchStatsDmg.text = item.heroDamage.toString()
             tvMatchStatsDmgTowers.text = item.towerDamage.toString()
