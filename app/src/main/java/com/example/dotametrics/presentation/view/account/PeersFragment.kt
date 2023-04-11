@@ -45,7 +45,7 @@ class PeersFragment : Fragment() {
     }
 
     private fun loadData() {
-        viewModel.loadPeers()
+        if (viewModel.peers.value == null) viewModel.loadPeers()
     }
 
     private fun initRecyclerView() = with(binding) {

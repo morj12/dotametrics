@@ -64,49 +64,51 @@ class MatchSkillsPlayerAdapter(private val activity: AppCompatActivity) :
             for (i in 0..1) {
                 val tableRow = TableRow(root.context)
                 for (j in 0 until ITEMS_PER_ROW) {
-                    if (skillCount < item.abilityUpgradesArr.size) {
-                        val abilityId = item.abilityUpgradesArr[skillCount]
-                        val abilityName = ConstData.abilityIds[abilityId.toString()]
-                        var ability: AbilityResult? = null
-                        var type: String? = null
-                        abilityName?.let {
-                            ability = ConstData.abilities[it]
-                            type = when {
-                                abilityName.contains("attributes") -> "attributes"
-                                abilityName.contains("special_bonus") -> "talent"
-                                else -> "ability"
-                            }
-                        }
-                        ability?.let {
-                            val cell =
-                                if (type == "talent" || type == "attributes") TextView(root.context)
-                                else ImageView(root.context)
-
-                            val typedSize = TypedValue.applyDimension(
-                                TypedValue.COMPLEX_UNIT_DIP,
-                                cellSize,
-                                activity.resources.displayMetrics
-                            ).toInt()
-                            cell.layoutParams = TableRow.LayoutParams(typedSize, typedSize)
-
-                            if (cell is TextView) {
-                                if (type == "talent") {
-                                    cell.text = ability!!.dname
-                                    cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6f)
-                                    cell.setBackgroundResource(R.drawable.talent)
-                                    cell.textAlignment = TEXT_ALIGNMENT_CENTER
-                                } else {
-                                    cell.setBackgroundResource(R.drawable.attr)
+                    if (item.abilityUpgradesArr != null) {
+                        if (skillCount < item.abilityUpgradesArr.size) {
+                            val abilityId = item.abilityUpgradesArr[skillCount]
+                            val abilityName = ConstData.abilityIds[abilityId.toString()]
+                            var ability: AbilityResult? = null
+                            var type: String? = null
+                            abilityName?.let {
+                                ability = ConstData.abilities[it]
+                                type = when {
+                                    abilityName.contains("attributes") -> "attributes"
+                                    abilityName.contains("special_bonus") -> "talent"
+                                    else -> "ability"
                                 }
-                            } else if (cell is ImageView) {
-                                Glide.with(root)
-                                    .load("${URL}${ability!!.img}")
-                                    .apply(GlideRequestOptions.requestOptions())
-                                    .into(cell)
                             }
-                            tableRow.addView(cell)
+                            ability?.let {
+                                val cell =
+                                    if (type == "talent" || type == "attributes") TextView(root.context)
+                                    else ImageView(root.context)
+
+                                val typedSize = TypedValue.applyDimension(
+                                    TypedValue.COMPLEX_UNIT_DIP,
+                                    cellSize,
+                                    activity.resources.displayMetrics
+                                ).toInt()
+                                cell.layoutParams = TableRow.LayoutParams(typedSize, typedSize)
+
+                                if (cell is TextView) {
+                                    if (type == "talent") {
+                                        cell.text = ability!!.dname
+                                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6f)
+                                        cell.setBackgroundResource(R.drawable.talent)
+                                        cell.textAlignment = TEXT_ALIGNMENT_CENTER
+                                    } else {
+                                        cell.setBackgroundResource(R.drawable.attr)
+                                    }
+                                } else if (cell is ImageView) {
+                                    Glide.with(root)
+                                        .load("${URL}${ability!!.img}")
+                                        .apply(GlideRequestOptions.requestOptions())
+                                        .into(cell)
+                                }
+                                tableRow.addView(cell)
+                            }
+                            skillCount++
                         }
-                        skillCount++
                     }
                 }
                 tlSkills.addView(tableRow)

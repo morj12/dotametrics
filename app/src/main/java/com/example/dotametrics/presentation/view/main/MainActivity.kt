@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private fun initTabs() {
         val mainPagerAdapter = MainPagerAdapter(this, supportFragmentManager)
         binding.viewPagerMain.adapter = mainPagerAdapter
+        binding.viewPagerMain.offscreenPageLimit = 3
         binding.tabsMain.setupWithViewPager(binding.viewPagerMain)
     }
 

@@ -44,7 +44,7 @@ class TotalsFragment : Fragment() {
     }
 
     private fun loadData() {
-        viewModel.loadTotals()
+        if (viewModel.totals.value == null) viewModel.loadTotals()
     }
 
     private fun initRecyclerView() = with(binding) {

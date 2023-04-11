@@ -2,6 +2,7 @@ package com.example.dotametrics.presentation.view.match
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.example.dotametrics.R
 import com.example.dotametrics.databinding.ActivityMatchBinding
@@ -47,7 +48,7 @@ class MatchActivity : AppCompatActivity() {
         val itemsLoaded = ConstData.items.isNotEmpty()
 
         if (regionsLoaded && itemsLoaded) {
-            viewModel.loadMatch(id.toString())
+            if (viewModel.result.value == null) viewModel.loadMatch()
         } else {
             if (!regionsLoaded) viewModel.loadRegions()
             if (!itemsLoaded) viewModel.loadItems()
@@ -57,6 +58,7 @@ class MatchActivity : AppCompatActivity() {
     private fun initTabs() {
         val sectionsPagerAdapter = MatchSectionsPagerAdapter(this, supportFragmentManager)
         binding.matchViewPager.adapter = sectionsPagerAdapter
+        binding.matchViewPager.offscreenPageLimit = 3
         binding.matchTabs.setupWithViewPager(binding.matchViewPager)
     }
 

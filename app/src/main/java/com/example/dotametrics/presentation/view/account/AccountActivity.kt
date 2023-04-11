@@ -39,7 +39,7 @@ class AccountActivity : AppCompatActivity() {
         val id = intent.getLongExtra("id", 0L)
         if (id != 0L) {
             viewModel.userId = id.toString()
-            viewModel.loadUser()
+            if (viewModel.result.value == null && viewModel.wl.value == null) viewModel.loadUser()
             binding.profileImage.startLoading(binding.pbProfileImage)
             binding.tvAccountLosesNumber.startLoading(binding.pbTvAccountLoses)
             viewModel.checkFavorite(id)
@@ -50,6 +50,7 @@ class AccountActivity : AppCompatActivity() {
     private fun initTabs() {
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         binding.viewPager.adapter = sectionsPagerAdapter
+        binding.viewPager.offscreenPageLimit = 3
         binding.tabs.setupWithViewPager(binding.viewPager)
     }
 

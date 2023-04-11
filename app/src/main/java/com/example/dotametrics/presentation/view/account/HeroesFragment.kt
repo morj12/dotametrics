@@ -44,9 +44,7 @@ class HeroesFragment : Fragment() {
     }
 
     private fun loadData() {
-        if (ConstData.heroes.isNotEmpty())
-            viewModel.loadPlayerHeroesResults()
-        else viewModel.loadHeroes()
+        if (viewModel.heroes.value == null) viewModel.loadPlayerHeroesResults()
     }
 
     private fun initRecyclerView() = with(binding) {

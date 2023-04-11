@@ -56,7 +56,8 @@ class MatchesFragment : Fragment() {
         val lobbiesLoaded = ConstData.lobbies.isNotEmpty()
 
         if (heroesLoaded && lobbiesLoaded) {
-            viewModel.loadMatches(::observeMatches)
+            if (viewModel.matches.value == null) viewModel.loadMatches(::observeMatches)
+            else observeMatches()
         } else {
             if (!heroesLoaded) viewModel.loadHeroes()
             if (!lobbiesLoaded) viewModel.loadLobbyTypes()
