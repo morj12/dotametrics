@@ -85,7 +85,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_match_skills_hero_title_dire" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rc_match_overview_dire"
+            android:id="@+id/rc_match_skills_dire"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"

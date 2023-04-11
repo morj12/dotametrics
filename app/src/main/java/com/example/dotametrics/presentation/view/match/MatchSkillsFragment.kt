@@ -39,7 +39,7 @@ class MatchSkillsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rcMatchSkillsRadiant.startLoading(binding.pbRcMatchSkillsRadiant)
-        binding.pbRcMatchSkillsDire.startLoading(binding.pbRcMatchSkillsDire)
+        binding.rcMatchSkillsDire.startLoading(binding.pbRcMatchSkillsDire)
         initRecyclerView()
         observe()
     }
@@ -55,7 +55,7 @@ class MatchSkillsFragment : Fragment() {
                 direAdapter.submitList(match.players.sortedBy { it.playerSlot }
                     .filter { player -> player.playerSlot!! >= 100 })
                 binding.rcMatchSkillsRadiant.stopLoading(binding.pbRcMatchSkillsRadiant)
-                binding.pbRcMatchSkillsDire.stopLoading(binding.pbRcMatchSkillsDire)
+                binding.rcMatchSkillsDire.stopLoading(binding.pbRcMatchSkillsDire)
             }
         } else {
             if (!abilityIdsLoaded) viewModel.loadAbilityIds()
@@ -69,8 +69,8 @@ class MatchSkillsFragment : Fragment() {
         rcMatchSkillsRadiant.adapter = radiantAdapter
 
         direAdapter = MatchSkillsPlayerAdapter(requireActivity() as AppCompatActivity)
-        rcMatchOverviewDire.layoutManager = LinearLayoutManager(activity)
-        rcMatchOverviewDire.adapter = direAdapter
+        rcMatchSkillsDire.layoutManager = LinearLayoutManager(activity)
+        rcMatchSkillsDire.adapter = direAdapter
     }
 
     private fun observe() {
