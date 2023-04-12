@@ -27,7 +27,12 @@ interface DotaService {
     fun getPlayersResults(@Path("id") id: String): Call<PlayersResult>
 
     @GET("players/{id}/wl")
-    fun getWLResults(@Path("id") id: String): Call<WLResult>
+    fun getWLResults(
+        @Path("id") id: String,
+        @Query("limit") limit: Int?,
+        @Query("lobby_type") lobbyType: Int?,
+        @Query("hero_id") heroId: Int?
+    ): Call<WLResult>
 
     @GET("players/{id}/totals")
     fun getTotals(@Path("id") id: String): Call<List<TotalsResult>>
@@ -45,7 +50,9 @@ interface DotaService {
     fun getMatches(
         @Path("id") id: String,
         @Query("limit") limit: Int,
-        @Query("offset") offset: Long
+        @Query("offset") offset: Long,
+        @Query("lobby_type") lobbyType: Int?,
+        @Query("hero_id") heroId: Int?
     ): Call<List<MatchesResult>>
 
     @GET("constants/lobby_type")

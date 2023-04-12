@@ -42,6 +42,17 @@
         app:strokeWidth="2dp" />
 
     <TextView
+        android:id="@+id/tv_account_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="298003403"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/tv_account_name"
+        app:layout_constraintStart_toStartOf="@id/tv_account_name"
+        app:layout_constraintEnd_toEndOf="@id/tv_account_name"/>
+
+    <TextView
         android:id="@+id/tv_account_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,6 +65,19 @@
         app:layout_constraintStart_toEndOf="@+id/profile_image"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Account name" />
+
+    <TextView
+        android:id="@+id/tv_last_games"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/last_games_info"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/gray"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@+id/tv_account_id"
+        app:layout_constraintStart_toStartOf="@+id/tv_account_id"
+        app:layout_constraintEnd_toEndOf="@+id/tv_account_id"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
@@ -82,6 +106,16 @@
         app:layout_constraintStart_toStartOf="@+id/iv_account_rank"
         app:layout_constraintTop_toTopOf="@+id/tv_account_name"
         tools:srcCompat="@drawable/ic_fav" />
+
+    <ImageView
+        android:id="@+id/iv_account_flag"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        tools:src="@drawable/ic_person"
+        app:layout_constraintTop_toBottomOf="@id/iv_account_fav"
+        app:layout_constraintBottom_toTopOf="@id/iv_account_rank"
+        app:layout_constraintStart_toStartOf="@id/iv_account_rank"
+        app:layout_constraintEnd_toEndOf="@id/iv_account_rank"/>
 
     <ImageView
         android:id="@+id/iv_account_rank"
@@ -139,7 +173,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@id/tv_account_wr"
         app:layout_constraintStart_toEndOf="@id/tv_account_wins"
-        app:layout_constraintTop_toBottomOf="@+id/tv_account_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_last_games"
         tools:layout_editor_absoluteX="296dp" />
 
     <TextView

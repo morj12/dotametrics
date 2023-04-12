@@ -7,6 +7,134 @@
     android:layout_height="wrap_content"
     tools:context=".presentation.view.account.MatchesFragment">
 
+    <Spinner
+        android:id="@+id/spinner_lobby"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/bt_apply_filter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/spinner_item" />
+
+    <AutoCompleteTextView
+        android:id="@+id/actv_hero_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:hint="@string/hero_name"
+        app:layout_constraintEnd_toStartOf="@+id/iv_clear_hero"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner_lobby"
+        tools:layout_editor_absoluteY="36dp" />
+
+    <ImageView
+        android:id="@+id/iv_clear_hero"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_clear"
+        app:layout_constraintBottom_toBottomOf="@id/actv_hero_id"
+        app:layout_constraintEnd_toStartOf="@+id/bt_apply_filter"
+        app:layout_constraintTop_toTopOf="@id/actv_hero_id" />
+
+    <Button
+        android:id="@+id/bt_apply_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:backgroundTint="@color/purple_700"
+        android:text="@string/apply_filter"
+        android:textColor="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_results"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/actv_hero_id">
+
+        <TextView
+            android:id="@+id/tv_account_wins_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="@string/wins"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_account_loses_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loses"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="296dp" />
+
+        <TextView
+            android:id="@+id/tv_account_wr_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="@string/winrate"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_account_wins_number_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tv_account_wins_filter"
+            app:layout_constraintStart_toStartOf="@+id/tv_account_wins_filter"
+            app:layout_constraintTop_toBottomOf="@+id/tv_account_wins_filter"
+            tools:text="60" />
+
+        <TextView
+            android:id="@+id/tv_account_loses_number_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:textColor="@color/red"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tv_account_loses_filter"
+            app:layout_constraintStart_toStartOf="@+id/tv_account_loses_filter"
+            app:layout_constraintTop_toBottomOf="@+id/tv_account_loses_filter"
+            tools:text="40" />
+
+        <TextView
+            android:id="@+id/tv_account_winrate_number_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tv_account_wr_filter"
+            app:layout_constraintStart_toStartOf="@+id/tv_account_wr_filter"
+            app:layout_constraintTop_toBottomOf="@+id/tv_account_wr_filter"
+            tools:text="60%" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <TextView
         android:id="@+id/tv_match_hero"
         android:layout_width="wrap_content"
@@ -17,7 +145,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/layout_results" />
 
     <TextView
         android:id="@+id/tv_match_result"
@@ -29,7 +157,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/tv_match_hero"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/tv_match_hero" />
 
     <TextView
         android:id="@+id/tv_match_lobby"
@@ -41,7 +169,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/tv_match_hero" />
 
     <TextView
         android:id="@+id/tv_match_rank"
@@ -54,7 +182,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/tv_match_hero" />
 
     <TextView
         android:id="@+id/tv_match_kda"
@@ -66,7 +194,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/tv_match_hero" />
 
     <ProgressBar
         android:id="@+id/pb_rc_matches"

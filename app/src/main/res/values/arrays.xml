@@ -14,4 +14,12 @@
         <item>tower_damage</item>
         <item>hero_healing</item>
     </string-array>
+    <string-array name="lobbies_array">
+        <item>lobby_type_normal</item>
+        <item>lobby_type_tournament</item>
+        <item>lobby_type_ranked</item>
+        <item>lobby_type_1v1_mid</item>
+        <item>lobby_type_battle_cup</item>
+        <item>lobby_type_event</item>
+    </string-array>
 </resources>

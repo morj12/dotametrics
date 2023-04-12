@@ -33,6 +33,8 @@ class AccountViewModel(private val app: App) : ViewModel() {
     private var loadingLobbies = false
 
     var userId: String = ""
+    var lobbyType: Int? = null
+    var heroId: Int? = null
 
     private val _result = MutableLiveData<PlayersResult>()
     val result: LiveData<PlayersResult>
@@ -41,6 +43,10 @@ class AccountViewModel(private val app: App) : ViewModel() {
     private val _wl = MutableLiveData<WLResult>()
     val wl: LiveData<WLResult>
         get() = _wl
+
+    private val _filteredWl = MutableLiveData<WLResult>()
+    val filteredWl: LiveData<WLResult>
+        get() = _filteredWl
 
     private val _totals = MutableLiveData<List<TotalsResult>>()
     val totals: LiveData<List<TotalsResult>>
@@ -95,7 +101,7 @@ class AccountViewModel(private val app: App) : ViewModel() {
                     _error.value = t.message.toString()
                 }
             })
-            retrofit.getWLResults(userId).enqueue(object : Callback<WLResult> {
+            retrofit.getWLResults(userId, 20, null, null).enqueue(object : Callback<WLResult> {
                 override fun onResponse(call: Call<WLResult>, response: Response<WLResult>) {
                     Log.d("RETROFIT_CALL", "AccountViewModel: loadUser getWLResults")
                     _wl.value = response.body()
@@ -106,6 +112,23 @@ class AccountViewModel(private val app: App) : ViewModel() {
                 }
 
             })
+        }
+    }
+
+    fun loadFilteredWLResults() {
+        if (userId.isNotBlank()) {
+            retrofit.getWLResults(userId, null, lobbyType, heroId)
+                .enqueue(object : Callback<WLResult> {
+                    override fun onResponse(call: Call<WLResult>, response: Response<WLResult>) {
+                        Log.d("RETROFIT_CALL", "AccountViewModel: loadFilteredWLResults")
+                        _filteredWl.value = response.body()
+                    }
+
+                    override fun onFailure(call: Call<WLResult>, t: Throwable) {
+                        _error.value = t.message.toString()
+                    }
+
+                })
         }
     }
 
@@ -200,7 +223,7 @@ class AccountViewModel(private val app: App) : ViewModel() {
 
     fun loadMatches(callback: () -> Unit) {
         if (userId.isNotBlank()) {
-            val factory = MatchDataSourceFactory(userId, errorListener)
+            val factory = MatchDataSourceFactory(userId, lobbyType, heroId, errorListener)
             matchDataSource = factory.mutableLiveData
             val config = PagedList.Config.Builder()
                 .setEnablePlaceholders(true)
@@ -231,7 +254,9 @@ class AccountViewModel(private val app: App) : ViewModel() {
                     Log.d("RETROFIT_CALL", "AccountViewModel: loadLobbyTypes")
                     val body = response.body()
                     if (body != null) {
-                        ConstData.lobbies = body.values.toList()
+                        val usefulLobbies = app.resources.getStringArray(R.array.lobbies_array)
+                        ConstData.lobbies =
+                            body.values.toList().filter { usefulLobbies.contains(it.name) }
                         _constLobbyTypes.value = Unit
                         loadingLobbies = false
                     }

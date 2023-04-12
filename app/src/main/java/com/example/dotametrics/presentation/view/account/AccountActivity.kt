@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.data.db.dbmodel.PlayerDbModel
@@ -11,7 +12,6 @@ import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.databinding.ActivityAccountBinding
 import com.example.dotametrics.presentation.adapter.SectionsPagerAdapter
-import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.GlideRequestOptions.requestOptions
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
@@ -120,6 +120,11 @@ class AccountActivity : AppCompatActivity() {
             .into(profileImage)
         tvAccountName.text = player.profile?.personaname
         setRank(player)
+        tvAccountId.text = player.profile?.accountId.toString()
+        Glide.with(this@AccountActivity)
+            .load("https://flagcdn.com/w80/${player.profile?.loccountrycode?.lowercase()}.png")
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(ivAccountFlag)
     }
 
 

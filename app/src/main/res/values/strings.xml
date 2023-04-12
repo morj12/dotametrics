@@ -75,5 +75,9 @@
 
     <string name="tab_main_1">Search</string>
     <string name="tab_main_2">Favorites</string>
+    <string name="any_lobby">Lobby</string>
+    <string name="last_games_info">Last 20 games info</string>
+    <string name="hero_name">Hero name</string>
+    <string name="apply_filter">Apply filter</string>
 
 </resources>

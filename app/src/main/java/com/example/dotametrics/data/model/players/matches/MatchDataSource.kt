@@ -7,13 +7,18 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MatchDataSource(private val id: String, private val errorListener: (String) -> Unit) :
+class MatchDataSource(
+    private val id: String,
+    private val lobbyType: Int?,
+    private val heroId: Int?,
+    private val errorListener: (String) -> Unit
+) :
     PageKeyedDataSource<Long, MatchesResult>() {
 
     private val retrofit = RetrofitInstance.getService()
 
     override fun loadAfter(params: LoadParams<Long>, callback: LoadCallback<Long, MatchesResult>) {
-        retrofit.getMatches(id, PAGE_SIZE, params.key)
+        retrofit.getMatches(id, PAGE_SIZE, params.key, lobbyType, heroId)
             .enqueue(object : Callback<List<MatchesResult>> {
                 override fun onResponse(
                     call: Call<List<MatchesResult>>,
@@ -40,7 +45,7 @@ class MatchDataSource(private val id: String, private val errorListener: (String
         params: LoadInitialParams<Long>,
         callback: LoadInitialCallback<Long, MatchesResult>
     ) {
-        retrofit.getMatches(id, PAGE_SIZE, 0).enqueue(object : Callback<List<MatchesResult>> {
+        retrofit.getMatches(id, PAGE_SIZE, 0, lobbyType, heroId).enqueue(object : Callback<List<MatchesResult>> {
             override fun onResponse(
                 call: Call<List<MatchesResult>>,
                 response: Response<List<MatchesResult>>
