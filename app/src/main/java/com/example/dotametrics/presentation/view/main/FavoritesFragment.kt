@@ -1,17 +1,20 @@
 package com.example.dotametrics.presentation.view.main
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
 import com.example.dotametrics.data.db.dbmodel.PlayerDbModel
 import com.example.dotametrics.databinding.FragmentFavoritesBinding
 import com.example.dotametrics.presentation.adapter.FavoriteAdapter
+import com.example.dotametrics.presentation.adapter.MatchSkillsPlayerAdapter
 import com.example.dotametrics.presentation.view.account.AccountActivity
 
 class FavoritesFragment : Fragment() {
@@ -48,7 +51,13 @@ class FavoritesFragment : Fragment() {
 
     private fun initRecyclerView() {
         adapter = FavoriteAdapter()
-        binding.rcFav.layoutManager = LinearLayoutManager(requireActivity())
+        val orientation: Int = binding.root.resources.configuration.orientation
+        val layoutManager = if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            GridLayoutManager(requireActivity(), 2)
+        } else {
+            LinearLayoutManager(requireActivity())
+        }
+        binding.rcFav.layoutManager = layoutManager
         binding.rcFav.adapter = adapter
         adapter.onItemClickedListener = openAccount
     }

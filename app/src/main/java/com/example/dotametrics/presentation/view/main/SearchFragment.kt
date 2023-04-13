@@ -1,6 +1,7 @@
 package com.example.dotametrics.presentation.view.main
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
 import com.example.dotametrics.data.model.search.SearchResult
@@ -52,7 +54,13 @@ class SearchFragment : Fragment() {
 
     private fun initRecyclerView() {
         adapter = SearchResultAdapter()
-        binding.rcMain.layoutManager = LinearLayoutManager(requireActivity())
+        val orientation: Int = binding.root.resources.configuration.orientation
+        val layoutManager = if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            GridLayoutManager(requireActivity(), 2)
+        } else {
+            LinearLayoutManager(requireActivity())
+        }
+        binding.rcMain.layoutManager = layoutManager
         binding.rcMain.adapter = adapter
         adapter.onItemClickedListener = openAccount
     }
