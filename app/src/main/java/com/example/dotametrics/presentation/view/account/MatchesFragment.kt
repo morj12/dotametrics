@@ -2,12 +2,9 @@ package com.example.dotametrics.presentation.view.account
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -75,7 +72,7 @@ class MatchesFragment : Fragment() {
         }
     }
 
-    private fun initSpinner() {
+    private fun initLobbyFilter() {
         val data = mutableListOf(getString(R.string.any_lobby))
         data.addAll(ConstData.lobbies.map {
             requireContext().getString(
@@ -92,13 +89,14 @@ class MatchesFragment : Fragment() {
     }
 
     private fun initHeroFilter() {
-        val data = ConstData.heroes.map { it.localizedName }
+        val data = mutableListOf("Hero")
+        data.addAll(ConstData.heroes.map { it.localizedName!! })
         val adapter = ArrayAdapter(
             requireActivity(),
             R.layout.spinner_item,
             data
         )
-        binding.actvHeroId.setAdapter(adapter)
+        binding.spinnerHeroId.adapter = adapter
     }
 
     private fun initRecyclerView() = with(binding) {
@@ -113,13 +111,10 @@ class MatchesFragment : Fragment() {
             val position = binding.spinnerLobby.selectedItemPosition
             val lobbyType = if (position == 0) null else ConstData.lobbies[position - 1].id
             viewModel.lobbyType = lobbyType
-            viewModel.heroId =
-                ConstData.heroes.firstOrNull { it.localizedName == binding.actvHeroId.text.toString() }?.id
-            if (viewModel.heroId == null) binding.actvHeroId.setText("")
+            val heroPosition = binding.spinnerHeroId.selectedItemPosition
+            val heroId = if (heroPosition == 0) null else ConstData.heroes[heroPosition - 1].id
+            viewModel.heroId = heroId
             loadData(true)
-        }
-        binding.ivClearHero.setOnClickListener {
-            binding.actvHeroId.setText("")
         }
     }
 
@@ -130,7 +125,7 @@ class MatchesFragment : Fragment() {
         }
         viewModel.constLobbyTypes.observe(viewLifecycleOwner) {
             loadData()
-            initSpinner()
+            initLobbyFilter()
         }
         viewModel.filteredWl.observe(viewLifecycleOwner) { player ->
             with(binding) {

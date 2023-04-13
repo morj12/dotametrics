@@ -12,23 +12,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/bt_apply_filter"
+        app:layout_constraintBottom_toBottomOf="@id/spinner_hero_id"
+        app:layout_constraintEnd_toStartOf="@id/spinner_hero_id"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/spinner_hero_id"
         tools:listitem="@layout/spinner_item" />
 
     <Spinner
         android:id="@+id/spinner_hero_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginHorizontal="12dp"
+        android:hint="@string/hero_name"
+        app:layout_constraintBottom_toBottomOf="@id/bt_apply_filter"
         app:layout_constraintEnd_toStartOf="@id/bt_apply_filter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner_lobby"
+        app:layout_constraintStart_toEndOf="@id/spinner_lobby"
+        app:layout_constraintTop_toTopOf="@id/bt_apply_filter"
+        tools:layout_editor_absoluteY="36dp"
         tools:listitem="@layout/spinner_item" />
 
     <Button

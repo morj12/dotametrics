@@ -187,7 +187,7 @@ class AccountViewModel(private val app: App) : ViewModel() {
                     Log.d("RETROFIT_CALL", "AccountViewModel: loadHeroes")
                     val body = response.body()
                     if (body != null) {
-                        ConstData.heroes = body.values.toList()
+                        ConstData.heroes = body.values.toList().sortedBy { it.localizedName }
                         _constHeroes.value = Unit
                         loadingHeroes = false
                     }
