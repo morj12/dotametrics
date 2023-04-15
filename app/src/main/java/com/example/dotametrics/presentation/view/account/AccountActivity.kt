@@ -1,6 +1,5 @@
 package com.example.dotametrics.presentation.view.account
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
@@ -12,12 +11,13 @@ import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.databinding.ActivityAccountBinding
 import com.example.dotametrics.presentation.adapter.SectionsPagerAdapter
+import com.example.dotametrics.presentation.view.DrawerActivity
 import com.example.dotametrics.util.GlideRequestOptions.requestOptions
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
 
-class AccountActivity : AppCompatActivity() {
+class AccountActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityAccountBinding
 
@@ -31,6 +31,8 @@ class AccountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        allocateActivityTitle(getString(R.string.players))
 
         initTabs()
         initConstants()

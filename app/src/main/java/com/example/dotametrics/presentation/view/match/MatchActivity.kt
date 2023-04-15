@@ -1,16 +1,15 @@
 package com.example.dotametrics.presentation.view.match
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.example.dotametrics.R
 import com.example.dotametrics.databinding.ActivityMatchBinding
 import com.example.dotametrics.presentation.adapter.MatchSectionsPagerAdapter
+import com.example.dotametrics.presentation.view.DrawerActivity
 import com.example.dotametrics.util.*
 import com.google.android.material.snackbar.Snackbar
 
-class MatchActivity : AppCompatActivity() {
+class MatchActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityMatchBinding
 
@@ -24,6 +23,8 @@ class MatchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMatchBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        allocateActivityTitle(getString(R.string.players))
 
         initTabs()
 

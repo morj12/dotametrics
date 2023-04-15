@@ -79,5 +79,11 @@
     <string name="last_games_info">Last 20 games info</string>
     <string name="hero_name">Hero name</string>
     <string name="apply_filter">Apply filter</string>
+    <string name="players">Players</string>
+    <string name="patches">Patches</string>
+    <string name="teams">Teams</string>
+    <string name="heroes">Heroes</string>
+    <string name="drawer_open">Drawer open</string>
+    <string name="drawer_closed">Drawer closed</string>
 
 </resources>
