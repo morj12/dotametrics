@@ -4,6 +4,8 @@ import com.example.dotametrics.data.model.constants.abilities.AbilityResult
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.constants.items.ItemResult
 import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
+import com.example.dotametrics.data.model.constants.patch.PatchResult
+import com.example.dotametrics.data.model.constants.patch.PatchNotesResult
 import com.example.dotametrics.data.model.matches.MatchDataResult
 import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
@@ -72,5 +74,11 @@ interface DotaService {
 
     @GET("constants/abilities")
     fun getAbilities(): Call<Map<String, AbilityResult>>
+
+    @GET("constants/patch")
+    fun getPatches(): Call<List<PatchResult>>
+
+    @GET("constants/patchnotes")
+    fun getPatchNotes(): Call<Map<String, PatchNotesResult>>
 
 }

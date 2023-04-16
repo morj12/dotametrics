@@ -117,7 +117,7 @@ class MatchViewModel(val app: Application) : AndroidViewModel(app) {
                     Log.d("RETROFIT_CALL", "MatchViewModel: loadItems")
                     val body = response.body()
                     if (body != null) {
-                        ConstData.items = body.values.toList()
+                        ConstData.items = body
                         _constItems.value = Unit
                         loadingItems = false
                     }

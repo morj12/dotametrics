@@ -85,5 +85,17 @@
     <string name="heroes">Heroes</string>
     <string name="drawer_open">Drawer open</string>
     <string name="drawer_closed">Drawer closed</string>
+    <string name="patch_series">Series: %1$s</string>
+    <string name="patch_date">First patch date: %1$s</string>
+
+    <string name="no_patch_info">No info for this patch series</string>
+    <string name="patch_changes">Changes:</string>
+
+    <string name="patch_general_count">General: %1$s</string>
+    <string name="patch_hero_count">Heroes: %1$s</string>
+    <string name="patch_item_count">Items: %1$s</string>
+    <string name="patch_general">General</string>
+    <string name="patchnotes_heroes">Heroes</string>
+    <string name="patchnotes_items">Items</string>
 
 </resources>
