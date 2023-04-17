@@ -1,5 +1,6 @@
 package com.example.dotametrics.presentation.view.teamsearch
 
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,9 +12,11 @@ import com.example.dotametrics.App
 import com.example.dotametrics.data.model.teams.TeamsResult
 import com.example.dotametrics.databinding.ActivityTeamSearchBinding
 import com.example.dotametrics.presentation.adapter.TeamSearchAdapter
+import com.example.dotametrics.presentation.view.DrawerActivity
+import com.example.dotametrics.presentation.view.team.TeamActivity
 import com.google.android.material.snackbar.Snackbar
 
-class TeamSearchActivity : AppCompatActivity() {
+class TeamSearchActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityTeamSearchBinding
 
@@ -24,7 +27,9 @@ class TeamSearchActivity : AppCompatActivity() {
     private lateinit var adapter: TeamSearchAdapter
 
     private val openTeam: (TeamsResult) -> Unit = {
-
+        val intent = Intent(this, TeamActivity::class.java)
+        intent.putExtra("team", it)
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

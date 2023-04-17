@@ -1,7 +1,10 @@
 package com.example.dotametrics.data.model.teams
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class TeamsResult(
     @SerializedName("team_id") var teamId: Int? = null,
     @SerializedName("rating") var rating: Double? = null,
@@ -11,4 +14,4 @@ data class TeamsResult(
     @SerializedName("name") var name: String? = null,
     @SerializedName("tag") var tag: String? = null,
     @SerializedName("logo_url") var logoUrl: String? = null
-)
+) : Parcelable
