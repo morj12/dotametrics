@@ -66,49 +66,49 @@ class MatchOverviewPlayerAdapter :
 
     private fun setItems(player: Players, binding: MatchOverviewItemBinding) {
         var item: ItemResult
-        if (player.item0 != 0) {
+        if (player.item0 != null && player.item0 != 0) {
             item = ConstData.items.values.first { it.id == player.item0 }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
                 .apply(requestOptions())
                 .into(binding.tvMatchOverviewItem0)
         }
-        if (player.item1 != 0) {
+        if (player.item1 != null && player.item1 != 0) {
             item = ConstData.items.values.first { it.id == player.item1 }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
                 .apply(requestOptions())
                 .into(binding.tvMatchOverviewItem1)
         }
-        if (player.item2 != 0) {
+        if (player.item2 != null && player.item2 != 0) {
             item = ConstData.items.values.first { it.id == player.item2 }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
                 .apply(requestOptions())
                 .into(binding.tvMatchOverviewItem2)
         }
-        if (player.item3 != 0) {
+        if (player.item3 != null && player.item3 != 0) {
             item = ConstData.items.values.first { it.id == player.item3 }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
                 .apply(requestOptions())
                 .into(binding.tvMatchOverviewItem3)
         }
-        if (player.item4 != 0) {
+        if (player.item4 != null && player.item4 != 0) {
             item = ConstData.items.values.first { it.id == player.item4 }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
                 .apply(requestOptions())
                 .into(binding.tvMatchOverviewItem4)
         }
-        if (player.item5 != 0) {
+        if (player.item5 != null && player.item5 != 0) {
             item = ConstData.items.values.first { it.id == player.item5 }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
                 .apply(requestOptions())
                 .into(binding.tvMatchOverviewItem5)
         }
-        if (player.itemNeutral != 0) {
+        if (player.itemNeutral != null && player.itemNeutral != 0) {
             item = ConstData.items.values.first { it.id == player.itemNeutral }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
