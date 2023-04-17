@@ -6,6 +6,7 @@ import com.example.dotametrics.data.model.constants.items.ItemResult
 import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.data.model.constants.patch.PatchResult
 import com.example.dotametrics.data.model.constants.patch.PatchNotesResult
+import com.example.dotametrics.data.model.teams.TeamsResult
 
 object ConstData {
 
@@ -17,5 +18,6 @@ object ConstData {
     var abilities = mapOf<String, AbilityResult>()
     var patches = listOf<PatchResult>()
     var patchNotes = mapOf<String, PatchNotesResult>()
+    var teams = listOf<TeamsResult>()
 
 }

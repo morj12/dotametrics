@@ -14,6 +14,10 @@ import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.data.model.players.totals.TotalsResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.data.model.search.SearchResult
+import com.example.dotametrics.data.model.teams.TeamsResult
+import com.example.dotametrics.data.model.teams.heroes.TeamHeroesResult
+import com.example.dotametrics.data.model.teams.matches.TeamMatchesResult
+import com.example.dotametrics.data.model.teams.players.TeamPlayersResult
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -80,5 +84,17 @@ interface DotaService {
 
     @GET("constants/patchnotes")
     fun getPatchNotes(): Call<Map<String, PatchNotesResult>>
+
+    @GET("teams")
+    fun getTeams(): Call<List<TeamsResult>>
+
+    @GET("teams/{id}/players")
+    fun getTeamPlayers(@Path("id") id: String): Call<List<TeamPlayersResult>>
+
+    @GET("teams/{id}/matches")
+    fun getTeamMatches(@Path("id") id: String): Call<List<TeamMatchesResult>>
+
+    @GET("teams/{id}/heroes")
+    fun getTeamHeroes(@Path("id") id: String): Call<List<TeamHeroesResult>>
 
 }

@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.example.dotametrics.R
 import com.example.dotametrics.presentation.view.main.MainActivity
 import com.example.dotametrics.presentation.view.patch.PatchActivity
+import com.example.dotametrics.presentation.view.teamsearch.TeamSearchActivity
 import com.google.android.material.navigation.NavigationView
 
 open class DrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -51,7 +52,11 @@ open class DrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                 overridePendingTransition(0, 0)
             }
             R.id.nav_heroes -> {}
-            R.id.nav_teams -> {}
+            R.id.nav_teams -> {
+                val intent = Intent(this, TeamSearchActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(0, 0)
+            }
             R.id.nav_patches -> {
                 val intent = Intent(this, PatchActivity::class.java)
                 startActivity(intent)

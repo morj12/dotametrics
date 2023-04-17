@@ -98,4 +98,6 @@
     <string name="patchnotes_heroes">Heroes</string>
     <string name="patchnotes_items">Items</string>
 
+    <string name="team_rating">Rating: %1$s</string>
+
 </resources>
