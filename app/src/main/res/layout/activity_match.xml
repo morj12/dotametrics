@@ -108,6 +108,7 @@
         android:id="@+id/match_tabs"
         android:layout_width="match_parent"
         android:layout_height="32dp"
+        android:background="@color/purple_900"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_match" />

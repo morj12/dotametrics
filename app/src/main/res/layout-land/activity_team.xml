@@ -63,6 +63,7 @@
         android:id="@+id/tabs_team"
         android:layout_width="0dp"
         android:layout_height="32dp"
+        android:background="@color/purple_900"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/bkg_team"
         app:layout_constraintTop_toTopOf="parent" />
