@@ -5,8 +5,10 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.dotametrics.R
 import com.example.dotametrics.data.model.constants.abilities.AbilityResult
 import com.example.dotametrics.data.model.constants.items.ItemResult
+import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.data.model.matches.MatchDataResult
 import com.example.dotametrics.data.service.RetrofitInstance
 import com.example.dotametrics.util.ConstData
@@ -21,6 +23,7 @@ class MatchViewModel(val app: Application) : AndroidViewModel(app) {
     var loadingAbilityIds = false
     var loadingAbilities = false
     var loadingMatch = false
+    var loadingLobbies = false
 
     var matchId: String = ""
 
@@ -35,6 +38,10 @@ class MatchViewModel(val app: Application) : AndroidViewModel(app) {
     private val _constItems = MutableLiveData<Unit>()
     val constItems: LiveData<Unit>
         get() = _constItems
+
+    private val _constLobbyTypes = MutableLiveData<Unit>()
+    val constLobbyTypes: LiveData<Unit>
+        get() = _constLobbyTypes
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String>
@@ -98,6 +105,37 @@ class MatchViewModel(val app: Application) : AndroidViewModel(app) {
                     loadingRegions = false
                 }
 
+            })
+        }
+    }
+
+    fun loadLobbyTypes() {
+        if (loadingLobbies) return
+        if (ConstData.lobbies.isNotEmpty()) {
+            _constLobbyTypes.value = Unit
+            loadingLobbies = false
+        } else {
+            loadingLobbies = true
+            retrofit.getConstLobbyTypes().enqueue(object : Callback<Map<String, LobbyTypeResult>> {
+                override fun onResponse(
+                    call: Call<Map<String, LobbyTypeResult>>,
+                    response: Response<Map<String, LobbyTypeResult>>
+                ) {
+                    Log.d("RETROFIT_CALL", "MatchViewModel: loadLobbyTypes")
+                    val body = response.body()
+                    if (body != null) {
+                        val usefulLobbies = app.resources.getStringArray(R.array.lobbies_array)
+                        ConstData.lobbies =
+                            body.values.toList().filter { usefulLobbies.contains(it.name) }
+                        _constLobbyTypes.value = Unit
+                        loadingLobbies = false
+                    }
+                }
+
+                override fun onFailure(call: Call<Map<String, LobbyTypeResult>>, t: Throwable) {
+                    _error.value = t.message.toString()
+                    loadingLobbies = false
+                }
             })
         }
     }

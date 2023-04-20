@@ -47,17 +47,20 @@ class MatchActivity : DrawerActivity() {
         viewModel.loadItems()
         viewModel.loadAbilityIds()
         viewModel.loadAbilities()
+        viewModel.loadLobbyTypes()
     }
 
     private fun loadData() {
         val regionsLoaded = ConstData.regions.isNotEmpty()
         val itemsLoaded = ConstData.items.isNotEmpty()
+        val lobbiesLoaded = ConstData.lobbies.isNotEmpty()
 
-        if (regionsLoaded && itemsLoaded) {
+        if (regionsLoaded && itemsLoaded && lobbiesLoaded) {
             if (viewModel.result.value == null) viewModel.loadMatch()
         } else {
             if (!regionsLoaded) viewModel.loadRegions()
             if (!itemsLoaded) viewModel.loadItems()
+            if (!lobbiesLoaded) viewModel.loadLobbyTypes()
         }
     }
 
@@ -73,6 +76,9 @@ class MatchActivity : DrawerActivity() {
             loadData()
         }
         viewModel.constItems.observe(this@MatchActivity) {
+            loadData()
+        }
+        viewModel.constLobbyTypes.observe(this@MatchActivity) {
             loadData()
         }
         viewModel.result.observe(this@MatchActivity) {

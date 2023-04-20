@@ -45,12 +45,14 @@ class TeamMatchesAdapter :
                 .apply(requestOptions())
                 .into(ivTeamMatchesEnemy)
             item.duration?.let { tvTeamMatchesDuration.text = Datetime.getStringTime(it) }
-            tvTeamMatchesDireScore.text = item.direScore.toString()
-            tvTeamMatchesRadiantScore.text = item.radiantScore.toString()
             tvTeamMatchesLeague.text = item.leagueName
             tvTeamMatchesEnemyName.text = item.opposingTeamName
             tvTeamMatchesDate.text = item.startTime?.let { Datetime.getDateTime(it) }
             if (item.radiant != null && item.radiantWin != null) {
+                tvTeamMatchesScore.text = if (item.radiant!!) item.radiantScore.toString()
+                else item.direScore.toString()
+                tvTeamMatchesEnemyScore.text = if (item.radiant!!) item.direScore.toString()
+                else item.radiantScore.toString()
                 val result =
                     if (item.radiant!! && item.radiantWin!! || !item.radiant!! && !item.radiantWin!!)
                         root.context.getString(R.string.win)
