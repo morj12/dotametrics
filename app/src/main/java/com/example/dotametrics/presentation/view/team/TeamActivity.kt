@@ -23,8 +23,9 @@ class TeamActivity : DrawerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTeamBinding.inflate(layoutInflater)
-        allocateActivityTitle(getString(R.string.teams))
         setContentView(binding.root)
+
+        allocateActivityTitle(getString(R.string.teams))
 
         initTabs()
         val team = intent.getParcelableExtra<TeamsResult>("team")

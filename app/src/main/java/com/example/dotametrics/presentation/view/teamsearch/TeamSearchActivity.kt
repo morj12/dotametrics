@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
+import com.example.dotametrics.R
 import com.example.dotametrics.data.model.teams.TeamsResult
 import com.example.dotametrics.databinding.ActivityTeamSearchBinding
 import com.example.dotametrics.presentation.adapter.TeamSearchAdapter
@@ -36,6 +37,8 @@ class TeamSearchActivity : DrawerActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTeamSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        allocateActivityTitle(getString(R.string.teams))
 
         if (viewModel.teams.value == null) viewModel.loadTeams()
         initRecyclerView()

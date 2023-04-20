@@ -32,7 +32,12 @@ class AccountActivity : DrawerActivity() {
         binding = ActivityAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        allocateActivityTitle(getString(R.string.players))
+        val from = intent.getStringExtra("from")
+        if (from == "teams") {
+            allocateActivityTitle(getString(R.string.teams))
+        } else {
+            allocateActivityTitle(getString(R.string.players))
+        }
 
         initTabs()
         initConstants()

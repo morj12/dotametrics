@@ -102,7 +102,5 @@
     <string name="tab_team_1">Players</string>
     <string name="tab_team_2">Matches</string>
     <string name="tab_team_3">Heroes</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

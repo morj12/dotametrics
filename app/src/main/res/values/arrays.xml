@@ -21,5 +21,6 @@
         <item>lobby_type_1v1_mid</item>
         <item>lobby_type_battle_cup</item>
         <item>lobby_type_event</item>
+        <item>lobby_type_practice</item>
     </string-array>
 </resources>

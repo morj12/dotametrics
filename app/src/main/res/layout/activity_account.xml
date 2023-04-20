@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-        app:srcCompat="@drawable/ic_person"
+        app:srcCompat="@drawable/ic_placeholder"
         app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
 
@@ -111,7 +111,7 @@
         android:id="@+id/iv_account_flag"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        tools:src="@drawable/ic_person"
+        tools:src="@drawable/ic_placeholder"
         app:layout_constraintTop_toBottomOf="@id/iv_account_fav"
         app:layout_constraintBottom_toTopOf="@id/iv_account_rank"
         app:layout_constraintStart_toStartOf="@id/iv_account_rank"

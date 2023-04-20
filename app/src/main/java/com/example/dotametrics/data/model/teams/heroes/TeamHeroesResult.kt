@@ -2,7 +2,7 @@ package com.example.dotametrics.data.model.teams.heroes
 
 import com.google.gson.annotations.SerializedName
 
-class TeamHeroesResult(
+data class TeamHeroesResult(
     @SerializedName("hero_id") var heroId: Int? = null,
     @SerializedName("localized_name") var localizedName: String? = null,
     @SerializedName("games_played") var gamesPlayed: Int? = null,
