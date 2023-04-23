@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.dotametrics.R
+import com.example.dotametrics.presentation.view.herosearch.HeroSearchActivity
 import com.example.dotametrics.presentation.view.main.MainActivity
 import com.example.dotametrics.presentation.view.patch.PatchActivity
 import com.example.dotametrics.presentation.view.teamsearch.TeamSearchActivity
@@ -51,7 +52,11 @@ open class DrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                 startActivity(intent)
                 overridePendingTransition(0, 0)
             }
-            R.id.nav_heroes -> {}
+            R.id.nav_heroes -> {
+                val intent = Intent(this, HeroSearchActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(0, 0)
+            }
             R.id.nav_teams -> {
                 val intent = Intent(this, TeamSearchActivity::class.java)
                 startActivity(intent)

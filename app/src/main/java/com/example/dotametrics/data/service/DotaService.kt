@@ -1,11 +1,14 @@
 package com.example.dotametrics.data.service
 
 import com.example.dotametrics.data.model.constants.abilities.AbilityResult
+import com.example.dotametrics.data.model.constants.abilities.HeroAbilitiesResult
+import com.example.dotametrics.data.model.constants.aghs.AghsResult
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.constants.items.ItemResult
 import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.data.model.constants.patch.PatchResult
 import com.example.dotametrics.data.model.constants.patch.PatchNotesResult
+import com.example.dotametrics.data.model.heroes.matchups.MatchupsResult
 import com.example.dotametrics.data.model.matches.MatchDataResult
 import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
@@ -96,5 +99,20 @@ interface DotaService {
 
     @GET("teams/{id}/heroes")
     fun getTeamHeroes(@Path("id") id: String): Call<List<TeamHeroesResult>>
+
+    @GET("constants/aghs_desc")
+    fun getAghs(): Call<List<AghsResult>>
+
+    @GET("constants/hero_abilities")
+    fun getHeroAbilities(): Call<Map<String, HeroAbilitiesResult>>
+
+    @GET("constants/hero_lore")
+    fun getHeroLore(): Call<Map<String, String>>
+
+    @GET("heroes/{id}/matchups")
+    fun getHeroMatchups(@Path("id") id: String): Call<List<MatchupsResult>>
+
+    @GET("heroes/{id}/itemPopularity")
+    fun getHeroItemPopularity(@Path("id") id: String): Call<List<MatchupsResult>>
 
 }
