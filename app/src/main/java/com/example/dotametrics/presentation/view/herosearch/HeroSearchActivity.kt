@@ -12,6 +12,7 @@ import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.databinding.ActivityHeroSearchBinding
 import com.example.dotametrics.presentation.adapter.HeroSearchAdapter
 import com.example.dotametrics.presentation.view.DrawerActivity
+import com.example.dotametrics.presentation.view.hero.HeroActivity
 import com.google.android.material.snackbar.Snackbar
 
 class HeroSearchActivity : DrawerActivity() {
@@ -25,9 +26,9 @@ class HeroSearchActivity : DrawerActivity() {
     private lateinit var adapter: HeroSearchAdapter
 
     private val openHero: (HeroResult) -> Unit = {
-//        val intent = Intent(this, HeroActivity::class.java)
-//        intent.putExtra("hero", it.id)
-//        startActivity(intent)
+        val intent = Intent(this, HeroActivity::class.java)
+        intent.putExtra("hero", it)
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

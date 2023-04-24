@@ -103,4 +103,18 @@
     <string name="tab_team_2">Matches</string>
     <string name="tab_team_3">Heroes</string>
 
+    <string name="primary_attr">Attribute: %1$s</string>
+    <string name="str">Strength: %1$s</string>
+    <string name="agi">Agility: %1$s</string>
+    <string name="intel">Intelligence: %1$s</string>
+    <string name="resist">Magic resist: %1$s</string>
+    <string name="range">Attack range: %1$s</string>
+    <string name="attack_speed">Attack speed: %1$s</string>
+    <string name="move_speed">Move speed: %1$s</string>
+
+    <string name="str_name">Strength</string>
+    <string name="agi_name">Agility</string>
+    <string name="int_name">Intelligence</string>
+    <string name="all_name">Universal</string>
+
 </resources>
