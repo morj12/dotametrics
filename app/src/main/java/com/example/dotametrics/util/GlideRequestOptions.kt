@@ -8,6 +8,6 @@ object GlideRequestOptions {
 
     fun requestOptions() = RequestOptions()
         .diskCacheStrategy(DiskCacheStrategy.ALL)
-        .placeholder(R.drawable.ic_person)
+        .placeholder(R.drawable.ic_placeholder)
 
 }

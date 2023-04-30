@@ -1,16 +1,15 @@
 package com.example.dotametrics.presentation.view.match
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.example.dotametrics.R
 import com.example.dotametrics.databinding.ActivityMatchBinding
 import com.example.dotametrics.presentation.adapter.MatchSectionsPagerAdapter
+import com.example.dotametrics.presentation.view.DrawerActivity
 import com.example.dotametrics.util.*
 import com.google.android.material.snackbar.Snackbar
 
-class MatchActivity : AppCompatActivity() {
+class MatchActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityMatchBinding
 
@@ -24,6 +23,13 @@ class MatchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMatchBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val from = intent.getStringExtra("from")
+        if (from == "teams") {
+            allocateActivityTitle(getString(R.string.teams))
+        } else {
+            allocateActivityTitle(getString(R.string.players))
+        }
 
         initTabs()
 
@@ -41,17 +47,20 @@ class MatchActivity : AppCompatActivity() {
         viewModel.loadItems()
         viewModel.loadAbilityIds()
         viewModel.loadAbilities()
+        viewModel.loadLobbyTypes()
     }
 
     private fun loadData() {
         val regionsLoaded = ConstData.regions.isNotEmpty()
         val itemsLoaded = ConstData.items.isNotEmpty()
+        val lobbiesLoaded = ConstData.lobbies.isNotEmpty()
 
-        if (regionsLoaded && itemsLoaded) {
+        if (regionsLoaded && itemsLoaded && lobbiesLoaded) {
             if (viewModel.result.value == null) viewModel.loadMatch()
         } else {
             if (!regionsLoaded) viewModel.loadRegions()
             if (!itemsLoaded) viewModel.loadItems()
+            if (!lobbiesLoaded) viewModel.loadLobbyTypes()
         }
     }
 
@@ -67,6 +76,9 @@ class MatchActivity : AppCompatActivity() {
             loadData()
         }
         viewModel.constItems.observe(this@MatchActivity) {
+            loadData()
+        }
+        viewModel.constLobbyTypes.observe(this@MatchActivity) {
             loadData()
         }
         viewModel.result.observe(this@MatchActivity) {

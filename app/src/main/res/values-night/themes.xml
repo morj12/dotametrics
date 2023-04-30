@@ -10,8 +10,10 @@
         <item name="colorSecondaryVariant">@color/purple_200</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/dark</item>
+        <item name="android:statusBarColor">@color/purple_900</item>
         <item name="android:windowFullscreen">true</item>
-        <!-- Customize your theme here. -->
+
+        <item name="android:windowBackground">@color/purple_900</item>
+        <item name="android:colorBackground">@color/purple_900</item>
     </style>
 </resources>

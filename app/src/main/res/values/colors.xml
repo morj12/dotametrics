@@ -6,10 +6,11 @@
     <color name="green">#007300</color>
     <color name="red">#D50000</color>
 
-    <color name="purple_700">#001F30</color>
+    <color name="purple_700">#00070B</color>
+    <color name="purple_900">#001F30</color>
     <color name="purple_500">#005383</color>
     <color name="purple_200">#54A8D6</color>
     <color name="gray">#FAFAFA</color>
-
+    <color name="blue">#8080FF</color>
 
 </resources>

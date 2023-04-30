@@ -1,9 +1,13 @@
 package com.example.dotametrics.data.model.constants.abilities
 
+import com.example.dotametrics.data.service.StringJsonAdapter
+import com.google.gson.annotations.JsonAdapter
 import com.google.gson.annotations.SerializedName
 
 data class Attrib(
     @SerializedName("key") var key: String? = null,
     @SerializedName("header") var header: String? = null,
-    @SerializedName("value") var value: String? = null
+    @JsonAdapter(value = StringJsonAdapter::class)
+    @SerializedName("value")
+    var value: CustomArrayList<String> = CustomArrayList()
 )

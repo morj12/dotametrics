@@ -1,9 +1,13 @@
 package com.example.dotametrics.data.service
 
 import com.example.dotametrics.data.model.constants.abilities.AbilityResult
+import com.example.dotametrics.data.model.constants.abilities.HeroAbilitiesResult
+import com.example.dotametrics.data.model.constants.aghs.AghsResult
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.constants.items.ItemResult
 import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
+import com.example.dotametrics.data.model.constants.patch.PatchResult
+import com.example.dotametrics.data.model.constants.patch.PatchNotesResult
 import com.example.dotametrics.data.model.matches.MatchDataResult
 import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
@@ -12,6 +16,10 @@ import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.data.model.players.totals.TotalsResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.data.model.search.SearchResult
+import com.example.dotametrics.data.model.teams.TeamsResult
+import com.example.dotametrics.data.model.teams.heroes.TeamHeroesResult
+import com.example.dotametrics.data.model.teams.matches.TeamMatchesResult
+import com.example.dotametrics.data.model.teams.players.TeamPlayersResult
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -72,5 +80,32 @@ interface DotaService {
 
     @GET("constants/abilities")
     fun getAbilities(): Call<Map<String, AbilityResult>>
+
+    @GET("constants/patch")
+    fun getPatches(): Call<List<PatchResult>>
+
+    @GET("constants/patchnotes")
+    fun getPatchNotes(): Call<Map<String, PatchNotesResult>>
+
+    @GET("teams")
+    fun getTeams(): Call<List<TeamsResult>>
+
+    @GET("teams/{id}/players")
+    fun getTeamPlayers(@Path("id") id: String): Call<List<TeamPlayersResult>>
+
+    @GET("teams/{id}/matches")
+    fun getTeamMatches(@Path("id") id: String): Call<List<TeamMatchesResult>>
+
+    @GET("teams/{id}/heroes")
+    fun getTeamHeroes(@Path("id") id: String): Call<List<TeamHeroesResult>>
+
+    @GET("constants/aghs_desc")
+    fun getAghs(): Call<List<AghsResult>>
+
+    @GET("constants/hero_abilities")
+    fun getHeroAbilities(): Call<Map<String, HeroAbilitiesResult>>
+
+    @GET("constants/hero_lore")
+    fun getHeroLore(): Call<Map<String, String>>
 
 }
