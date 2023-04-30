@@ -8,7 +8,6 @@ import com.example.dotametrics.data.model.constants.items.ItemResult
 import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.data.model.constants.patch.PatchResult
 import com.example.dotametrics.data.model.constants.patch.PatchNotesResult
-import com.example.dotametrics.data.model.heroes.matchups.MatchupsResult
 import com.example.dotametrics.data.model.matches.MatchDataResult
 import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
@@ -108,11 +107,5 @@ interface DotaService {
 
     @GET("constants/hero_lore")
     fun getHeroLore(): Call<Map<String, String>>
-
-    @GET("heroes/{id}/matchups")
-    fun getHeroMatchups(@Path("id") id: String): Call<List<MatchupsResult>>
-
-    @GET("heroes/{id}/itemPopularity")
-    fun getHeroItemPopularity(@Path("id") id: String): Call<List<MatchupsResult>>
 
 }

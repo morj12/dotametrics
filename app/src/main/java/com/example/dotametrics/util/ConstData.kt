@@ -1,6 +1,8 @@
 package com.example.dotametrics.util
 
 import com.example.dotametrics.data.model.constants.abilities.AbilityResult
+import com.example.dotametrics.data.model.constants.abilities.HeroAbilitiesResult
+import com.example.dotametrics.data.model.constants.aghs.AghsResult
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.constants.items.ItemResult
 import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
@@ -19,5 +21,8 @@ object ConstData {
     var patches = listOf<PatchResult>()
     var patchNotes = mapOf<String, PatchNotesResult>()
     var teams = listOf<TeamsResult>()
+    var lores = mapOf<String, String>()
+    var aghs = listOf<AghsResult>()
+    var heroAbilities = mapOf<String, HeroAbilitiesResult>()
 
 }
