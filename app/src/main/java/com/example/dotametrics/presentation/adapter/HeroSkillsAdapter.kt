@@ -39,16 +39,18 @@ class HeroSkillsAdapter :
         with(holder.binding) {
             tvSkillName.text = item.dname
             tvSkillDesc.text = item.desc
-            val bkbPierceString = item.bkbPierce.joinToString(separator = ",")
-            tvSkillBkbPierce.text = root.context.getString(R.string.hero_bkb_pierce, bkbPierceString)
-            val dmgTypeString = item.dmgType.joinToString(separator = ",")
+            val bkbPierceString = item.bkbPierce.joinToString(separator = ", ")
+            tvSkillBkbPierce.text =
+                root.context.getString(R.string.hero_bkb_pierce, bkbPierceString)
+            val dmgTypeString = item.dmgType.joinToString(separator = ", ")
             tvSkillDmgType.text = root.context.getString(R.string.hero_dmg_type, dmgTypeString)
-            val behaviorString = item.behavior.joinToString(separator = ",")
+            val behaviorString = item.behavior.joinToString(separator = ", ")
             tvSkillBhv.text = root.context.getString(R.string.skill_bhv, behaviorString)
             val attrsString = StringBuilder()
             item.attrib.forEach {
                 attrsString.append(it.header)
-                attrsString.append(it.value.joinToString(separator = ","))
+                attrsString.append(" ")
+                attrsString.append(it.value.joinToString(separator = ", "))
                 attrsString.append("\n")
             }
             tvSkillAttrs.text = attrsString.toString()
