@@ -33,6 +33,14 @@
             app:strokeColor="@color/white"
             app:strokeWidth="2dp" />
 
+        <ProgressBar
+            android:id="@+id/pb_hero_image"
+            style="@style/DotaMetricsProgressBar"
+            app:layout_constraintBottom_toBottomOf="@id/hero_image"
+            app:layout_constraintEnd_toEndOf="@+id/hero_image"
+            app:layout_constraintStart_toStartOf="@+id/hero_image"
+            app:layout_constraintTop_toTopOf="@+id/hero_image" />
+
         <TextView
             android:id="@+id/tv_hero_name"
             android:layout_width="wrap_content"
@@ -145,6 +153,13 @@
             android:layout_margin="8dp"
             app:layout_constraintTop_toBottomOf="@id/tv_hero_lore"
             tools:itemCount="4" />
+
+        <ProgressBar
+            android:id="@+id/pb_rc_hero_skills"
+            style="@style/DotaMetricsProgressBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_hero_lore" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_hero_talents"

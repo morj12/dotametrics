@@ -15,6 +15,8 @@ import com.example.dotametrics.presentation.view.DrawerActivity
 import com.example.dotametrics.util.AttrMapper
 import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.startLoading
+import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
 
 class HeroActivity : DrawerActivity() {
@@ -39,6 +41,8 @@ class HeroActivity : DrawerActivity() {
         hero = intent.getParcelableExtra("hero")
         if (hero != null) {
             if (hero!!.name != null) {
+                binding.heroImage.startLoading(binding.pbHeroImage)
+                binding.rcHeroSkills.startLoading(binding.pbRcHeroSkills)
                 viewModel.setHero(hero!!)
                 loadConstants()
             }
@@ -64,6 +68,7 @@ class HeroActivity : DrawerActivity() {
             .load("${URL}${hero.img}\"")
             .apply(requestOptions())
             .into(heroImage)
+        heroImage.stopLoading(binding.pbHeroImage)
         tvHeroName.text = hero.localizedName
         heroMainAttr.text =
             getString(R.string.primary_attr, AttrMapper.mapAttr(root.context, hero.primaryAttr))
@@ -148,7 +153,9 @@ class HeroActivity : DrawerActivity() {
             adapter.submitList(abilities
                 .filter { !it.value.behavior.contains("Hidden") }
                 .map { it.value }
-            )
+            ) {
+                binding.rcHeroSkills.stopLoading(binding.pbRcHeroSkills)
+            }
         }
     }
 
