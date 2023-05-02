@@ -14,6 +14,7 @@ import com.example.dotametrics.R
 import com.example.dotametrics.data.model.players.matches.MatchesResult
 import com.example.dotametrics.databinding.FragmentMatchesBinding
 import com.example.dotametrics.presentation.adapter.MatchesResultAdapter
+import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.presentation.view.match.MatchActivity
 import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.LobbyTypeMapper
@@ -31,6 +32,10 @@ class MatchesFragment : Fragment() {
 
     private val viewModel: AccountViewModel by activityViewModels {
         AccountViewModel.AccountViewModelFactory((context?.applicationContext as App))
+    }
+
+    private val constViewModel: ConstViewModel by activityViewModels {
+        ConstViewModel.ConstViewModelFactory((context?.applicationContext as App))
     }
 
     private val openMatch: (MatchesResult) -> Unit = {
@@ -67,8 +72,8 @@ class MatchesFragment : Fragment() {
                 observeMatches()
             }
         } else {
-            if (!heroesLoaded) viewModel.loadHeroes()
-            if (!lobbiesLoaded) viewModel.loadLobbyTypes()
+            if (!heroesLoaded) constViewModel.loadHeroes()
+            if (!lobbiesLoaded) constViewModel.loadLobbyTypes()
         }
     }
 
@@ -76,7 +81,7 @@ class MatchesFragment : Fragment() {
         val data = mutableListOf(getString(R.string.any_lobby))
         data.addAll(ConstData.lobbies.map {
             requireContext().getString(
-                LobbyTypeMapper.getLobbyResource(it.name!!, requireContext())
+                LobbyTypeMapper().getLobbyResource(it.name!!, requireContext())
             )
         })
 
@@ -119,13 +124,16 @@ class MatchesFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.constHeroes.observe(viewLifecycleOwner) {
+        constViewModel.heroes.observe(viewLifecycleOwner) {
             loadData()
             initHeroFilter()
         }
-        viewModel.constLobbyTypes.observe(viewLifecycleOwner) {
+        constViewModel.constLobbyTypes.observe(viewLifecycleOwner) {
             loadData()
             initLobbyFilter()
+        }
+        constViewModel.error.observe(viewLifecycleOwner) {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
         viewModel.filteredWl.observe(viewLifecycleOwner) { player ->
             with(binding) {

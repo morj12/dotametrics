@@ -8,8 +8,6 @@ import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.data.db.dbmodel.PlayerDbModel
 import com.example.dotametrics.data.db.repository.PlayerRepository
-import com.example.dotametrics.data.model.constants.heroes.HeroResult
-import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
 import com.example.dotametrics.data.model.players.matches.MatchDataSource
@@ -20,7 +18,6 @@ import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.data.model.players.totals.TotalsResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.data.service.RetrofitInstance
-import com.example.dotametrics.util.ConstData
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,9 +25,6 @@ import retrofit2.Response
 import java.util.concurrent.Executors
 
 class AccountViewModel(private val app: App) : ViewModel() {
-
-    private var loadingHeroes = false
-    private var loadingLobbies = false
 
     var userId: String = ""
     var lobbyType: Int? = null
@@ -60,17 +54,9 @@ class AccountViewModel(private val app: App) : ViewModel() {
     val error: LiveData<String>
         get() = _error
 
-    private val _constHeroes = MutableLiveData<Unit>()
-    val constHeroes: LiveData<Unit>
-        get() = _constHeroes
-
     private val _peers = MutableLiveData<List<PeersResult>>()
     val peers: LiveData<List<PeersResult>>
         get() = _peers
-
-    private val _constLobbyTypes = MutableLiveData<Unit>()
-    val constLobbyTypes: LiveData<Unit>
-        get() = _constLobbyTypes
 
     private val _matches = MutableLiveData<PagedList<MatchesResult>>()
     var matches: LiveData<PagedList<MatchesResult>> = _matches
@@ -127,7 +113,6 @@ class AccountViewModel(private val app: App) : ViewModel() {
                     override fun onFailure(call: Call<WLResult>, t: Throwable) {
                         _error.value = t.message.toString()
                     }
-
                 })
         }
     }
@@ -172,35 +157,6 @@ class AccountViewModel(private val app: App) : ViewModel() {
         }
     }
 
-    fun loadHeroes() {
-        if (loadingHeroes) return
-        if (ConstData.heroes.isNotEmpty()) {
-            _constHeroes.value = Unit
-            loadingHeroes = false
-        } else {
-            loadingHeroes = true
-            retrofit.getConstHeroes().enqueue(object : Callback<Map<String, HeroResult>> {
-                override fun onResponse(
-                    call: Call<Map<String, HeroResult>>,
-                    response: Response<Map<String, HeroResult>>
-                ) {
-                    Log.d("RETROFIT_CALL", "AccountViewModel: loadHeroes")
-                    val body = response.body()
-                    if (body != null) {
-                        ConstData.heroes = body.values.toList().sortedBy { it.localizedName }
-                        _constHeroes.value = Unit
-                        loadingHeroes = false
-                    }
-                }
-
-                override fun onFailure(call: Call<Map<String, HeroResult>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingHeroes = false
-                }
-            })
-        }
-    }
-
     fun loadPeers() {
         if (userId.isNotBlank()) {
             retrofit.getPeers(userId)
@@ -238,37 +194,6 @@ class AccountViewModel(private val app: App) : ViewModel() {
     }
 
     private val errorListener: ((String) -> Unit) = { _error.value = it }
-
-    fun loadLobbyTypes() {
-        if (loadingLobbies) return
-        if (ConstData.lobbies.isNotEmpty()) {
-            _constLobbyTypes.value = Unit
-            loadingLobbies = false
-        } else {
-            loadingLobbies = true
-            retrofit.getConstLobbyTypes().enqueue(object : Callback<Map<String, LobbyTypeResult>> {
-                override fun onResponse(
-                    call: Call<Map<String, LobbyTypeResult>>,
-                    response: Response<Map<String, LobbyTypeResult>>
-                ) {
-                    Log.d("RETROFIT_CALL", "AccountViewModel: loadLobbyTypes")
-                    val body = response.body()
-                    if (body != null) {
-                        val usefulLobbies = app.resources.getStringArray(R.array.lobbies_array)
-                        ConstData.lobbies =
-                            body.values.toList().filter { usefulLobbies.contains(it.name) }
-                        _constLobbyTypes.value = Unit
-                        loadingLobbies = false
-                    }
-                }
-
-                override fun onFailure(call: Call<Map<String, LobbyTypeResult>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingLobbies = false
-                }
-            })
-        }
-    }
 
     fun checkFavorite(id: Long) = viewModelScope.launch {
         val player = repository.getPlayer(id)

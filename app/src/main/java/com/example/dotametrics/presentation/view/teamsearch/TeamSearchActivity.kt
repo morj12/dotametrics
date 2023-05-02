@@ -21,9 +21,7 @@ class TeamSearchActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityTeamSearchBinding
 
-    private val viewModel: TeamSearchViewModel by viewModels {
-        TeamSearchViewModel.TeamSearchViewModelFactory(applicationContext as App)
-    }
+    private val viewModel: TeamSearchViewModel by viewModels()
 
     private lateinit var adapter: TeamSearchAdapter
 

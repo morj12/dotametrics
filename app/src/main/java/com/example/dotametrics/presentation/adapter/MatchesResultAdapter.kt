@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.R
-import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.data.model.players.matches.MatchesResult
 import com.example.dotametrics.databinding.MatchItemBinding
 import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.Datetime
-import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager.requestOptions
 import com.example.dotametrics.util.LobbyTypeMapper
 
 class MatchesResultAdapter :
@@ -48,9 +48,9 @@ class MatchesResultAdapter :
             if (heroInfo != null)
                 Glide.with(root)
                     .load("${URL}${heroInfo.img}")
-                    .apply(requestOptions())
+                    .apply(requestOptions(root.context))
                     .into(ivMatchHero)
-            item.startTime?.let { tvMatchDate.text = Datetime.getDateTime(it) }
+            item.startTime?.let { tvMatchDate.text = Datetime.formatDate(it) }
             tvMatchKda.text = "${item.kills} / ${item.deaths} / ${item.assists}"
             setLobbyType(item, lobbyInfo, this)
             setResult(item, this)
@@ -68,7 +68,7 @@ class MatchesResultAdapter :
         tvMatchLobby.text =
             if (lobbyInfo != null)
                 root.context.getString(
-                    LobbyTypeMapper.getLobbyResource(
+                    LobbyTypeMapper().getLobbyResource(
                         lobbyInfo.name!!,
                         root.context
                     )
@@ -103,10 +103,6 @@ class MatchesResultAdapter :
             )
         }
         ivMatchRank.setImageResource(id)
-    }
-
-    companion object {
-        private const val URL = "https://api.opendota.com"
     }
 
 }

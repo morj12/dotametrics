@@ -5,11 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dotametrics.App
 import com.example.dotametrics.databinding.FragmentMatchSkillsBinding
 import com.example.dotametrics.presentation.adapter.MatchSkillsPlayerAdapter
+import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
@@ -24,8 +28,10 @@ class MatchSkillsFragment : Fragment() {
     private lateinit var radiantAdapter: MatchSkillsPlayerAdapter
     private lateinit var direAdapter: MatchSkillsPlayerAdapter
 
-    private val viewModel: MatchViewModel by lazy {
-        ViewModelProvider(requireActivity())[MatchViewModel::class.java]
+    private val viewModel: MatchViewModel by activityViewModels()
+
+    private val constViewModel: ConstViewModel by activityViewModels {
+        ConstViewModel.ConstViewModelFactory((context?.applicationContext as App))
     }
 
     override fun onCreateView(
@@ -58,8 +64,8 @@ class MatchSkillsFragment : Fragment() {
                 binding.rcMatchSkillsDire.stopLoading(binding.pbRcMatchSkillsDire)
             }
         } else {
-            if (!abilityIdsLoaded) viewModel.loadAbilityIds()
-            if (!abilitiesLoaded) viewModel.loadAbilities()
+            if (!abilityIdsLoaded) constViewModel.loadAbilityIds()
+            if (!abilitiesLoaded) constViewModel.loadAbilities()
         }
     }
 
@@ -77,13 +83,16 @@ class MatchSkillsFragment : Fragment() {
         viewModel.result.observe(viewLifecycleOwner) {
             loadData()
         }
-        viewModel.constAbilityIds.observe(viewLifecycleOwner) {
+        constViewModel.constAbilityIds.observe(viewLifecycleOwner) {
             loadData()
         }
-        viewModel.constAbilities.observe(viewLifecycleOwner) {
+        constViewModel.constAbilities.observe(viewLifecycleOwner) {
             loadData()
         }
         viewModel.error.observe(viewLifecycleOwner) {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+        }
+        constViewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
     }

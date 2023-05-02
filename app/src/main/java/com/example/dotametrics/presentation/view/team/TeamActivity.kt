@@ -9,16 +9,14 @@ import com.example.dotametrics.data.model.teams.TeamsResult
 import com.example.dotametrics.databinding.ActivityTeamBinding
 import com.example.dotametrics.presentation.adapter.TeamSectionsPagerAdapter
 import com.example.dotametrics.presentation.view.DrawerActivity
-import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.GlideManager.requestOptions
 import com.google.android.material.snackbar.Snackbar
 
 class TeamActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityTeamBinding
 
-    private val viewModel: TeamViewModel by viewModels {
-        TeamViewModel.TeamViewModelFactory(applicationContext as App)
-    }
+    private val viewModel: TeamViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +43,7 @@ class TeamActivity : DrawerActivity() {
     private fun showData(team: TeamsResult) = with(binding) {
         Glide.with(root)
             .load(team.logoUrl)
-            .apply(requestOptions())
+            .apply(requestOptions(root.context))
             .into(teamImage)
         tvTeamName.text = team.name
         tvTeamRating.text = root.context.getString(R.string.team_rating, team.rating.toString())

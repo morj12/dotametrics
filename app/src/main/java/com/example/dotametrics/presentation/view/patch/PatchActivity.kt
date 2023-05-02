@@ -12,9 +12,7 @@ class PatchActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityPatchBinding
 
-    private val viewModel: PatchViewModel by viewModels {
-        PatchViewModel.PatchViewModelFactory(applicationContext as App)
-    }
+    private val viewModel: PatchViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.data.model.matches.Players
@@ -25,9 +27,7 @@ class MatchOverviewFragment : Fragment() {
     private lateinit var radiantAdapter: MatchOverviewPlayerAdapter
     private lateinit var direAdapter: MatchOverviewPlayerAdapter
 
-    private val viewModel: MatchViewModel by lazy {
-        ViewModelProvider(requireActivity())[MatchViewModel::class.java]
-    }
+    private val viewModel: MatchViewModel  by activityViewModels()
 
     private val openAccount: (Players) -> Unit = {
         val intent = Intent(requireActivity(), AccountActivity::class.java)

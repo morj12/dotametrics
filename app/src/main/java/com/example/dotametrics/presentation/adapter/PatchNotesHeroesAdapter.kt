@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.databinding.PatchnotesHeroItemBinding
 import com.example.dotametrics.util.ConstData
-import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager.requestOptions
 
 class PatchNotesHeroesAdapter :
     ListAdapter<Pair<String, List<String>>, PatchNotesHeroesAdapter.ViewHolder>(
@@ -53,7 +54,7 @@ class PatchNotesHeroesAdapter :
                 tvPatchnotesHeroName.text = heroInfo.localizedName
                 Glide.with(root)
                     .load("${URL}${heroInfo.img}")
-                    .apply(requestOptions())
+                    .apply(requestOptions(root.context))
                     .into(ivPatchnotesHero)
             } else {
                 tvPatchnotesHeroName.text = item.first
@@ -66,9 +67,5 @@ class PatchNotesHeroesAdapter :
                 onItemClickedListener?.invoke(item)
             }
         }
-    }
-
-    companion object {
-        private const val URL = "https://api.opendota.com"
     }
 }

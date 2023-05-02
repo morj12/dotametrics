@@ -11,7 +11,8 @@ import com.example.dotametrics.data.model.constants.items.ItemResult
 import com.example.dotametrics.data.model.matches.Players
 import com.example.dotametrics.databinding.MatchOverviewItemBinding
 import com.example.dotametrics.util.ConstData
-import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager.requestOptions
 
 class MatchOverviewPlayerAdapter :
     ListAdapter<Players, MatchOverviewPlayerAdapter.ViewHolder>(MatchOverviewPlayerCallback()) {
@@ -46,7 +47,7 @@ class MatchOverviewPlayerAdapter :
             if (heroInfo != null) {
                 Glide.with(root)
                     .load("${URL}${heroInfo.img}")
-                    .apply(requestOptions())
+                    .apply(requestOptions(root.context))
                     .into(ivMatchOverviewHero)
             }
             setRank(item, this)
@@ -70,49 +71,49 @@ class MatchOverviewPlayerAdapter :
             item = ConstData.items.values.first { it.id == player.item0 }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
-                .apply(requestOptions())
+                .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItem0)
         }
         if (player.item1 != null && player.item1 != 0) {
             item = ConstData.items.values.first { it.id == player.item1 }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
-                .apply(requestOptions())
+                .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItem1)
         }
         if (player.item2 != null && player.item2 != 0) {
             item = ConstData.items.values.first { it.id == player.item2 }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
-                .apply(requestOptions())
+                .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItem2)
         }
         if (player.item3 != null && player.item3 != 0) {
             item = ConstData.items.values.first { it.id == player.item3 }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
-                .apply(requestOptions())
+                .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItem3)
         }
         if (player.item4 != null && player.item4 != 0) {
             item = ConstData.items.values.first { it.id == player.item4 }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
-                .apply(requestOptions())
+                .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItem4)
         }
         if (player.item5 != null && player.item5 != 0) {
             item = ConstData.items.values.first { it.id == player.item5 }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
-                .apply(requestOptions())
+                .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItem5)
         }
         if (player.itemNeutral != null && player.itemNeutral != 0) {
             item = ConstData.items.values.first { it.id == player.itemNeutral }
             Glide.with(binding.root)
                 .load("${URL}${item.img}")
-                .apply(requestOptions())
+                .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItemn)
         }
     }
@@ -125,9 +126,5 @@ class MatchOverviewPlayerAdapter :
             )
         }
         ivMatchOverviewRank.setImageResource(id)
-    }
-
-    companion object {
-        private const val URL = "https://api.opendota.com"
     }
 }

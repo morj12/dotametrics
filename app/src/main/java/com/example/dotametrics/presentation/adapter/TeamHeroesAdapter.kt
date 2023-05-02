@@ -9,7 +9,8 @@ import com.bumptech.glide.Glide
 import com.example.dotametrics.data.model.teams.heroes.TeamHeroesResult
 import com.example.dotametrics.databinding.TeamHeroItemBinding
 import com.example.dotametrics.util.ConstData
-import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager.requestOptions
 
 class TeamHeroesAdapter :
     ListAdapter<TeamHeroesResult, TeamHeroesAdapter.ViewHolder>(TeamHeroesCallback()) {
@@ -41,7 +42,7 @@ class TeamHeroesAdapter :
             if (heroInfo != null) {
                 Glide.with(root)
                     .load("${URL}${heroInfo.img}")
-                    .apply(requestOptions())
+                    .apply(requestOptions(root.context))
                     .into(ivTeamHeroItemName)
             }
             tvTeamHeroItemGames.text = item.gamesPlayed.toString()
@@ -54,10 +55,6 @@ class TeamHeroesAdapter :
             }
 
         }
-    }
-
-    companion object {
-        private const val URL = "https://api.opendota.com"
     }
 
 }

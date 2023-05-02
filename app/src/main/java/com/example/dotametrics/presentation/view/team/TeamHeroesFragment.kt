@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
 import com.example.dotametrics.databinding.FragmentTeamHeroesBinding
 import com.example.dotametrics.presentation.adapter.TeamHeroesAdapter
 import com.example.dotametrics.presentation.adapter.TeamPlayersAdapter
+import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
@@ -21,8 +23,10 @@ class TeamHeroesFragment : Fragment() {
     private val binding: FragmentTeamHeroesBinding
         get() = _binding ?: throw RuntimeException("FragmentTeamHeroesBinding is null")
 
-    private val viewModel: TeamViewModel by activityViewModels {
-        TeamViewModel.TeamViewModelFactory(context?.applicationContext as App)
+    private val viewModel: TeamViewModel by activityViewModels()
+
+    private val constViewModel: ConstViewModel by activityViewModels {
+        ConstViewModel.ConstViewModelFactory((context?.applicationContext as App))
     }
 
     private lateinit var adapter: TeamHeroesAdapter
@@ -37,7 +41,7 @@ class TeamHeroesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadConstHeroes()
+        constViewModel.loadHeroes()
         binding.rcTeamHeroes.startLoading(binding.pbTeamHeroes)
         initRecyclerView()
         observe()
@@ -50,10 +54,13 @@ class TeamHeroesFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.constHeroes.observe(viewLifecycleOwner) {
+        constViewModel.heroes.observe(viewLifecycleOwner) {
             loadData()
         }
         viewModel.error.observe(viewLifecycleOwner) {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+        }
+        constViewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
     }

@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
 import com.example.dotametrics.databinding.FragmentHeroesBinding
 import com.example.dotametrics.presentation.adapter.PlayerHeroesAdapter
+import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
@@ -26,6 +28,10 @@ class HeroesFragment : Fragment() {
 
     private val viewModel: AccountViewModel by activityViewModels {
         AccountViewModel.AccountViewModelFactory((context?.applicationContext as App))
+    }
+
+    private val constViewModel: ConstViewModel by activityViewModels {
+        ConstViewModel.ConstViewModelFactory((context?.applicationContext as App))
     }
 
     override fun onCreateView(
@@ -54,7 +60,7 @@ class HeroesFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.constHeroes.observe(viewLifecycleOwner) {
+        constViewModel.heroes.observe(viewLifecycleOwner) {
             loadData()
         }
         viewModel.heroes.observe(viewLifecycleOwner) {
@@ -64,6 +70,9 @@ class HeroesFragment : Fragment() {
             binding.rcPlayerHeroes.stopLoading(binding.pbRcPlayerHeroes)
         }
         viewModel.error.observe(viewLifecycleOwner) {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+        }
+        constViewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
     }

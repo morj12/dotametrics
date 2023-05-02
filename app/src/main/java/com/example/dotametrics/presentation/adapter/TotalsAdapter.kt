@@ -36,7 +36,7 @@ class TotalsAdapter : ListAdapter<TotalsResult, TotalsAdapter.ViewHolder>(Totals
         with(holder.binding) {
             if (item.field != null && item.sum != null && item.n != null) {
                 tvTotalsName.text =
-                    root.context.getString(StatsMapper.getStatsResource(item.field!!, root.context))
+                    root.context.getString(StatsMapper().getStatsResource(item.field!!, root.context))
                 tvTotalsValue.text = String.format("%.2f", item.sum!! / item.n!!)
             }
         }

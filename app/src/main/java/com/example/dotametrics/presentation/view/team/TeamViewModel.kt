@@ -4,30 +4,20 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.dotametrics.App
-import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.teams.TeamsResult
 import com.example.dotametrics.data.model.teams.heroes.TeamHeroesResult
 import com.example.dotametrics.data.model.teams.matches.TeamMatchesResult
 import com.example.dotametrics.data.model.teams.players.TeamPlayersResult
 import com.example.dotametrics.data.service.RetrofitInstance
-import com.example.dotametrics.util.ConstData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TeamViewModel(private val application: App) : ViewModel() {
-
-    private var loadingHeroes = false
+class TeamViewModel : ViewModel() {
 
     private val _team = MutableLiveData<TeamsResult>()
     val team: LiveData<TeamsResult>
         get() = _team
-
-    private val _constHeroes = MutableLiveData<Unit>()
-    val constHeroes: LiveData<Unit>
-        get() = _constHeroes
 
     private val _players = MutableLiveData<List<TeamPlayersResult>>()
     val players: LiveData<List<TeamPlayersResult>>
@@ -110,45 +100,4 @@ class TeamViewModel(private val application: App) : ViewModel() {
                 })
         }
     }
-
-    fun loadConstHeroes() {
-        if (loadingHeroes) return
-        if (ConstData.heroes.isNotEmpty()) {
-            _constHeroes.value = Unit
-            loadingHeroes = false
-        } else {
-            loadingHeroes = true
-            retrofit.getConstHeroes().enqueue(object : Callback<Map<String, HeroResult>> {
-                override fun onResponse(
-                    call: Call<Map<String, HeroResult>>,
-                    response: Response<Map<String, HeroResult>>
-                ) {
-                    Log.d("RETROFIT_CALL", "TeamViewModel: loadConstHeroes")
-                    val body = response.body()
-                    if (body != null) {
-                        ConstData.heroes = body.values.toList().sortedBy { it.localizedName }
-                        _constHeroes.value = Unit
-                        loadingHeroes = false
-                    }
-                }
-
-                override fun onFailure(call: Call<Map<String, HeroResult>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingHeroes = false
-                }
-            })
-        }
-    }
-
-
-    class TeamViewModelFactory(private val app: App) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(TeamViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return TeamViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unknown view model class")
-        }
-    }
-
 }

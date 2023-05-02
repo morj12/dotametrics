@@ -23,9 +23,7 @@ class PatchSeriesFragment : Fragment() {
 
     private lateinit var adapter: PatchSeriesAdapter
 
-    private val viewModel: PatchViewModel by activityViewModels {
-        PatchViewModel.PatchViewModelFactory(context?.applicationContext as App)
-    }
+    private val viewModel: PatchViewModel by activityViewModels()
 
     private val setSeries: ((Pair<String, PatchNotesResult>) -> Unit) = {
         viewModel.setPatch(it)

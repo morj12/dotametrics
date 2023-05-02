@@ -4,17 +4,19 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.data.model.constants.abilities.AbilityResult
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.databinding.ActivityHeroBinding
 import com.example.dotametrics.presentation.adapter.HeroSkillsAdapter
-import com.example.dotametrics.presentation.adapter.PlayerHeroesAdapter
+import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.presentation.view.DrawerActivity
 import com.example.dotametrics.util.AttrMapper
 import com.example.dotametrics.util.ConstData
-import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager.requestOptions
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
@@ -23,8 +25,10 @@ class HeroActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityHeroBinding
 
-    private val viewModel: HeroViewModel by viewModels {
-        HeroViewModel.HeroViewModelFactory(applicationContext as App)
+    private val viewModel: HeroViewModel by viewModels()
+
+    private val constViewModel: ConstViewModel by viewModels {
+        ConstViewModel.ConstViewModelFactory(applicationContext as App)
     }
 
     private lateinit var adapter: HeroSkillsAdapter
@@ -52,9 +56,9 @@ class HeroActivity : DrawerActivity() {
     }
 
     private fun loadConstants() {
-        if (viewModel.constLores.value == null) viewModel.loadLore()
-        if (viewModel.constAghs.value == null) viewModel.loadAghs()
-        if (viewModel.constHeroAbilities.value == null) viewModel.loadHeroAbilities()
+        if (constViewModel.constLores.value == null) constViewModel.loadLore()
+        if (constViewModel.constAghs.value == null) constViewModel.loadAghs()
+        if (constViewModel.constHeroAbilities.value == null) constViewModel.loadHeroAbilities()
     }
 
     private fun initRecyclerView() = with(binding) {
@@ -66,12 +70,12 @@ class HeroActivity : DrawerActivity() {
     private fun showData(hero: HeroResult) = with(binding) {
         Glide.with(root)
             .load("${URL}${hero.img}\"")
-            .apply(requestOptions())
+            .apply(requestOptions(root.context))
             .into(heroImage)
         heroImage.stopLoading(binding.pbHeroImage)
         tvHeroName.text = hero.localizedName
         heroMainAttr.text =
-            getString(R.string.primary_attr, AttrMapper.mapAttr(root.context, hero.primaryAttr))
+            getString(R.string.primary_attr, AttrMapper().mapAttr(root.context, hero.primaryAttr))
         heroStr.text = getString(R.string.str, "${hero.baseStr} + ${hero.strGain}")
         heroAgi.text = getString(R.string.agi, "${hero.baseAgi} + ${hero.agiGain}")
         heroInt.text = getString(R.string.intel, "${hero.baseInt} + ${hero.intGain}")
@@ -100,22 +104,22 @@ class HeroActivity : DrawerActivity() {
         viewModel.hero.observe(this) {
             showData(it)
         }
-        viewModel.constLores.observe(this) {
+        constViewModel.constLores.observe(this) {
             showLore()
         }
-        viewModel.constAghs.observe(this) {
+        constViewModel.constAghs.observe(this) {
             showAghs()
         }
-        viewModel.constHeroAbilities.observe(this) {
-            viewModel.loadAbilities()
+        constViewModel.constHeroAbilities.observe(this) {
+            constViewModel.loadAbilities()
         }
-        viewModel.constAbilities.observe(this) {
+        constViewModel.constAbilities.observe(this) {
             if (ConstData.heroAbilities.isNotEmpty()) {
                 showAbilities()
                 showTalents()
             }
         }
-        viewModel.error.observe(this) {
+        constViewModel.error.observe(this) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
     }
@@ -157,9 +161,5 @@ class HeroActivity : DrawerActivity() {
                 binding.rcHeroSkills.stopLoading(binding.pbRcHeroSkills)
             }
         }
-    }
-
-    companion object {
-        private const val URL = "https://api.opendota.com"
     }
 }

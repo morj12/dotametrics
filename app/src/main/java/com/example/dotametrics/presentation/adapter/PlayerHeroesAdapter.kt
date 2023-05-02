@@ -6,15 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.example.dotametrics.R
-import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
 import com.example.dotametrics.databinding.AccHeroItemBinding
 import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.Datetime
-import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager.requestOptions
 
 class PlayerHeroesAdapter :
     ListAdapter<PlayerHeroResult, PlayerHeroesAdapter.ViewHolder>(HeroesCallback()) {
@@ -47,7 +45,7 @@ class PlayerHeroesAdapter :
             if (heroInfo != null && item.games != 0) {
                 Glide.with(root)
                     .load("$URL${heroInfo.img}")
-                    .apply(requestOptions())
+                    .apply(requestOptions(root.context))
                     .into(ivAccHeroImg)
                 tvAccHeroName.text = heroInfo.localizedName
                 tvAccHeroCount.text = item.games.toString()
@@ -64,15 +62,11 @@ class PlayerHeroesAdapter :
                     )
                 }
                 item.lastPlayed?.let {
-                    val date = Datetime.getDateTime(it)
+                    val date = Datetime.formatDate(it)
                     tvHeroLastDate.text = root.context.getString(R.string.last_match_time, date)
                 }
 
             }
         }
-    }
-
-    companion object {
-        private const val URL = "https://api.opendota.com"
     }
 }

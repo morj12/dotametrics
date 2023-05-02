@@ -6,9 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.databinding.SearchHeroItemBinding
-import com.example.dotametrics.util.GlideRequestOptions
+import com.example.dotametrics.util.GlideManager
+import com.example.dotametrics.util.GlideManager.URL
 
 class HeroSearchAdapter :
     ListAdapter<HeroResult, HeroSearchAdapter.ViewHolder>(HeroSearchCallback()) {
@@ -41,15 +43,12 @@ class HeroSearchAdapter :
             tvHeroName.text = item.localizedName
             Glide.with(this.root)
                 .load("${URL}${item.img}")
-                .apply(GlideRequestOptions.requestOptions())
+                .apply(GlideManager.requestOptions(root.context))
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(ivHeroImg)
             root.setOnClickListener {
                 onItemClickedListener?.invoke(item)
             }
         }
-    }
-
-    companion object {
-        private const val URL = "https://api.opendota.com"
     }
 }

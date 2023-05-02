@@ -18,7 +18,8 @@ import com.example.dotametrics.data.model.constants.abilities.AbilityResult
 import com.example.dotametrics.data.model.matches.Players
 import com.example.dotametrics.databinding.MatchSkillsItemBinding
 import com.example.dotametrics.util.ConstData
-import com.example.dotametrics.util.GlideRequestOptions
+import com.example.dotametrics.util.GlideManager
+import com.example.dotametrics.util.GlideManager.URL
 
 class MatchSkillsPlayerAdapter(private val activity: AppCompatActivity) :
     ListAdapter<Players, MatchSkillsPlayerAdapter.ViewHolder>(MatchSkillsPlayerCallback()) {
@@ -102,7 +103,7 @@ class MatchSkillsPlayerAdapter(private val activity: AppCompatActivity) :
                                 } else if (cell is ImageView) {
                                     Glide.with(root)
                                         .load("${URL}${ability!!.img}")
-                                        .apply(GlideRequestOptions.requestOptions())
+                                        .apply(GlideManager.requestOptions(root.context))
                                         .into(cell)
                                 }
                                 tableRow.addView(cell)
@@ -119,7 +120,6 @@ class MatchSkillsPlayerAdapter(private val activity: AppCompatActivity) :
     }
 
     companion object {
-        private const val URL = "https://api.opendota.com"
         private var ITEMS_PER_ROW = 15
     }
 }

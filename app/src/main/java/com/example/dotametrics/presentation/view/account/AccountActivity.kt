@@ -11,8 +11,9 @@ import com.example.dotametrics.data.model.players.PlayersResult
 import com.example.dotametrics.data.model.players.wl.WLResult
 import com.example.dotametrics.databinding.ActivityAccountBinding
 import com.example.dotametrics.presentation.adapter.SectionsPagerAdapter
+import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.presentation.view.DrawerActivity
-import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.GlideManager.requestOptions
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
@@ -23,6 +24,10 @@ class AccountActivity : DrawerActivity() {
 
     private val viewModel: AccountViewModel by viewModels {
         AccountViewModel.AccountViewModelFactory(applicationContext as App)
+    }
+
+    private val constViewModel: ConstViewModel by viewModels {
+        ConstViewModel.ConstViewModelFactory(applicationContext as App)
     }
 
     private var isFav = false
@@ -62,8 +67,8 @@ class AccountActivity : DrawerActivity() {
     }
 
     private fun initConstants() {
-        viewModel.loadHeroes()
-        viewModel.loadLobbyTypes()
+        constViewModel.loadHeroes()
+        constViewModel.loadLobbyTypes()
     }
 
     private fun initListeners() {
@@ -104,6 +109,9 @@ class AccountActivity : DrawerActivity() {
         viewModel.error.observe(this) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
+        constViewModel.error.observe(this) {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+        }
         viewModel.isFav.observe(this) {
             isFav = it
             if (isFav) {
@@ -123,7 +131,7 @@ class AccountActivity : DrawerActivity() {
     private fun showData(player: PlayersResult) = with(binding) {
         Glide.with(this@AccountActivity)
             .load(player.profile?.avatarfull)
-            .apply(requestOptions())
+            .apply(requestOptions(root.context))
             .into(profileImage)
         tvAccountName.text = player.profile?.personaname
         setRank(player)

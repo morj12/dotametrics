@@ -9,7 +9,8 @@ import com.bumptech.glide.Glide
 import com.example.dotametrics.R
 import com.example.dotametrics.data.model.constants.abilities.AbilityResult
 import com.example.dotametrics.databinding.SkillItemBinding
-import com.example.dotametrics.util.GlideRequestOptions
+import com.example.dotametrics.util.GlideManager
+import com.example.dotametrics.util.GlideManager.URL
 
 class HeroSkillsAdapter :
     ListAdapter<AbilityResult, HeroSkillsAdapter.ViewHolder>(HeroSkillCallback()) {
@@ -56,12 +57,8 @@ class HeroSkillsAdapter :
             tvSkillAttrs.text = attrsString.toString()
             Glide.with(this.root)
                 .load("${URL}${item.img}")
-                .apply(GlideRequestOptions.requestOptions())
+                .apply(GlideManager.requestOptions(root.context))
                 .into(ivSkillImg)
         }
-    }
-
-    companion object {
-        private const val URL = "https://api.opendota.com"
     }
 }

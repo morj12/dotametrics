@@ -4,10 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.dotametrics.App
-import com.example.dotametrics.data.model.constants.heroes.HeroResult
-import com.example.dotametrics.data.model.constants.items.ItemResult
 import com.example.dotametrics.data.model.constants.patch.PatchResult
 import com.example.dotametrics.data.model.constants.patch.PatchNotesResult
 import com.example.dotametrics.data.service.RetrofitInstance
@@ -16,12 +12,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PatchViewModel(private val application: App) : ViewModel() {
+class PatchViewModel : ViewModel() {
 
     private var loadingPatches = false
     private var loadingPatchNotes = false
-    private var loadingHeroes = false
-    private var loadingItems = false
 
     private val _patches = MutableLiveData<Unit>()
     val patches: LiveData<Unit>
@@ -38,14 +32,6 @@ class PatchViewModel(private val application: App) : ViewModel() {
     private val _currentPatchNotes = MutableLiveData<Pair<String, PatchNotesResult>>()
     val currentPatchNotes: LiveData<Pair<String, PatchNotesResult>>
         get() = _currentPatchNotes
-
-    private val _constHeroes = MutableLiveData<Unit>()
-    val constHeroes: LiveData<Unit>
-        get() = _constHeroes
-
-    private val _constItems = MutableLiveData<Unit>()
-    val constItems: LiveData<Unit>
-        get() = _constItems
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String>
@@ -108,66 +94,6 @@ class PatchViewModel(private val application: App) : ViewModel() {
                     _error.value = t.message.toString()
                     loadingPatchNotes = false
                 }
-            }
-            )
-        }
-    }
-
-    fun loadHeroes() {
-        if (loadingHeroes) return
-        if (ConstData.heroes.isNotEmpty()) {
-            _constHeroes.value = Unit
-            loadingHeroes = false
-        } else {
-            loadingHeroes = true
-            retrofit.getConstHeroes().enqueue(object : Callback<Map<String, HeroResult>> {
-                override fun onResponse(
-                    call: Call<Map<String, HeroResult>>,
-                    response: Response<Map<String, HeroResult>>
-                ) {
-                    Log.d("RETROFIT_CALL", "AccountViewModel: loadHeroes")
-                    val body = response.body()
-                    if (body != null) {
-                        ConstData.heroes = body.values.toList().sortedBy { it.localizedName }
-                        _constHeroes.value = Unit
-                        loadingHeroes = false
-                    }
-                }
-
-                override fun onFailure(call: Call<Map<String, HeroResult>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingHeroes = false
-                }
-            })
-        }
-    }
-
-    fun loadItems() {
-        if (loadingItems) return
-        if (ConstData.items.isNotEmpty()) {
-            _constItems.value = Unit
-            loadingItems = false
-        } else {
-            loadingItems = true
-            retrofit.getItems().enqueue(object : Callback<Map<String, ItemResult>> {
-                override fun onResponse(
-                    call: Call<Map<String, ItemResult>>,
-                    response: Response<Map<String, ItemResult>>
-                ) {
-                    Log.d("RETROFIT_CALL", "MatchViewModel: loadItems")
-                    val body = response.body()
-                    if (body != null) {
-                        ConstData.items = body
-                        _constItems.value = Unit
-                        loadingItems = false
-                    }
-                }
-
-                override fun onFailure(call: Call<Map<String, ItemResult>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingItems = false
-                }
-
             })
         }
     }
@@ -186,15 +112,5 @@ class PatchViewModel(private val application: App) : ViewModel() {
 
     fun clearCurrentPatch() {
         this._currentPatchNotes.value = null
-    }
-
-    class PatchViewModelFactory(private val app: App) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(PatchViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return PatchViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unknown view model class")
-        }
     }
 }

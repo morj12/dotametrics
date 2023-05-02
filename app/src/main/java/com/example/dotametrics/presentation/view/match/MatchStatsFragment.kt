@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.databinding.FragmentMatchStatsBinding
@@ -22,9 +24,7 @@ class MatchStatsFragment : Fragment() {
     private lateinit var radiantAdapter: MatchStatsPlayerAdapter
     private lateinit var direAdapter: MatchStatsPlayerAdapter
 
-    private val viewModel: MatchViewModel by lazy {
-        ViewModelProvider(requireActivity())[MatchViewModel::class.java]
-    }
+    private val viewModel: MatchViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

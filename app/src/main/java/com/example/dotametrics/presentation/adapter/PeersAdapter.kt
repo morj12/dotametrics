@@ -6,13 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.example.dotametrics.R
 import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.databinding.PeersItemBinding
 import com.example.dotametrics.util.Datetime
-import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.GlideManager.requestOptions
 
 class PeersAdapter : ListAdapter<PeersResult, PeersAdapter.ViewHolder>(PeersCallback()) {
 
@@ -43,7 +41,7 @@ class PeersAdapter : ListAdapter<PeersResult, PeersAdapter.ViewHolder>(PeersCall
         with(holder.binding) {
             Glide.with(root)
                 .load(item.avatarfull)
-                .apply(requestOptions())
+                .apply(requestOptions(root.context))
                 .into(ivPeerImg)
             tvPeerName.text = item.personaname
             tvPeerCount.text = item.withGames.toString()
@@ -60,7 +58,7 @@ class PeersAdapter : ListAdapter<PeersResult, PeersAdapter.ViewHolder>(PeersCall
                 )
             }
             item.lastPlayed?.let {
-                val date = Datetime.getDateTime(it)
+                val date = Datetime.formatDate(it)
                 tvPeerLastDate.text = root.context.getString(R.string.last_match_time, date)
             }
 

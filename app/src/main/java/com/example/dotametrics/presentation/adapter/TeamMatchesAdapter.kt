@@ -10,7 +10,7 @@ import com.example.dotametrics.R
 import com.example.dotametrics.data.model.teams.matches.TeamMatchesResult
 import com.example.dotametrics.databinding.TeamMatchItemBinding
 import com.example.dotametrics.util.Datetime
-import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.GlideManager.requestOptions
 
 class TeamMatchesAdapter :
     ListAdapter<TeamMatchesResult, TeamMatchesAdapter.ViewHolder>(TeamMatchesCallback()) {
@@ -42,12 +42,12 @@ class TeamMatchesAdapter :
         with(holder.binding) {
             Glide.with(root)
                 .load(item.opposingTeamLogo)
-                .apply(requestOptions())
+                .apply(requestOptions(root.context))
                 .into(ivTeamMatchesEnemy)
             item.duration?.let { tvTeamMatchesDuration.text = Datetime.getStringTime(it) }
             tvTeamMatchesLeague.text = item.leagueName
             tvTeamMatchesEnemyName.text = item.opposingTeamName
-            tvTeamMatchesDate.text = item.startTime?.let { Datetime.getDateTime(it) }
+            tvTeamMatchesDate.text = item.startTime?.let { Datetime.formatDate(it) }
             if (item.radiant != null && item.radiantWin != null) {
                 tvTeamMatchesScore.text = if (item.radiant!!) item.radiantScore.toString()
                 else item.direScore.toString()

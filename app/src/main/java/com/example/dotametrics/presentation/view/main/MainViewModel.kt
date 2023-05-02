@@ -10,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel(private val application: App) : ViewModel() {
+class MainViewModel(private val app: App) : ViewModel() {
 
     private val _results = MutableLiveData<List<SearchResult>>()
     val results: LiveData<List<SearchResult>>
@@ -22,7 +22,7 @@ class MainViewModel(private val application: App) : ViewModel() {
 
     private val retrofit = RetrofitInstance.getService()
 
-    private val repository = PlayerRepository(application.db)
+    private val repository = PlayerRepository(app.db)
 
     val players = repository.getPlayers().asLiveData()
 

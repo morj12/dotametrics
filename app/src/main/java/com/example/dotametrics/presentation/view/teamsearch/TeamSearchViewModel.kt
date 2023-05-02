@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.dotametrics.App
 import com.example.dotametrics.data.model.teams.TeamsResult
 import com.example.dotametrics.data.service.RetrofitInstance
 import com.example.dotametrics.util.ConstData
@@ -13,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TeamSearchViewModel(private val application: App) : ViewModel() {
+class TeamSearchViewModel : ViewModel() {
 
     private val _teams = MutableLiveData<Unit>()
     val teams: LiveData<Unit>
@@ -56,16 +54,6 @@ class TeamSearchViewModel(private val application: App) : ViewModel() {
         } else {
             _filteredTeams.value =
                 ConstData.teams.filter { it.name!!.lowercase().contains(name.lowercase()) }
-        }
-    }
-
-    class TeamSearchViewModelFactory(private val app: App) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(TeamSearchViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return TeamSearchViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unknown view model class")
         }
     }
 }

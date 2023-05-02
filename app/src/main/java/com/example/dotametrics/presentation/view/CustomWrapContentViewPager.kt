@@ -1,4 +1,4 @@
-package com.example.dotametrics.util
+package com.example.dotametrics.presentation.view
 
 import android.content.Context
 import android.util.AttributeSet

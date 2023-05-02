@@ -11,6 +11,7 @@ import com.example.dotametrics.R
 import com.example.dotametrics.data.model.constants.heroes.HeroResult
 import com.example.dotametrics.databinding.ActivityHeroSearchBinding
 import com.example.dotametrics.presentation.adapter.HeroSearchAdapter
+import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.presentation.view.DrawerActivity
 import com.example.dotametrics.presentation.view.hero.HeroActivity
 import com.google.android.material.snackbar.Snackbar
@@ -19,8 +20,10 @@ class HeroSearchActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityHeroSearchBinding
 
-    private val viewModel: HeroSearchViewModel by viewModels {
-        HeroSearchViewModel.HeroSearchViewModelFactory(applicationContext as App)
+    private val viewModel: HeroSearchViewModel by viewModels()
+
+    private val constViewModel: ConstViewModel by viewModels {
+        ConstViewModel.ConstViewModelFactory(applicationContext as App)
     }
 
     private lateinit var adapter: HeroSearchAdapter
@@ -38,7 +41,7 @@ class HeroSearchActivity : DrawerActivity() {
 
         allocateActivityTitle(getString(R.string.heroes))
 
-        if (viewModel.heroes.value == null) viewModel.loadHeroes()
+        if (constViewModel.heroes.value == null) constViewModel.loadHeroes()
         initRecyclerView()
         initListeners()
         observe()
@@ -74,7 +77,7 @@ class HeroSearchActivity : DrawerActivity() {
     }
 
     private fun observe() {
-        viewModel.heroes.observe(this) {
+        constViewModel.heroes.observe(this) {
             loadData()
         }
         viewModel.filteredHeroes.observe(this) {
@@ -84,7 +87,7 @@ class HeroSearchActivity : DrawerActivity() {
                 binding.pbSearchHeroes.visibility = View.INVISIBLE
             }
         }
-        viewModel.error.observe(this) {
+        constViewModel.error.observe(this) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
             binding.btSearchHeroes.visibility = View.VISIBLE
             binding.pbSearchHeroes.visibility = View.INVISIBLE

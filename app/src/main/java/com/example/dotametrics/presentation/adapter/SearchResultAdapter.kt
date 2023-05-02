@@ -6,13 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.example.dotametrics.util.Datetime
 import com.example.dotametrics.R
 import com.example.dotametrics.data.model.search.SearchResult
 import com.example.dotametrics.databinding.SearchResultItemBinding
-import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.GlideManager.requestOptions
 
 class SearchResultAdapter :
     ListAdapter<SearchResult, SearchResultAdapter.ViewHolder>(SearchResultCallback()) {
@@ -48,7 +46,7 @@ class SearchResultAdapter :
             searchResultLastMatch.text = root.context.getString(R.string.last_match_time, date)
             Glide.with(this.root)
                 .load(item.avatarfull)
-                .apply(requestOptions())
+                .apply(requestOptions(root.context))
                 .into(searchIcon)
             root.setOnClickListener {
                 onItemClickedListener?.invoke(item)

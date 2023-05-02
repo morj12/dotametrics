@@ -13,6 +13,7 @@ import com.example.dotametrics.App
 import com.example.dotametrics.data.model.players.peers.PeersResult
 import com.example.dotametrics.databinding.FragmentPeersBinding
 import com.example.dotametrics.presentation.adapter.PeersAdapter
+import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
@@ -28,6 +29,7 @@ class PeersFragment : Fragment() {
     private val viewModel: AccountViewModel by activityViewModels {
         AccountViewModel.AccountViewModelFactory((context?.applicationContext as App))
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

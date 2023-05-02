@@ -28,8 +28,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="@string/patch_general"
-            android:textSize="16sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_patchnotes_name" />
 
         <TextView
@@ -48,8 +50,10 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:text="@string/patchnotes_heroes"
-            android:textSize="16sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_patchnotes_general_list" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -66,8 +70,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="@string/patchnotes_items"
-            android:textSize="16sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rc_patchnotes_heroes" />
 
         <androidx.recyclerview.widget.RecyclerView

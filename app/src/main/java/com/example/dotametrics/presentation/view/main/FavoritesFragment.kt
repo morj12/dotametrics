@@ -15,6 +15,7 @@ import com.example.dotametrics.data.db.dbmodel.PlayerDbModel
 import com.example.dotametrics.databinding.FragmentFavoritesBinding
 import com.example.dotametrics.presentation.adapter.FavoriteAdapter
 import com.example.dotametrics.presentation.adapter.MatchSkillsPlayerAdapter
+import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.presentation.view.account.AccountActivity
 
 class FavoritesFragment : Fragment() {

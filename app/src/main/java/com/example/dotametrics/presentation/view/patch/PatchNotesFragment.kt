@@ -13,7 +13,9 @@ import com.example.dotametrics.data.model.constants.patch.PatchNotesResult
 import com.example.dotametrics.databinding.FragmentPatchNotesBinding
 import com.example.dotametrics.presentation.adapter.PatchNotesHeroesAdapter
 import com.example.dotametrics.presentation.adapter.PatchNotesItemsAdapter
+import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.util.ConstData
+import com.google.android.material.snackbar.Snackbar
 
 class PatchNotesFragment : Fragment() {
 
@@ -21,8 +23,10 @@ class PatchNotesFragment : Fragment() {
     private val binding: FragmentPatchNotesBinding
         get() = _binding ?: throw RuntimeException("FragmentPatchNotesBinding is null")
 
-    private val viewModel: PatchViewModel by activityViewModels {
-        PatchViewModel.PatchViewModelFactory(context?.applicationContext as App)
+    private val viewModel: PatchViewModel by activityViewModels()
+
+    private val constViewModel: ConstViewModel by activityViewModels {
+        ConstViewModel.ConstViewModelFactory((context?.applicationContext as App))
     }
 
     private lateinit var heroesAdapter: PatchNotesHeroesAdapter
@@ -38,8 +42,8 @@ class PatchNotesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadItems()
-        viewModel.loadHeroes()
+        constViewModel.loadItems()
+        constViewModel.loadHeroes()
         initRecyclerView()
         observe()
     }
@@ -55,19 +59,15 @@ class PatchNotesFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.constHeroes.observe(viewLifecycleOwner) {
+        constViewModel.heroes.observe(viewLifecycleOwner) {
             checkData()
         }
-        viewModel.constItems.observe(viewLifecycleOwner) {
+        constViewModel.constItems.observe(viewLifecycleOwner) {
             checkData()
         }
-//        viewModel.currentPatchNotes.observe(viewLifecycleOwner) {
-//            if (it == null) {
-//                requireActivity().supportFragmentManager.popBackStack()
-//            } else {
-//                loadData(it)
-//            }
-//        }
+        constViewModel.error.observe(viewLifecycleOwner) {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     private fun checkData() {
@@ -83,8 +83,8 @@ class PatchNotesFragment : Fragment() {
                 }
             }
         } else {
-            if (!heroesLoaded) viewModel.loadHeroes()
-            if (!itemsLoaded) viewModel.loadItems()
+            if (!heroesLoaded) constViewModel.loadHeroes()
+            if (!itemsLoaded) constViewModel.loadItems()
         }
     }
 

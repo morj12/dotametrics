@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
@@ -30,9 +31,7 @@ class TeamPlayersFragment : Fragment() {
         startActivity(intent)
     }
 
-    private val viewModel: TeamViewModel by activityViewModels {
-        TeamViewModel.TeamViewModelFactory(context?.applicationContext as App)
-    }
+    private val viewModel: TeamViewModel by activityViewModels()
 
     private lateinit var adapter: TeamPlayersAdapter
 

@@ -1,10 +1,12 @@
 package com.example.dotametrics.presentation.view.match
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
+import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.databinding.ActivityMatchBinding
 import com.example.dotametrics.presentation.adapter.MatchSectionsPagerAdapter
+import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.presentation.view.DrawerActivity
 import com.example.dotametrics.util.*
 import com.google.android.material.snackbar.Snackbar
@@ -13,8 +15,10 @@ class MatchActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityMatchBinding
 
-    private val viewModel: MatchViewModel by lazy {
-        ViewModelProvider(this)[MatchViewModel::class.java]
+    private val viewModel: MatchViewModel  by viewModels()
+
+    private val constViewModel: ConstViewModel by viewModels {
+        ConstViewModel.ConstViewModelFactory(applicationContext as App)
     }
 
     private var id: Long = 0L
@@ -43,11 +47,11 @@ class MatchActivity : DrawerActivity() {
     }
 
     private fun initConstants() {
-        viewModel.loadRegions()
-        viewModel.loadItems()
-        viewModel.loadAbilityIds()
-        viewModel.loadAbilities()
-        viewModel.loadLobbyTypes()
+        constViewModel.loadRegions()
+        constViewModel.loadItems()
+        constViewModel.loadAbilityIds()
+        constViewModel.loadAbilities()
+        constViewModel.loadLobbyTypes()
     }
 
     private fun loadData() {
@@ -58,9 +62,9 @@ class MatchActivity : DrawerActivity() {
         if (regionsLoaded && itemsLoaded && lobbiesLoaded) {
             if (viewModel.result.value == null) viewModel.loadMatch()
         } else {
-            if (!regionsLoaded) viewModel.loadRegions()
-            if (!itemsLoaded) viewModel.loadItems()
-            if (!lobbiesLoaded) viewModel.loadLobbyTypes()
+            if (!regionsLoaded) constViewModel.loadRegions()
+            if (!itemsLoaded) constViewModel.loadItems()
+            if (!lobbiesLoaded) constViewModel.loadLobbyTypes()
         }
     }
 
@@ -72,18 +76,18 @@ class MatchActivity : DrawerActivity() {
     }
 
     private fun observe() = with(binding) {
-        viewModel.constRegions.observe(this@MatchActivity) {
+        constViewModel.constRegions.observe(this@MatchActivity) {
             loadData()
         }
-        viewModel.constItems.observe(this@MatchActivity) {
+        constViewModel.constItems.observe(this@MatchActivity) {
             loadData()
         }
-        viewModel.constLobbyTypes.observe(this@MatchActivity) {
+        constViewModel.constLobbyTypes.observe(this@MatchActivity) {
             loadData()
         }
         viewModel.result.observe(this@MatchActivity) {
             tvMatchDuration.text = Datetime.getStringTime(it.duration!!)
-            tvMatchDatetime.text = Datetime.getDateTime(it.startTime!!)
+            tvMatchDatetime.text = Datetime.formatDate(it.startTime!!)
             tvMatchRadiantPoints.text = it.radiantScore.toString()
             tvMatchDirePoints.text = it.direScore.toString()
             tvMatchResult.text =
@@ -91,7 +95,7 @@ class MatchActivity : DrawerActivity() {
                 else root.context.getString(R.string.dire_won)
             tvMatchLobbyType.text =
                 getString(
-                    LobbyTypeMapper.getLobbyResource(
+                    LobbyTypeMapper().getLobbyResource(
                         ConstData.lobbies.first { lobby -> it.lobbyType == lobby.id }.name!!,
                         this@MatchActivity
                     )
@@ -100,6 +104,9 @@ class MatchActivity : DrawerActivity() {
             binding.tvMatchResult.stopLoading(binding.pbTvMatchResult)
         }
         viewModel.error.observe(this@MatchActivity) {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+        }
+        constViewModel.error.observe(this@MatchActivity) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
     }

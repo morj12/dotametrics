@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.data.db.dbmodel.PlayerDbModel
 import com.example.dotametrics.databinding.FavoriteItemBinding
-import com.example.dotametrics.util.GlideRequestOptions.requestOptions
+import com.example.dotametrics.util.GlideManager.requestOptions
 
 class FavoriteAdapter :
     ListAdapter<PlayerDbModel, FavoriteAdapter.ViewHolder>(FavoriteCallback()) {
@@ -43,7 +43,7 @@ class FavoriteAdapter :
             favResultId.text = item.id.toString()
             Glide.with(this.root)
                 .load(item.avatar)
-                .apply(requestOptions())
+                .apply(requestOptions(root.context))
                 .into(favIcon)
 
             root.setOnClickListener {

@@ -3,7 +3,7 @@ package com.example.dotametrics.util
 import android.content.Context
 import com.example.dotametrics.R
 
-object AttrMapper {
+class AttrMapper {
 
     fun mapAttr(context: Context, attr: String?): String {
         return when (attr) {

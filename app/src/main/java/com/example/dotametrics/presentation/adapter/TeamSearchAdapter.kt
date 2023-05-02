@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.dotametrics.R
 import com.example.dotametrics.data.model.teams.TeamsResult
 import com.example.dotametrics.databinding.TeamsItemBinding
-import com.example.dotametrics.util.GlideRequestOptions
+import com.example.dotametrics.util.GlideManager
 
 class TeamSearchAdapter :
     ListAdapter<TeamsResult, TeamSearchAdapter.ViewHolder>(TeamSearchResultCallback()) {
@@ -43,7 +43,7 @@ class TeamSearchAdapter :
             teamsRating.text = root.context.getString(R.string.team_rating, item.rating.toString())
             Glide.with(this.root)
                 .load(item.logoUrl)
-                .apply(GlideRequestOptions.requestOptions())
+                .apply(GlideManager.requestOptions(root.context))
                 .into(teamsIcon)
             root.setOnClickListener {
                 onItemClickedListener?.invoke(item)
