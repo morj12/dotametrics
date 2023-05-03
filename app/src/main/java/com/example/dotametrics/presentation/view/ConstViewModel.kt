@@ -248,7 +248,7 @@ class ConstViewModel(private val app: App) : ViewModel() {
                     val body = response.body()
                     if (body != null) {
                         ConstData.abilities = body
-                        _constAbilityIds.value = Unit
+                        _constAbilities.value = Unit
                         loadingAbilities = false
                     }
                 }
