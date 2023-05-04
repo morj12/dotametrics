@@ -41,7 +41,7 @@ class HeroSearchActivity : DrawerActivity() {
 
         allocateActivityTitle(getString(R.string.heroes))
 
-        if (constViewModel.heroes.value == null) constViewModel.loadHeroes()
+        constViewModel.loadHeroes()
         initRecyclerView()
         initListeners()
         observe()

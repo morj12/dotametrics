@@ -27,6 +27,9 @@ class ConstViewModel(private val app: App) : ViewModel() {
     private var loadingItems = false
     private var loadingAbilityIds = false
     private var loadingAbilities = false
+    private var loadingLore = false
+    private var loadingAghs = false
+    private var loadingHeroAbilities = false
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String>
@@ -263,68 +266,91 @@ class ConstViewModel(private val app: App) : ViewModel() {
     }
 
     fun loadLore() {
-        retrofit.getHeroLore().enqueue(object : Callback<Map<String, String>> {
-
-            override fun onResponse(
-                call: Call<Map<String, String>>,
-                response: Response<Map<String, String>>
-            ) {
-                Log.d("RETROFIT_CALL", "ConstViewModel: loadLore")
-                val body = response.body()
-                if (body != null) {
-                    ConstData.lores = body
-                    _constLores.value = Unit
-                }
-            }
-
-            override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
-                _error.value = t.message.toString()
-            }
-        })
-    }
-
-    fun loadAghs() {
-        retrofit.getAghs().enqueue(object : Callback<List<AghsResult>> {
-            override fun onResponse(
-                call: Call<List<AghsResult>>,
-                response: Response<List<AghsResult>>
-            ) {
-                Log.d("RETROFIT_CALL", "ConstViewModel: loadAghs")
-                val body = response.body()
-                if (body != null) {
-                    ConstData.aghs = body
-                    _constAghs.value = Unit
-                }
-            }
-
-            override fun onFailure(call: Call<List<AghsResult>>, t: Throwable) {
-                _error.value = t.message.toString()
-            }
-        })
-    }
-
-    fun loadHeroAbilities() {
-        retrofit.getHeroAbilities()
-            .enqueue(object : Callback<Map<String, HeroAbilitiesResult>> {
+        if (loadingLore) return
+        if (ConstData.lores.isNotEmpty()) {
+            _constLores.value = Unit
+            loadingLore = false
+        } else {
+            retrofit.getHeroLore().enqueue(object : Callback<Map<String, String>> {
                 override fun onResponse(
-                    call: Call<Map<String, HeroAbilitiesResult>>,
-                    response: Response<Map<String, HeroAbilitiesResult>>
+                    call: Call<Map<String, String>>,
+                    response: Response<Map<String, String>>
                 ) {
-                    Log.d("RETROFIT_CALL", "ConstViewModel: loadHeroAbilities")
+                    Log.d("RETROFIT_CALL", "ConstViewModel: loadLore")
                     val body = response.body()
                     if (body != null) {
-                        ConstData.heroAbilities = body
-                        _constHeroAbilities.value = Unit
+                        ConstData.lores = body
+                        _constLores.value = Unit
+                        loadingLore = false
                     }
                 }
 
-                override fun onFailure(
-                    call: Call<Map<String, HeroAbilitiesResult>>,
-                    t: Throwable
-                ) {
+                override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
                     _error.value = t.message.toString()
+                    loadingLore = false
                 }
             })
+        }
+    }
+
+    fun loadAghs() {
+        if (loadingAghs) return
+        if (ConstData.aghs.isNotEmpty()) {
+            _constAghs.value = Unit
+            loadingAghs = false
+        } else {
+            retrofit.getAghs().enqueue(object : Callback<List<AghsResult>> {
+                override fun onResponse(
+                    call: Call<List<AghsResult>>,
+                    response: Response<List<AghsResult>>
+                ) {
+                    Log.d("RETROFIT_CALL", "ConstViewModel: loadAghs")
+                    val body = response.body()
+                    if (body != null) {
+                        ConstData.aghs = body
+                        _constAghs.value = Unit
+                        loadingAghs = false
+                    }
+                }
+
+                override fun onFailure(call: Call<List<AghsResult>>, t: Throwable) {
+                    _error.value = t.message.toString()
+                    loadingAghs = false
+                }
+            })
+        }
+    }
+
+    fun loadHeroAbilities() {
+        if (loadingHeroAbilities) return
+        if (ConstData.heroAbilities.isNotEmpty()) {
+            _constHeroAbilities.value = Unit
+            loadingHeroAbilities = false
+        } else {
+            retrofit.getHeroAbilities()
+                .enqueue(object : Callback<Map<String, HeroAbilitiesResult>> {
+                    override fun onResponse(
+                        call: Call<Map<String, HeroAbilitiesResult>>,
+                        response: Response<Map<String, HeroAbilitiesResult>>
+                    ) {
+                        Log.d("RETROFIT_CALL", "ConstViewModel: loadHeroAbilities")
+                        val body = response.body()
+                        if (body != null) {
+                            ConstData.heroAbilities = body
+                            _constHeroAbilities.value = Unit
+                            loadingHeroAbilities = false
+                        }
+                    }
+
+                    override fun onFailure(
+                        call: Call<Map<String, HeroAbilitiesResult>>,
+                        t: Throwable
+                    ) {
+                        _error.value = t.message.toString()
+                        loadingHeroAbilities = false
+                    }
+                })
+        }
     }
 
     class ConstViewModelFactory(private val app: App) : ViewModelProvider.Factory {

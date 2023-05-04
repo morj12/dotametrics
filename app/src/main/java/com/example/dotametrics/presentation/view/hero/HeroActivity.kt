@@ -56,9 +56,9 @@ class HeroActivity : DrawerActivity() {
     }
 
     private fun loadConstants() {
-        if (constViewModel.constLores.value == null) constViewModel.loadLore()
-        if (constViewModel.constAghs.value == null) constViewModel.loadAghs()
-        if (constViewModel.constHeroAbilities.value == null) constViewModel.loadHeroAbilities()
+        constViewModel.loadLore()
+        constViewModel.loadAghs()
+        constViewModel.loadHeroAbilities()
     }
 
     private fun initRecyclerView() = with(binding) {
