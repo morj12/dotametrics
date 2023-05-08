@@ -2,15 +2,13 @@ package com.example.dotametrics.presentation.view.teamsearch
 
 import android.content.Intent
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dotametrics.App
 import com.example.dotametrics.R
-import com.example.dotametrics.data.model.teams.TeamsResult
+import com.example.dotametrics.data.remote.model.teams.TeamsResult
 import com.example.dotametrics.databinding.ActivityTeamSearchBinding
 import com.example.dotametrics.presentation.adapter.TeamSearchAdapter
 import com.example.dotametrics.presentation.view.DrawerActivity

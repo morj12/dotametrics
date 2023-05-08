@@ -7,13 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
-import com.example.dotametrics.data.model.players.peers.PeersResult
+import com.example.dotametrics.data.remote.model.players.peers.PeersResult
 import com.example.dotametrics.databinding.FragmentPeersBinding
 import com.example.dotametrics.presentation.adapter.PeersAdapter
-import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar

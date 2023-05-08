@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.dotametrics.data.model.matches.MatchDataResult
-import com.example.dotametrics.data.service.RetrofitInstance
+import com.example.dotametrics.data.remote.model.matches.MatchDataResult
+import com.example.dotametrics.data.remote.service.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

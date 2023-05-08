@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.R
-import com.example.dotametrics.data.model.teams.matches.TeamMatchesResult
+import com.example.dotametrics.data.remote.model.teams.matches.TeamMatchesResult
 import com.example.dotametrics.databinding.TeamMatchItemBinding
 import com.example.dotametrics.util.Datetime
 import com.example.dotametrics.util.GlideManager.requestOptions

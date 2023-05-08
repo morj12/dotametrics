@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.R
-import com.example.dotametrics.data.model.constants.lobbytypes.LobbyTypeResult
-import com.example.dotametrics.data.model.players.matches.MatchesResult
+import com.example.dotametrics.data.remote.model.constants.lobbytypes.LobbyTypeResult
+import com.example.dotametrics.data.remote.model.players.matches.MatchesResult
 import com.example.dotametrics.databinding.MatchItemBinding
 import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.Datetime

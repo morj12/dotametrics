@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.example.dotametrics.data.model.constants.heroes.HeroResult
+import com.example.dotametrics.data.remote.model.constants.heroes.HeroResult
 import com.example.dotametrics.databinding.SearchHeroItemBinding
 import com.example.dotametrics.util.GlideManager
 import com.example.dotametrics.util.GlideManager.URL

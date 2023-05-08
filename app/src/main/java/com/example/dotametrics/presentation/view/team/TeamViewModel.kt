@@ -4,11 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.dotametrics.data.model.teams.TeamsResult
-import com.example.dotametrics.data.model.teams.heroes.TeamHeroesResult
-import com.example.dotametrics.data.model.teams.matches.TeamMatchesResult
-import com.example.dotametrics.data.model.teams.players.TeamPlayersResult
-import com.example.dotametrics.data.service.RetrofitInstance
+import com.example.dotametrics.data.remote.model.teams.TeamsResult
+import com.example.dotametrics.data.remote.model.teams.heroes.TeamHeroesResult
+import com.example.dotametrics.data.remote.model.teams.matches.TeamMatchesResult
+import com.example.dotametrics.data.remote.model.teams.players.TeamPlayersResult
+import com.example.dotametrics.data.remote.service.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

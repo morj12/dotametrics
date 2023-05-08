@@ -6,11 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dotametrics.data.model.matches.Players
+import com.example.dotametrics.data.remote.model.matches.Players
 import com.example.dotametrics.databinding.FragmentMatchOverviewBinding
 import com.example.dotametrics.presentation.adapter.MatchOverviewPlayerAdapter
 import com.example.dotametrics.presentation.view.account.AccountActivity

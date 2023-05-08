@@ -4,11 +4,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.dotametrics.App
 import com.example.dotametrics.R
-import com.example.dotametrics.data.model.constants.abilities.AbilityResult
-import com.example.dotametrics.data.model.constants.heroes.HeroResult
+import com.example.dotametrics.data.remote.model.constants.abilities.AbilityResult
+import com.example.dotametrics.data.remote.model.constants.heroes.HeroResult
 import com.example.dotametrics.databinding.ActivityHeroBinding
 import com.example.dotametrics.presentation.adapter.HeroSkillsAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel

@@ -8,7 +8,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dotametrics.App
 import com.example.dotametrics.R
-import com.example.dotametrics.data.model.constants.heroes.HeroResult
+import com.example.dotametrics.data.remote.model.constants.heroes.HeroResult
 import com.example.dotametrics.databinding.ActivityHeroSearchBinding
 import com.example.dotametrics.presentation.adapter.HeroSearchAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel

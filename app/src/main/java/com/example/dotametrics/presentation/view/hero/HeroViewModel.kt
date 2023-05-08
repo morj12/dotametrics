@@ -3,9 +3,7 @@ package com.example.dotametrics.presentation.view.hero
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.dotametrics.App
-import com.example.dotametrics.data.model.constants.heroes.HeroResult
+import com.example.dotametrics.data.remote.model.constants.heroes.HeroResult
 
 class HeroViewModel : ViewModel() {
 

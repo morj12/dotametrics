@@ -3,9 +3,9 @@ package com.example.dotametrics.presentation.view.main
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.dotametrics.App
-import com.example.dotametrics.data.db.repository.PlayerRepository
-import com.example.dotametrics.data.model.search.SearchResult
-import com.example.dotametrics.data.service.RetrofitInstance
+import com.example.dotametrics.data.local.repository.PlayerRepository
+import com.example.dotametrics.data.remote.model.search.SearchResult
+import com.example.dotametrics.data.remote.service.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.R
-import com.example.dotametrics.data.model.players.heroes.PlayerHeroResult
+import com.example.dotametrics.data.remote.model.players.heroes.PlayerHeroResult
 import com.example.dotametrics.databinding.AccHeroItemBinding
 import com.example.dotametrics.util.ConstData
 import com.example.dotametrics.util.Datetime

@@ -3,7 +3,7 @@ package com.example.dotametrics.presentation.view.herosearch
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.dotametrics.data.model.constants.heroes.HeroResult
+import com.example.dotametrics.data.remote.model.constants.heroes.HeroResult
 import com.example.dotametrics.util.ConstData
 
 class HeroSearchViewModel : ViewModel() {

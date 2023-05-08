@@ -5,8 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dotametrics.R
-import com.example.dotametrics.data.model.players.totals.TotalsResult
+import com.example.dotametrics.data.remote.model.players.totals.TotalsResult
 import com.example.dotametrics.databinding.TotalsItemBinding
 import com.example.dotametrics.util.StatsMapper
 

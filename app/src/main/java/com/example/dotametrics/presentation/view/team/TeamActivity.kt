@@ -3,9 +3,8 @@ package com.example.dotametrics.presentation.view.team
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
-import com.example.dotametrics.App
 import com.example.dotametrics.R
-import com.example.dotametrics.data.model.teams.TeamsResult
+import com.example.dotametrics.data.remote.model.teams.TeamsResult
 import com.example.dotametrics.databinding.ActivityTeamBinding
 import com.example.dotametrics.presentation.adapter.TeamSectionsPagerAdapter
 import com.example.dotametrics.presentation.view.DrawerActivity
