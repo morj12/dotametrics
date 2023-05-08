@@ -33,7 +33,6 @@ class TeamSearchViewModel : ViewModel() {
                 call: Call<List<TeamsResult>>,
                 response: Response<List<TeamsResult>>
             ) {
-                Log.d("RETROFIT_CALL", "TeamSearchViewModel: loadTeams")
                 val body = response.body()
                 if (body != null) {
                     ConstData.teams = body

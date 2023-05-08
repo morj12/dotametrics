@@ -97,7 +97,6 @@ class ConstViewModel(private val app: App) : ViewModel() {
                     call: Call<Map<String, HeroResult>>,
                     response: Response<Map<String, HeroResult>>
                 ) {
-                    Log.d("RETROFIT_CALL", "ConstViewModel: loadHeroes")
                     val body = response.body()
                     if (body != null) {
                         ConstData.heroes = body.values.toList().sortedBy { it.localizedName }
@@ -126,7 +125,6 @@ class ConstViewModel(private val app: App) : ViewModel() {
                     call: Call<Map<String, LobbyTypeResult>>,
                     response: Response<Map<String, LobbyTypeResult>>
                 ) {
-                    Log.d("RETROFIT_CALL", "ConstViewModel: loadLobbyTypes")
                     val body = response.body()
                     if (body != null) {
                         val usefulLobbies = app.resources.getStringArray(R.array.lobbies_array)
@@ -157,7 +155,6 @@ class ConstViewModel(private val app: App) : ViewModel() {
                     call: Call<Map<String, String>>,
                     response: Response<Map<String, String>>
                 ) {
-                    Log.d("RETROFIT_CALL", "ConstViewModel: loadRegions")
                     val body = response.body()
                     if (body != null) {
                         ConstData.regions = body.mapKeys { it.key.toInt() }
@@ -187,7 +184,6 @@ class ConstViewModel(private val app: App) : ViewModel() {
                     call: Call<Map<String, ItemResult>>,
                     response: Response<Map<String, ItemResult>>
                 ) {
-                    Log.d("RETROFIT_CALL", "ConstViewModel: loadItems")
                     val body = response.body()
                     if (body != null) {
                         ConstData.items = body
@@ -217,7 +213,6 @@ class ConstViewModel(private val app: App) : ViewModel() {
                     call: Call<Map<String, String>>,
                     response: Response<Map<String, String>>
                 ) {
-                    Log.d("RETROFIT_CALL", "ConstViewModel: loadAbilityIds")
                     val body = response.body()
                     if (body != null) {
                         ConstData.abilityIds = body
@@ -247,7 +242,6 @@ class ConstViewModel(private val app: App) : ViewModel() {
                     call: Call<Map<String, AbilityResult>>,
                     response: Response<Map<String, AbilityResult>>
                 ) {
-                    Log.d("RETROFIT_CALL", "ConstViewModel: loadAbilities")
                     val body = response.body()
                     if (body != null) {
                         ConstData.abilities = body
@@ -276,7 +270,6 @@ class ConstViewModel(private val app: App) : ViewModel() {
                     call: Call<Map<String, String>>,
                     response: Response<Map<String, String>>
                 ) {
-                    Log.d("RETROFIT_CALL", "ConstViewModel: loadLore")
                     val body = response.body()
                     if (body != null) {
                         ConstData.lores = body
@@ -304,7 +297,6 @@ class ConstViewModel(private val app: App) : ViewModel() {
                     call: Call<List<AghsResult>>,
                     response: Response<List<AghsResult>>
                 ) {
-                    Log.d("RETROFIT_CALL", "ConstViewModel: loadAghs")
                     val body = response.body()
                     if (body != null) {
                         ConstData.aghs = body
@@ -333,7 +325,6 @@ class ConstViewModel(private val app: App) : ViewModel() {
                         call: Call<Map<String, HeroAbilitiesResult>>,
                         response: Response<Map<String, HeroAbilitiesResult>>
                     ) {
-                        Log.d("RETROFIT_CALL", "ConstViewModel: loadHeroAbilities")
                         val body = response.body()
                         if (body != null) {
                             ConstData.heroAbilities = body

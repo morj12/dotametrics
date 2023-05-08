@@ -33,7 +33,6 @@ class MainViewModel(private val app: App) : ViewModel() {
                     call: Call<List<SearchResult>>,
                     response: Response<List<SearchResult>>
                 ) {
-                    Log.d("RETROFIT_CALL", "MainViewModel: search")
                     _results.value = response.body()
                 }
 

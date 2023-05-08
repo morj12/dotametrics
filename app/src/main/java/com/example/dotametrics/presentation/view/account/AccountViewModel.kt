@@ -79,7 +79,6 @@ class AccountViewModel(private val app: App) : ViewModel() {
                     call: Call<PlayersResult>,
                     response: Response<PlayersResult>
                 ) {
-                    Log.d("RETROFIT_CALL", "AccountViewModel: loadUser getPlayerResults")
                     _result.value = response.body()
                 }
 
@@ -89,7 +88,6 @@ class AccountViewModel(private val app: App) : ViewModel() {
             })
             retrofit.getWLResults(userId, 20, null, null).enqueue(object : Callback<WLResult> {
                 override fun onResponse(call: Call<WLResult>, response: Response<WLResult>) {
-                    Log.d("RETROFIT_CALL", "AccountViewModel: loadUser getWLResults")
                     _wl.value = response.body()
                 }
 
@@ -106,7 +104,6 @@ class AccountViewModel(private val app: App) : ViewModel() {
             retrofit.getWLResults(userId, null, lobbyType, heroId)
                 .enqueue(object : Callback<WLResult> {
                     override fun onResponse(call: Call<WLResult>, response: Response<WLResult>) {
-                        Log.d("RETROFIT_CALL", "AccountViewModel: loadFilteredWLResults")
                         _filteredWl.value = response.body()
                     }
 
@@ -124,7 +121,6 @@ class AccountViewModel(private val app: App) : ViewModel() {
                     call: Call<List<TotalsResult>>,
                     response: Response<List<TotalsResult>>
                 ) {
-                    Log.d("RETROFIT_CALL", "AccountViewModel: loadTotals")
                     val usefulTotals = app.resources.getStringArray(R.array.totals_array)
                     _totals.value = response.body()?.filter { usefulTotals.contains(it.field) }
                 }
@@ -145,7 +141,6 @@ class AccountViewModel(private val app: App) : ViewModel() {
                         call: Call<List<PlayerHeroResult>>,
                         response: Response<List<PlayerHeroResult>>
                     ) {
-                        Log.d("RETROFIT_CALL", "AccountViewModel: loadPlayerHeroesResults")
                         _heroes.value = response.body()
                     }
 
@@ -165,7 +160,6 @@ class AccountViewModel(private val app: App) : ViewModel() {
                         call: Call<List<PeersResult>>,
                         response: Response<List<PeersResult>>
                     ) {
-                        Log.d("RETROFIT_CALL", "AccountViewModel: loadPeers")
                         _peers.value = response.body()
                     }
 

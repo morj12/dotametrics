@@ -35,7 +35,6 @@ class MatchViewModel : ViewModel() {
                     call: Call<MatchDataResult>,
                     response: Response<MatchDataResult>
                 ) {
-                    Log.d("RETROFIT_CALL", "MatchViewModel: loadMatch")
                     _result.value = response.body()
                     loadingMatch = false
                 }

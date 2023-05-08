@@ -51,7 +51,6 @@ class PatchViewModel : ViewModel() {
                     call: Call<List<PatchResult>>,
                     response: Response<List<PatchResult>>
                 ) {
-                    Log.d("RETROFIT_CALL", "PatchViewModel: loadPatches")
                     val body = response.body()
                     if (body != null) {
                         ConstData.patches = body.reversed()
@@ -81,7 +80,6 @@ class PatchViewModel : ViewModel() {
                     call: Call<Map<String, PatchNotesResult>>,
                     response: Response<Map<String, PatchNotesResult>>
                 ) {
-                    Log.d("RETROFIT_CALL", "PatchViewModel: loadPatchDetails")
                     val body = response.body()
                     if (body != null) {
                         ConstData.patchNotes = body

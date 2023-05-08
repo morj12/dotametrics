@@ -24,7 +24,6 @@ class MatchDataSource(
                     call: Call<List<MatchesResult>>,
                     response: Response<List<MatchesResult>>
                 ) {
-                    Log.d("RETROFIT_CALL", "MatchDataSource: loadAfter")
                     callback.onResult(response.body() ?: listOf(), params.key + PAGE_SIZE)
                 }
 
@@ -50,7 +49,6 @@ class MatchDataSource(
                 call: Call<List<MatchesResult>>,
                 response: Response<List<MatchesResult>>
             ) {
-                Log.d("RETROFIT_CALL", "MatchDataSource: loadInitial")
                 callback.onResult(response.body() ?: listOf(), null, PAGE_SIZE.toLong())
             }
 

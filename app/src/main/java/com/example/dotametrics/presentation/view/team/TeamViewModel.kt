@@ -49,7 +49,6 @@ class TeamViewModel : ViewModel() {
                         call: Call<List<TeamPlayersResult>>,
                         response: Response<List<TeamPlayersResult>>
                     ) {
-                        Log.d("RETROFIT_CALL", "TeamViewModel: loadPlayers")
                         _players.value = response.body()?.filter { it.isCurrentTeamMember == true }
                     }
 
@@ -69,7 +68,6 @@ class TeamViewModel : ViewModel() {
                         call: Call<List<TeamMatchesResult>>,
                         response: Response<List<TeamMatchesResult>>
                     ) {
-                        Log.d("RETROFIT_CALL", "TeamViewModel: loadMatches")
                         _matches.value = response.body()
                     }
 
@@ -89,7 +87,6 @@ class TeamViewModel : ViewModel() {
                         call: Call<List<TeamHeroesResult>>,
                         response: Response<List<TeamHeroesResult>>
                     ) {
-                        Log.d("RETROFIT_CALL", "TeamViewModel: loadPlayers")
                         _heroes.value = response.body()
                     }
 
