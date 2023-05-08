@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.dotametrics.data.remote.model.constants.patch.PatchResult
 import com.example.dotametrics.data.remote.model.constants.patch.PatchNotesResult
 import com.example.dotametrics.data.remote.service.RetrofitInstance
-import com.example.dotametrics.util.ConstData
+import com.example.dotametrics.data.ConstData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

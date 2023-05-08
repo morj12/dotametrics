@@ -13,7 +13,7 @@ import com.example.dotametrics.presentation.adapter.HeroSkillsAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.presentation.view.DrawerActivity
 import com.example.dotametrics.util.AttrMapper
-import com.example.dotametrics.util.ConstData
+import com.example.dotametrics.data.ConstData
 import com.example.dotametrics.util.GlideManager.URL
 import com.example.dotametrics.util.GlideManager.requestOptions
 import com.example.dotametrics.util.startLoading

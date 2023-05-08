@@ -14,7 +14,7 @@ import com.example.dotametrics.data.remote.model.constants.heroes.HeroResult
 import com.example.dotametrics.data.remote.model.constants.items.ItemResult
 import com.example.dotametrics.data.remote.model.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.data.remote.service.RetrofitInstance
-import com.example.dotametrics.util.ConstData
+import com.example.dotametrics.data.ConstData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

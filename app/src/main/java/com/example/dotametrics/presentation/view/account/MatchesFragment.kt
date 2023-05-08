@@ -16,7 +16,7 @@ import com.example.dotametrics.databinding.FragmentMatchesBinding
 import com.example.dotametrics.presentation.adapter.MatchesResultAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.presentation.view.match.MatchActivity
-import com.example.dotametrics.util.ConstData
+import com.example.dotametrics.data.ConstData
 import com.example.dotametrics.util.LobbyTypeMapper
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading

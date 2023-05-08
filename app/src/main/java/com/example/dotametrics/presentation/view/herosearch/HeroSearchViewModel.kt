@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.dotametrics.data.remote.model.constants.heroes.HeroResult
-import com.example.dotametrics.util.ConstData
+import com.example.dotametrics.data.ConstData
 
 class HeroSearchViewModel : ViewModel() {
 

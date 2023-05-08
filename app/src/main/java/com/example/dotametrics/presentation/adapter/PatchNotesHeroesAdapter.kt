@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.databinding.PatchnotesHeroItemBinding
-import com.example.dotametrics.util.ConstData
+import com.example.dotametrics.data.ConstData
 import com.example.dotametrics.util.GlideManager.URL
 import com.example.dotametrics.util.GlideManager.requestOptions
 

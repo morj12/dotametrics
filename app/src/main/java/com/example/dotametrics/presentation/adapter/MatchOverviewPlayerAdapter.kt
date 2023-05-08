@@ -10,7 +10,7 @@ import com.example.dotametrics.R
 import com.example.dotametrics.data.remote.model.constants.items.ItemResult
 import com.example.dotametrics.data.remote.model.matches.Players
 import com.example.dotametrics.databinding.MatchOverviewItemBinding
-import com.example.dotametrics.util.ConstData
+import com.example.dotametrics.data.ConstData
 import com.example.dotametrics.util.GlideManager.URL
 import com.example.dotametrics.util.GlideManager.requestOptions
 

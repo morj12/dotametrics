@@ -13,7 +13,7 @@ import com.example.dotametrics.R
 import com.example.dotametrics.data.remote.model.constants.patch.PatchResult
 import com.example.dotametrics.databinding.FragmentPatchBinding
 import com.example.dotametrics.presentation.adapter.PatchAdapter
-import com.example.dotametrics.util.ConstData
+import com.example.dotametrics.data.ConstData
 import com.google.android.material.snackbar.Snackbar
 
 class PatchFragment : Fragment() {

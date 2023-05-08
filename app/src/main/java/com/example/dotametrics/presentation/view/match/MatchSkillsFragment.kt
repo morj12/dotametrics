@@ -5,16 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
 import com.example.dotametrics.databinding.FragmentMatchSkillsBinding
 import com.example.dotametrics.presentation.adapter.MatchSkillsPlayerAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
-import com.example.dotametrics.util.ConstData
+import com.example.dotametrics.data.ConstData
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
