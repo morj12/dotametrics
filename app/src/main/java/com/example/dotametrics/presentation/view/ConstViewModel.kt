@@ -59,10 +59,6 @@ class ConstViewModel(private val app: App) : ViewModel() {
     val constAbilities: LiveData<Unit>
         get() = _constAbilities
 
-    private val _teams = MutableLiveData<Unit>()
-    val teams: LiveData<Unit>
-        get() = _teams
-
     private val _constLores = MutableLiveData<Unit>()
     val constLores: LiveData<Unit>
         get() = _constLores
