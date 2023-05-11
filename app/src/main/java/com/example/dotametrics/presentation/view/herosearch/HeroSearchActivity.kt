@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dotametrics.App
@@ -69,6 +70,18 @@ class HeroSearchActivity : DrawerActivity() {
                     edHeroes.text.toString()
                 else null
             )
+        }
+        edHeroes.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                binding.btSearchHeroes.visibility = View.INVISIBLE
+                binding.pbSearchHeroes.visibility = View.VISIBLE
+                viewModel.filterHeroes(
+                    if (binding.edHeroes.text.isNotBlank())
+                        edHeroes.text.toString()
+                    else null
+                )
+            }
+            true
         }
     }
 

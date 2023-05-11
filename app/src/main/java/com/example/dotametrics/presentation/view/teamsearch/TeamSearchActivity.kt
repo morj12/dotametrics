@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -64,6 +65,18 @@ class TeamSearchActivity : DrawerActivity() {
                     edTeams.text.toString()
                 else null
             )
+        }
+        edTeams.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                binding.btSearchTeams.visibility = View.INVISIBLE
+                binding.pbSearchTeams.visibility = View.VISIBLE
+                viewModel.filterTeams(
+                    if (binding.edTeams.text.isNotBlank())
+                        edTeams.text.toString()
+                    else null
+                )
+            }
+            true
         }
     }
 
