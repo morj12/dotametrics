@@ -14,4 +14,9 @@ data class MatchDataResult(
     @SerializedName("start_time") var startTime: Long? = null,
     @SerializedName("players") var players: ArrayList<Players> = arrayListOf(),
     @SerializedName("region") var region: Int? = null
-)
+) {
+    fun isNull() = matchId == null && direScore == null && duration == null
+            && gameMode == null && humanPlayers == null && lobbyType == null
+            && radiantScore == null && radiantWin == null && startTime == null
+            && region == null
+}

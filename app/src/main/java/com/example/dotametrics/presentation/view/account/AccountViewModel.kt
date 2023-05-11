@@ -1,6 +1,5 @@
 package com.example.dotametrics.presentation.view.account
 
-import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -79,7 +78,11 @@ class AccountViewModel(private val app: App) : ViewModel() {
                     call: Call<PlayersResult>,
                     response: Response<PlayersResult>
                 ) {
-                    _result.value = response.body()
+                    val body = response.body()
+                    body?.let {
+                        if (!it.isNull()) _result.value = it
+                    }
+
                 }
 
                 override fun onFailure(call: Call<PlayersResult>, t: Throwable) {
@@ -88,7 +91,10 @@ class AccountViewModel(private val app: App) : ViewModel() {
             })
             retrofit.getWLResults(userId, 20, null, null).enqueue(object : Callback<WLResult> {
                 override fun onResponse(call: Call<WLResult>, response: Response<WLResult>) {
-                    _wl.value = response.body()
+                    val body = response.body()
+                    body?.let {
+                        if (!it.isNull()) _wl.value = it
+                    }
                 }
 
                 override fun onFailure(call: Call<WLResult>, t: Throwable) {
@@ -104,7 +110,10 @@ class AccountViewModel(private val app: App) : ViewModel() {
             retrofit.getWLResults(userId, null, lobbyType, heroId)
                 .enqueue(object : Callback<WLResult> {
                     override fun onResponse(call: Call<WLResult>, response: Response<WLResult>) {
-                        _filteredWl.value = response.body()
+                        val body = response.body()
+                        body?.let {
+                            if (!it.isNull()) _wl.value = it
+                        }
                     }
 
                     override fun onFailure(call: Call<WLResult>, t: Throwable) {

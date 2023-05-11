@@ -1,6 +1,5 @@
 package com.example.dotametrics.presentation.view.main
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.dotametrics.App
 import com.example.dotametrics.data.local.repository.PlayerRepository

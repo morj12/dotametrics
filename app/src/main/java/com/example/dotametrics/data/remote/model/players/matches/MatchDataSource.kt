@@ -1,6 +1,5 @@
 package com.example.dotametrics.data.remote.model.players.matches
 
-import android.util.Log
 import androidx.paging.PageKeyedDataSource
 import com.example.dotametrics.data.remote.service.RetrofitInstance
 import retrofit2.Call

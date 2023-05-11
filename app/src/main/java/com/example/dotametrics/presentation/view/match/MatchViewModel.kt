@@ -1,6 +1,5 @@
 package com.example.dotametrics.presentation.view.match
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,7 +34,11 @@ class MatchViewModel : ViewModel() {
                     call: Call<MatchDataResult>,
                     response: Response<MatchDataResult>
                 ) {
-                    _result.value = response.body()
+                    val body = response.body()
+                    body?.let {
+                        if (!it.isNull()) _result.value = response.body()
+                    }
+
                     loadingMatch = false
                 }
 
