@@ -121,5 +121,7 @@
     <string name="skill_bhv">Behavior: %1$s</string>
     <string name="hero_bkb_pierce">Bkb pierce: %1$s</string>
     <string name="hero_dmg_type">Damage type: %1$s</string>
+    <string name="skill_cd">Cd: %1$s</string>
+    <string name="skill_mc">Mc: %1$s</string>
 
 </resources>

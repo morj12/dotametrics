@@ -5,12 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--
-    img, name, behaviour, dmg type, bkb pierce, desc
-    attribs
-    lore
-    -->
-
     <ImageView
         android:id="@+id/iv_skill_img"
         android:layout_width="60dp"
@@ -41,6 +35,16 @@
         tools:text="Behavior: Passive" />
 
     <TextView
+        android:id="@+id/tv_skill_cd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_skill_img"
+        tools:text="Cd: 6, 5, 4, 3" />
+
+    <TextView
         android:id="@+id/tv_skill_dmg_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,6 +61,16 @@
         app:layout_constraintStart_toStartOf="@id/iv_skill_img"
         app:layout_constraintTop_toBottomOf="@id/tv_skill_dmg_type"
         tools:text="Bkb pierce: false" />
+
+    <TextView
+        android:id="@+id/tv_skill_mc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_skill_dmg_type"
+        tools:text="Mc: 90, 110, 130, 150" />
 
     <TextView
         android:id="@+id/tv_skill_desc"
