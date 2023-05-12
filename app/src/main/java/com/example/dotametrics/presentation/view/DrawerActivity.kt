@@ -11,6 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.dotametrics.R
 import com.example.dotametrics.presentation.view.herosearch.HeroSearchActivity
+import com.example.dotametrics.presentation.view.info.InfoActivity
 import com.example.dotametrics.presentation.view.main.MainActivity
 import com.example.dotametrics.presentation.view.patch.PatchActivity
 import com.example.dotametrics.presentation.view.teamsearch.TeamSearchActivity
@@ -64,6 +65,11 @@ open class DrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             }
             R.id.nav_patches -> {
                 val intent = Intent(this, PatchActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(0, 0)
+            }
+            R.id.nav_info -> {
+                val intent = Intent(this, InfoActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(0, 0)
             }

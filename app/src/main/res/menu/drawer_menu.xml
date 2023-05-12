@@ -17,5 +17,9 @@
             android:id="@+id/nav_patches"
             android:icon="@drawable/ic_patch"
             android:title="@string/patches" />
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@drawable/ic_info"
+            android:title="@string/about" />
     </group>
 </menu>

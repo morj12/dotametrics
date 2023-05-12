@@ -123,5 +123,11 @@
     <string name="hero_dmg_type">Damage type: %1$s</string>
     <string name="skill_cd">Cd: %1$s</string>
     <string name="skill_mc">Mc: %1$s</string>
+    <string name="about">About</string>
+    <string name="about_text">This app allows you to view your or your friends\'
+        Dota 2 stats, such as played matches, favourite heroes, peers and global stats.
+        It also contains information about all the heroes and professional teams from the game.
+        \n\nThe app does not collect any personal data.
+        \n\nAll the data the application gets from the open data source OpenDota API.</string>
 
 </resources>
