@@ -112,7 +112,7 @@ class AccountViewModel(private val app: App) : ViewModel() {
                     override fun onResponse(call: Call<WLResult>, response: Response<WLResult>) {
                         val body = response.body()
                         body?.let {
-                            if (!it.isNull()) _wl.value = it
+                            if (!it.isNull()) _filteredWl.value = it
                         }
                     }
 
