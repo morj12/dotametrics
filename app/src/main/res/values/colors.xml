@@ -13,4 +13,15 @@
     <color name="gray">#FAFAFA</color>
     <color name="blue">#8080FF</color>
 
+    <color name="p_0">#FF7272</color>
+    <color name="p_1">#5D8AFF</color>
+    <color name="p_2">#66FFF9</color>
+    <color name="p_3">#FF7EE3</color>
+    <color name="p_4">#FF0000</color>
+    <color name="p_5">#FF8401</color>
+    <color name="p_6">#FFD500</color>
+    <color name="p_7">#B7FB4A</color>
+    <color name="p_8">#00FF0C</color>
+    <color name="p_9">#48FFBF</color>
+
 </resources>

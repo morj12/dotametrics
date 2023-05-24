@@ -56,11 +56,30 @@ class MatchOverviewPlayerAdapter :
                 item.personaname ?: root.context.getString(R.string.anonymous)
             tvMatchOverviewKda.text = "${item.kills} / ${item.deaths} / ${item.assists}"
             setItems(item, this)
+            setPartyColor(item, this)
 
             if (item.personaname != null) {
                 root.setOnClickListener {
                     onItemClickedListener?.invoke(item)
                 }
+            }
+        }
+    }
+
+    private fun setPartyColor(item: Players, binding: MatchOverviewItemBinding) {
+        if (item.partyId != null) {
+            binding.tvMatchOverviewParty.text = item.partyId.toString()
+            when (item.partyId) {
+                0 -> binding.tvMatchOverviewParty.setTextColor(binding.root.context.getColor(R.color.p_0))
+                1 -> binding.tvMatchOverviewParty.setTextColor(binding.root.context.getColor(R.color.p_1))
+                2 -> binding.tvMatchOverviewParty.setTextColor(binding.root.context.getColor(R.color.p_2))
+                3 -> binding.tvMatchOverviewParty.setTextColor(binding.root.context.getColor(R.color.p_3))
+                4 -> binding.tvMatchOverviewParty.setTextColor(binding.root.context.getColor(R.color.p_4))
+                5 -> binding.tvMatchOverviewParty.setTextColor(binding.root.context.getColor(R.color.p_5))
+                6 -> binding.tvMatchOverviewParty.setTextColor(binding.root.context.getColor(R.color.p_6))
+                7 -> binding.tvMatchOverviewParty.setTextColor(binding.root.context.getColor(R.color.p_7))
+                8 -> binding.tvMatchOverviewParty.setTextColor(binding.root.context.getColor(R.color.p_8))
+                9 -> binding.tvMatchOverviewParty.setTextColor(binding.root.context.getColor(R.color.p_9))
             }
         }
     }
