@@ -21,12 +21,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/border"
-        android:padding="2dp"
-        app:layout_constraintDimensionRatio="1:1"
         android:gravity="center"
+        android:padding="2dp"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_match_overview_hero"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="@id/iv_match_overview_hero"
         tools:text="24" />
 
@@ -49,6 +49,16 @@
         android:src="@drawable/r00"
         app:layout_constraintStart_toStartOf="@id/tv_match_overview_name"
         app:layout_constraintTop_toBottomOf="@id/tv_match_overview_name" />
+
+    <TextView
+        android:id="@+id/tv_match_overview_party"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_match_overview_rank"
+        app:layout_constraintStart_toEndOf="@id/iv_match_overview_rank"
+        app:layout_constraintTop_toTopOf="@id/iv_match_overview_rank"
+        tools:text="2" />
 
     <TextView
         android:id="@+id/tv_match_overview_kda"
@@ -134,13 +144,13 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginEnd="12dp"
-        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-        app:srcCompat="@drawable/ic_placeholder"
-        app:strokeColor="@color/white"
-        app:strokeWidth="1dp"
         android:padding="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        app:srcCompat="@drawable/ic_placeholder"
+        app:strokeColor="@color/white"
+        app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

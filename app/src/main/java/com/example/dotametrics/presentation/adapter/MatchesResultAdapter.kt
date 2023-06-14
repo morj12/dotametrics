@@ -65,6 +65,7 @@ class MatchesResultAdapter :
     private fun setLobbyType(
         item: MatchesResult, lobbyInfo: LobbyTypeResult?, binding: MatchItemBinding
     ) = with(binding) {
+        val partyCount = if (item.partySize != null) " x ${item.partySize}" else " x ?"
         tvMatchLobby.text =
             if (lobbyInfo != null)
                 root.context.getString(
@@ -72,8 +73,8 @@ class MatchesResultAdapter :
                         lobbyInfo.name!!,
                         root.context
                     )
-                )
-            else item.lobbyType.toString()
+                ) + partyCount
+            else item.lobbyType.toString() + partyCount
     }
 
     private fun setResult(item: MatchesResult, binding: MatchItemBinding) = with(binding) {
