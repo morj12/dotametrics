@@ -92,9 +92,11 @@ class SearchFragment : Fragment() {
 
     private fun search() {
         val user = binding.edMainUsername.text.toString()
-        viewModel.search(user)
-        binding.btSearch.visibility = View.INVISIBLE
-        binding.pbSearch.visibility = View.VISIBLE
+        if (user.isNotBlank()) {
+            viewModel.search(user)
+            binding.btSearch.visibility = View.INVISIBLE
+            binding.pbSearch.visibility = View.VISIBLE
+        }
     }
 
     override fun onDestroy() {
