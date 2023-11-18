@@ -129,5 +129,6 @@
         It also contains information about all the heroes and professional teams from the game.
         \n\nThe app does not collect any personal data.
         \n\nAll the data the application gets from the open data source OpenDota API.</string>
+    <string name="name">Name</string>
 
 </resources>

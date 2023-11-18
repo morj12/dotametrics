@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:ems="10"
-        android:hint="@string/name_or_steam_id"
+        android:hint="@string/name"
         android:imeOptions="actionSearch"
         android:inputType="text"
         app:layout_constraintTop_toTopOf="parent"

@@ -6,6 +6,9 @@ import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
 
+/**
+ * Used in cases when the API can return a single object or a list of objects
+ */
 class StringJsonAdapter : TypeAdapter<CustomArrayList<String>>() {
     override fun write(out: JsonWriter?, value: CustomArrayList<String>?) {}
 
