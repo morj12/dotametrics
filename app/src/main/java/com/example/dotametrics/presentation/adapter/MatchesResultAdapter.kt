@@ -12,7 +12,7 @@ import com.example.dotametrics.data.remote.model.players.matches.MatchesResult
 import com.example.dotametrics.databinding.MatchItemBinding
 import com.example.dotametrics.data.ConstData
 import com.example.dotametrics.util.Datetime
-import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager
 import com.example.dotametrics.util.GlideManager.requestOptions
 import com.example.dotametrics.util.LobbyTypeMapper
 
@@ -47,7 +47,7 @@ class MatchesResultAdapter :
         with(holder.binding) {
             if (heroInfo != null)
                 Glide.with(root)
-                    .load("${URL}${heroInfo.img}")
+                    .load("${GlideManager.HEROES_URL}/${heroInfo.name?.replace(GlideManager.HEROES_URL_REPLACE, "")}.png")
                     .apply(requestOptions(root.context))
                     .into(ivMatchHero)
             item.startTime?.let { tvMatchDate.text = Datetime.formatDate(it) }

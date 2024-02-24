@@ -11,7 +11,8 @@ import com.example.dotametrics.data.remote.model.players.heroes.PlayerHeroResult
 import com.example.dotametrics.databinding.AccHeroItemBinding
 import com.example.dotametrics.data.ConstData
 import com.example.dotametrics.util.Datetime
-import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager
+import com.example.dotametrics.util.GlideManager.HEROES_URL
 import com.example.dotametrics.util.GlideManager.requestOptions
 
 class PlayerHeroesAdapter :
@@ -44,7 +45,7 @@ class PlayerHeroesAdapter :
         with(holder.binding) {
             if (heroInfo != null && item.games != 0) {
                 Glide.with(root)
-                    .load("$URL${heroInfo.img}")
+                    .load("${HEROES_URL}/${heroInfo.name?.replace(GlideManager.HEROES_URL_REPLACE, "")}.png")
                     .apply(requestOptions(root.context))
                     .into(ivAccHeroImg)
                 tvAccHeroName.text = heroInfo.localizedName

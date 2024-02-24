@@ -19,7 +19,7 @@ import com.example.dotametrics.data.remote.model.matches.Players
 import com.example.dotametrics.databinding.MatchSkillsItemBinding
 import com.example.dotametrics.data.ConstData
 import com.example.dotametrics.util.GlideManager
-import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager.ABILITIES_URL
 
 class MatchSkillsPlayerAdapter(private val activity: AppCompatActivity) :
     ListAdapter<Players, MatchSkillsPlayerAdapter.ViewHolder>(MatchSkillsPlayerCallback()) {
@@ -69,10 +69,10 @@ class MatchSkillsPlayerAdapter(private val activity: AppCompatActivity) :
                         if (skillCount < item.abilityUpgradesArr.size) {
                             val abilityId = item.abilityUpgradesArr[skillCount]
                             val abilityName = ConstData.abilityIds[abilityId.toString()]
-                            var ability: AbilityResult? = null
+                            var ability: Pair<String, AbilityResult>? = null
                             var type: String? = null
                             abilityName?.let {
-                                ability = ConstData.abilities[it]
+                                ability = ConstData.abilities.entries.first { it.key == abilityName }.toPair()
                                 type = when {
                                     abilityName.contains("attributes") -> "attributes"
                                     abilityName.contains("special_bonus") -> "talent"
@@ -93,7 +93,7 @@ class MatchSkillsPlayerAdapter(private val activity: AppCompatActivity) :
 
                                 if (cell is TextView) {
                                     if (type == "talent") {
-                                        cell.text = ability!!.dname
+                                        cell.text = ability!!.second.dname
                                         cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6f)
                                         cell.setBackgroundResource(R.drawable.talent)
                                         cell.textAlignment = TEXT_ALIGNMENT_CENTER
@@ -102,7 +102,7 @@ class MatchSkillsPlayerAdapter(private val activity: AppCompatActivity) :
                                     }
                                 } else if (cell is ImageView) {
                                     Glide.with(root)
-                                        .load("${URL}${ability!!.img}")
+                                        .load("${ABILITIES_URL}/${ability!!.first}.png")
                                         .apply(GlideManager.requestOptions(root.context))
                                         .into(cell)
                                 }

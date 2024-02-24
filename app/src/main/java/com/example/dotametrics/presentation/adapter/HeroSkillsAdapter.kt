@@ -10,16 +10,16 @@ import com.example.dotametrics.R
 import com.example.dotametrics.data.remote.model.constants.abilities.AbilityResult
 import com.example.dotametrics.databinding.SkillItemBinding
 import com.example.dotametrics.util.GlideManager
-import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager.ABILITIES_URL
 
 class HeroSkillsAdapter :
-    ListAdapter<AbilityResult, HeroSkillsAdapter.ViewHolder>(HeroSkillCallback()) {
+    ListAdapter<Pair<String, AbilityResult>, HeroSkillsAdapter.ViewHolder>(HeroSkillCallback()) {
 
-    class HeroSkillCallback : DiffUtil.ItemCallback<AbilityResult>() {
-        override fun areItemsTheSame(oldItem: AbilityResult, newItem: AbilityResult) =
-            oldItem.dname == newItem.dname
+    class HeroSkillCallback : DiffUtil.ItemCallback<Pair<String, AbilityResult>>() {
+        override fun areItemsTheSame(oldItem: Pair<String, AbilityResult>, newItem: Pair<String, AbilityResult>) =
+            oldItem.first == newItem.first
 
-        override fun areContentsTheSame(oldItem: AbilityResult, newItem: AbilityResult) =
+        override fun areContentsTheSame(oldItem: Pair<String, AbilityResult>, newItem: Pair<String, AbilityResult>) =
             oldItem == newItem
     }
 
@@ -38,21 +38,21 @@ class HeroSkillsAdapter :
         val item = getItem(position)
 
         with(holder.binding) {
-            tvSkillName.text = item.dname
-            tvSkillDesc.text = item.desc
-            val bkbPierceString = item.bkbPierce.joinToString(separator = ", ")
+            tvSkillName.text = item.second.dname
+            tvSkillDesc.text = item.second.desc
+            val bkbPierceString = item.second.bkbPierce.joinToString(separator = ", ")
             tvSkillBkbPierce.text =
                 root.context.getString(R.string.hero_bkb_pierce, bkbPierceString)
-            val dmgTypeString = item.dmgType.joinToString(separator = ", ")
+            val dmgTypeString = item.second.dmgType.joinToString(separator = ", ")
             tvSkillDmgType.text = root.context.getString(R.string.hero_dmg_type, dmgTypeString)
-            val behaviorString = item.behavior.joinToString(separator = ", ")
+            val behaviorString = item.second.behavior.joinToString(separator = ", ")
             tvSkillBhv.text = root.context.getString(R.string.skill_bhv, behaviorString)
-            val cdString = item.cd.joinToString(separator = ", ")
+            val cdString = item.second.cd.joinToString(separator = ", ")
             tvSkillCd.text = root.context.getString(R.string.skill_cd, cdString)
-            val mcString = item.mc.joinToString(separator = ", ")
+            val mcString = item.second.mc.joinToString(separator = ", ")
             tvSkillMc.text = root.context.getString(R.string.skill_mc, mcString)
             val attrsString = StringBuilder()
-            item.attrib.forEach {
+            item.second.attrib.forEach {
                 attrsString.append(it.header)
                 attrsString.append(" ")
                 attrsString.append(it.value.joinToString(separator = ", "))
@@ -60,7 +60,7 @@ class HeroSkillsAdapter :
             }
             tvSkillAttrs.text = attrsString.toString()
             Glide.with(this.root)
-                .load("${URL}${item.img}")
+                .load("${ABILITIES_URL}/${item.first}.png")
                 .apply(GlideManager.requestOptions(root.context))
                 .into(ivSkillImg)
         }

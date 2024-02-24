@@ -14,7 +14,7 @@ import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.presentation.view.DrawerActivity
 import com.example.dotametrics.util.AttrMapper
 import com.example.dotametrics.data.ConstData
-import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager
 import com.example.dotametrics.util.GlideManager.requestOptions
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
@@ -68,7 +68,7 @@ class HeroActivity : DrawerActivity() {
 
     private fun showData(hero: HeroResult) = with(binding) {
         Glide.with(root)
-            .load("${URL}${hero.img}\"")
+            .load("${GlideManager.HEROES_URL}/${hero.name?.replace(GlideManager.HEROES_URL_REPLACE, "")}.png")
             .apply(requestOptions(root.context))
             .into(heroImage)
         heroImage.stopLoading(binding.pbHeroImage)
@@ -152,10 +152,10 @@ class HeroActivity : DrawerActivity() {
     private fun showAbilities() {
         val abilityNames = ConstData.heroAbilities[hero!!.name]?.abilities
         if (abilityNames != null) {
-            val abilities = ConstData.abilities.entries.filter { abilityNames.contains(it.key) }
+            val abilities = ConstData.abilities.filter { abilityNames.contains(it.key) }
             adapter.submitList(abilities
                 .filter { !it.value.behavior.contains("Hidden") }
-                .map { it.value }
+                .map { it.toPair() }
             ) {
                 binding.rcHeroSkills.stopLoading(binding.pbRcHeroSkills)
             }

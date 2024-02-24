@@ -11,7 +11,9 @@ import com.example.dotametrics.data.remote.model.constants.items.ItemResult
 import com.example.dotametrics.data.remote.model.matches.Players
 import com.example.dotametrics.databinding.MatchOverviewItemBinding
 import com.example.dotametrics.data.ConstData
-import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager
+import com.example.dotametrics.util.GlideManager.HEROES_URL
+import com.example.dotametrics.util.GlideManager.ITEMS_URL
 import com.example.dotametrics.util.GlideManager.requestOptions
 
 class MatchOverviewPlayerAdapter :
@@ -46,7 +48,7 @@ class MatchOverviewPlayerAdapter :
         with(holder.binding) {
             if (heroInfo != null) {
                 Glide.with(root)
-                    .load("${URL}${heroInfo.img}")
+                    .load("${HEROES_URL}/${heroInfo.name?.replace(GlideManager.HEROES_URL_REPLACE, "")}.png")
                     .apply(requestOptions(root.context))
                     .into(ivMatchOverviewHero)
             }
@@ -85,53 +87,54 @@ class MatchOverviewPlayerAdapter :
     }
 
     private fun setItems(player: Players, binding: MatchOverviewItemBinding) {
-        var item: ItemResult
+        var item: Pair<String, ItemResult>
         if (player.item0 != null && player.item0 != 0) {
-            item = ConstData.items.values.first { it.id == player.item0 }
+            item = ConstData.items.entries.first { it.value.id == player.item0 }.toPair()
+
             Glide.with(binding.root)
-                .load("${URL}${item.img}")
+                .load("${ITEMS_URL}/${item.first}.png")
                 .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItem0)
         }
         if (player.item1 != null && player.item1 != 0) {
-            item = ConstData.items.values.first { it.id == player.item1 }
+            item = ConstData.items.entries.first { it.value.id == player.item1 }.toPair()
             Glide.with(binding.root)
-                .load("${URL}${item.img}")
+                .load("${ITEMS_URL}/${item.first}.png")
                 .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItem1)
         }
         if (player.item2 != null && player.item2 != 0) {
-            item = ConstData.items.values.first { it.id == player.item2 }
+            item = ConstData.items.entries.first { it.value.id == player.item2 }.toPair()
             Glide.with(binding.root)
-                .load("${URL}${item.img}")
+                .load("${ITEMS_URL}/${item.first}.png")
                 .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItem2)
         }
         if (player.item3 != null && player.item3 != 0) {
-            item = ConstData.items.values.first { it.id == player.item3 }
+            item = ConstData.items.entries.first { it.value.id == player.item3 }.toPair()
             Glide.with(binding.root)
-                .load("${URL}${item.img}")
+                .load("${ITEMS_URL}/${item.first}.png")
                 .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItem3)
         }
         if (player.item4 != null && player.item4 != 0) {
-            item = ConstData.items.values.first { it.id == player.item4 }
+            item = ConstData.items.entries.first { it.value.id == player.item4 }.toPair()
             Glide.with(binding.root)
-                .load("${URL}${item.img}")
+                .load("${ITEMS_URL}/${item.first}.png")
                 .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItem4)
         }
         if (player.item5 != null && player.item5 != 0) {
-            item = ConstData.items.values.first { it.id == player.item5 }
+            item = ConstData.items.entries.first { it.value.id == player.item5 }.toPair()
             Glide.with(binding.root)
-                .load("${URL}${item.img}")
+                .load("${ITEMS_URL}/${item.first}.png")
                 .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItem5)
         }
         if (player.itemNeutral != null && player.itemNeutral != 0) {
-            item = ConstData.items.values.first { it.id == player.itemNeutral }
+            item = ConstData.items.entries.first { it.value.id == player.itemNeutral }.toPair()
             Glide.with(binding.root)
-                .load("${URL}${item.img}")
+                .load("${ITEMS_URL}/${item.first}.png")
                 .apply(requestOptions(binding.root.context))
                 .into(binding.tvMatchOverviewItemn)
         }

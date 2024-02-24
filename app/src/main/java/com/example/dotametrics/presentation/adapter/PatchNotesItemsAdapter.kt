@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.databinding.PatchnotesItemItemBinding
 import com.example.dotametrics.data.ConstData
-import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager
 import com.example.dotametrics.util.GlideManager.requestOptions
 
 class PatchNotesItemsAdapter :
@@ -53,7 +53,7 @@ class PatchNotesItemsAdapter :
             if (itemInfo != null) {
                 tvPatchnotesItemName.text = itemInfo.dname
                 Glide.with(root)
-                    .load("${URL}${itemInfo.img}")
+                    .load("${GlideManager.ITEMS_URL}/${item.first}.png")
                     .apply(requestOptions(root.context))
                     .into(ivPatchnotesItem)
             } else {

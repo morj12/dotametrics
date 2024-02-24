@@ -10,7 +10,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.dotametrics.data.remote.model.constants.heroes.HeroResult
 import com.example.dotametrics.databinding.SearchHeroItemBinding
 import com.example.dotametrics.util.GlideManager
-import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager.HEROES_URL
 
 class HeroSearchAdapter :
     ListAdapter<HeroResult, HeroSearchAdapter.ViewHolder>(HeroSearchCallback()) {
@@ -42,7 +42,7 @@ class HeroSearchAdapter :
         with(holder.binding) {
             tvHeroName.text = item.localizedName
             Glide.with(this.root)
-                .load("${URL}${item.img}")
+                .load("${HEROES_URL}/${item.name?.replace(GlideManager.HEROES_URL_REPLACE, "")}.png")
                 .apply(GlideManager.requestOptions(root.context))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(ivHeroImg)

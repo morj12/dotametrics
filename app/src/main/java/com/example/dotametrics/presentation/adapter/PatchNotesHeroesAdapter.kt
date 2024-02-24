@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.databinding.PatchnotesHeroItemBinding
 import com.example.dotametrics.data.ConstData
-import com.example.dotametrics.util.GlideManager.URL
+import com.example.dotametrics.util.GlideManager
+import com.example.dotametrics.util.GlideManager.HEROES_URL
 import com.example.dotametrics.util.GlideManager.requestOptions
 
 class PatchNotesHeroesAdapter :
@@ -53,7 +54,7 @@ class PatchNotesHeroesAdapter :
             if (heroInfo != null) {
                 tvPatchnotesHeroName.text = heroInfo.localizedName
                 Glide.with(root)
-                    .load("${URL}${heroInfo.img}")
+                    .load("${HEROES_URL}/${heroInfo.name?.replace(GlideManager.HEROES_URL_REPLACE, "")}.png")
                     .apply(requestOptions(root.context))
                     .into(ivPatchnotesHero)
             } else {
