@@ -1,5 +1,8 @@
 package com.example.dotametrics.data.remote.repository
 
+import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.example.dotametrics.data.remote.model.constants.abilities.AbilityResult
 import com.example.dotametrics.data.remote.model.constants.abilities.HeroAbilitiesResult
 import com.example.dotametrics.data.remote.model.constants.aghs.AghsResult
@@ -20,13 +23,20 @@ import com.example.dotametrics.data.remote.model.teams.TeamsResult
 import com.example.dotametrics.data.remote.model.teams.heroes.TeamHeroesResult
 import com.example.dotametrics.data.remote.model.teams.matches.TeamMatchesResult
 import com.example.dotametrics.data.remote.model.teams.players.TeamPlayersResult
+import com.example.dotametrics.data.remote.paging.players.MatchDataSource
+import com.example.dotametrics.data.remote.paging.players.MatchDataSourceFactory
 import com.example.dotametrics.data.remote.service.RetrofitInstance
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
 import com.example.dotametrics.domain.repository.response.BasicResponse
+import java.util.concurrent.Executors
 
 class OpenDotaRepository: IOpenDotaRepository {
 
     private val retrofit = RetrofitInstance.getService()
+
+    private lateinit var matchDataSource: LiveData<MatchDataSource>
+
+    private var executor = Executors.newCachedThreadPool()
 
     override fun getSearchResults(name: String): BasicResponse<List<SearchResult>> {
         val call = retrofit.getSearchResults(name).execute()
@@ -127,6 +137,24 @@ class OpenDotaRepository: IOpenDotaRepository {
     override fun getTeamPlayers(id: String): BasicResponse<List<TeamPlayersResult>> {
         val call = retrofit.getTeamPlayers(id).execute()
         return BasicResponse(call.body(), call.errorBody().toString())
+    }
+
+    override fun loadPagingMatches(
+        userId: String,
+        lobbyType: Int?,
+        heroId: Int?,
+        errorListener: (String) -> Unit
+    ): LiveData<PagedList<MatchesResult>> {
+        val factory = MatchDataSourceFactory(userId, lobbyType, heroId, errorListener)
+        matchDataSource = factory.mutableLiveData
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(true)
+            .setInitialLoadSizeHint(MatchDataSource.PAGE_SIZE)
+            .setPageSize(MatchDataSource.PAGE_SIZE)
+            .setPrefetchDistance(MatchDataSource.PAGE_SIZE / 4)
+            .build()
+
+        return LivePagedListBuilder(factory, config).setFetchExecutor(executor).build()
     }
 
     override fun getTeamMatches(id: String): BasicResponse<List<TeamMatchesResult>> {

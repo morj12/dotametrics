@@ -1,5 +1,7 @@
 package com.example.dotametrics.domain.repository
 
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
 import com.example.dotametrics.data.remote.model.constants.abilities.AbilityResult
 import com.example.dotametrics.data.remote.model.constants.abilities.HeroAbilitiesResult
 import com.example.dotametrics.data.remote.model.constants.aghs.AghsResult
@@ -57,4 +59,10 @@ interface IOpenDotaRepository {
     fun getAghs(): BasicResponse<List<AghsResult>>
     fun getHeroAbilities(): BasicResponse<Map<String, HeroAbilitiesResult>>
     fun getHeroLore(): BasicResponse<Map<String, String>>
+    fun loadPagingMatches(
+        userId: String,
+        lobbyType: Int?,
+        heroId: Int?,
+        errorListener: (String) -> Unit
+    ): LiveData<PagedList<MatchesResult>>
 }

@@ -66,12 +66,10 @@ class MatchesFragment : Fragment() {
 
         if (heroesLoaded && lobbiesLoaded) {
             if (viewModel.matches.value == null || reload) {
-                // todo: why callback?
-                viewModel.loadMatches { observeMatches() }
+                viewModel.loadMatches()
                 viewModel.loadFilteredWLResults()
-            } else {
-                observeMatches()
             }
+            observeMatches()
         } else {
             if (!heroesLoaded) constViewModel.loadHeroes()
             if (!lobbiesLoaded) constViewModel.loadLobbyTypes()

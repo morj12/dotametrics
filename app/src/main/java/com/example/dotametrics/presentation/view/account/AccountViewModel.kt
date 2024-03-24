@@ -68,9 +68,6 @@ class AccountViewModel(private val app: App) : ViewModel() {
     val isFav: LiveData<Boolean>
         get() = _isFav
 
-    private lateinit var matchDataSource: LiveData<MatchDataSource>
-    private var executor = Executors.newCachedThreadPool()
-
     fun loadUser() {
         if (userId.isNotBlank()) {
             viewModelScope.launch(Dispatchers.IO) {
@@ -145,20 +142,9 @@ class AccountViewModel(private val app: App) : ViewModel() {
         }
     }
 
-    fun loadMatches(callback: () -> Unit) {
-        // TODO: change later
+    fun loadMatches() {
         if (userId.isNotBlank()) {
-            val factory = MatchDataSourceFactory(userId, lobbyType, heroId, errorListener)
-            matchDataSource = factory.mutableLiveData
-            val config = PagedList.Config.Builder()
-                .setEnablePlaceholders(true)
-                .setInitialLoadSizeHint(PAGE_SIZE)
-                .setPageSize(PAGE_SIZE)
-                .setPrefetchDistance(PAGE_SIZE / 4)
-                .build()
-
-            matches = LivePagedListBuilder(factory, config).setFetchExecutor(executor).build()
-            callback()
+            matches = openDotaRepository.loadPagingMatches(userId, lobbyType, heroId, errorListener)
         }
     }
 
