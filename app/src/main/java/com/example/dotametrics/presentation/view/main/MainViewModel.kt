@@ -5,6 +5,7 @@ import com.example.dotametrics.App
 import com.example.dotametrics.data.local.repository.PlayerRepository
 import com.example.dotametrics.data.remote.model.search.SearchResult
 import com.example.dotametrics.data.remote.service.RetrofitInstance
+import com.example.dotametrics.domain.repository.IPlayerRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,9 +22,9 @@ class MainViewModel(private val app: App) : ViewModel() {
 
     private val retrofit = RetrofitInstance.getService()
 
-    private val repository = PlayerRepository(app.db)
+    private val playerRepository: IPlayerRepository = PlayerRepository(app.db)
 
-    val players = repository.getPlayers().asLiveData()
+    val players = playerRepository.getPlayers().asLiveData()
 
     fun search(user: String) {
         if (user.isNotBlank()) {
