@@ -3,14 +3,17 @@ package com.example.dotametrics.presentation.view.teamsearch
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.dotametrics.data.remote.model.teams.TeamsResult
-import com.example.dotametrics.data.remote.service.RetrofitInstance
 import com.example.dotametrics.data.ConstData
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.dotametrics.data.remote.repository.OpenDotaRepository
+import com.example.dotametrics.domain.repository.IOpenDotaRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TeamSearchViewModel : ViewModel() {
+
+    private val openDotaRepository: IOpenDotaRepository = OpenDotaRepository()
 
     private val _teams = MutableLiveData<Unit>()
     val teams: LiveData<Unit>
@@ -24,26 +27,18 @@ class TeamSearchViewModel : ViewModel() {
     val filteredTeams: LiveData<List<TeamsResult>>
         get() = _filteredTeams
 
-    private val retrofit = RetrofitInstance.getService()
-
     fun loadTeams() {
-        retrofit.getTeams().enqueue(object : Callback<List<TeamsResult>> {
-            override fun onResponse(
-                call: Call<List<TeamsResult>>,
-                response: Response<List<TeamsResult>>
-            ) {
-                val body = response.body()
-                if (body != null) {
-                    ConstData.teams = body
-                    _teams.value = Unit
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = openDotaRepository.getTeams()
+            if (result.error != "null") {
+                _error.postValue(result.error)
+            } else {
+                result.data?.let {
+                    ConstData.teams = it
+                    _teams.postValue(Unit)
                 }
             }
-
-            override fun onFailure(call: Call<List<TeamsResult>>, t: Throwable) {
-                _error.value = t.message.toString()
-            }
-
-        })
+        }
     }
 
     fun filterTeams(name: String? = null) {

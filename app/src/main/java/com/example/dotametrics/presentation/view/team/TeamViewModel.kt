@@ -3,16 +3,19 @@ package com.example.dotametrics.presentation.view.team
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.dotametrics.data.remote.model.teams.TeamsResult
 import com.example.dotametrics.data.remote.model.teams.heroes.TeamHeroesResult
 import com.example.dotametrics.data.remote.model.teams.matches.TeamMatchesResult
 import com.example.dotametrics.data.remote.model.teams.players.TeamPlayersResult
-import com.example.dotametrics.data.remote.service.RetrofitInstance
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.dotametrics.data.remote.repository.OpenDotaRepository
+import com.example.dotametrics.domain.repository.IOpenDotaRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TeamViewModel : ViewModel() {
+
+    private val openDotaRepository: IOpenDotaRepository = OpenDotaRepository()
 
     private val _team = MutableLiveData<TeamsResult>()
     val team: LiveData<TeamsResult>
@@ -34,66 +37,48 @@ class TeamViewModel : ViewModel() {
     val error: LiveData<String>
         get() = _error
 
-    private val retrofit = RetrofitInstance.getService()
-
     fun setTeam(team: TeamsResult) {
         _team.value = team
     }
 
     fun loadPlayers() {
         if (_team.value != null) {
-            retrofit.getTeamPlayers(_team.value!!.teamId.toString())
-                .enqueue(object : Callback<List<TeamPlayersResult>> {
-                    override fun onResponse(
-                        call: Call<List<TeamPlayersResult>>,
-                        response: Response<List<TeamPlayersResult>>
-                    ) {
-                        _players.value = response.body()?.filter { it.isCurrentTeamMember == true }
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getTeamPlayers(_team.value!!.teamId.toString())
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let {
+                        _players.postValue(it.filter { p -> p.isCurrentTeamMember == true })
                     }
-
-                    override fun onFailure(call: Call<List<TeamPlayersResult>>, t: Throwable) {
-                        _error.value = t.message.toString()
-                    }
-
-                })
+                }
+            }
         }
     }
 
     fun loadMatches() {
         if (_team.value != null) {
-            retrofit.getTeamMatches(_team.value!!.teamId.toString())
-                .enqueue(object : Callback<List<TeamMatchesResult>> {
-                    override fun onResponse(
-                        call: Call<List<TeamMatchesResult>>,
-                        response: Response<List<TeamMatchesResult>>
-                    ) {
-                        _matches.value = response.body()
-                    }
-
-                    override fun onFailure(call: Call<List<TeamMatchesResult>>, t: Throwable) {
-                        _error.value = t.message.toString()
-                    }
-
-                })
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getTeamMatches(_team.value!!.teamId.toString())
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let { _matches.postValue(it) }
+                }
+            }
         }
     }
 
     fun loadHeroes() {
         if (_team.value != null) {
-            retrofit.getTeamHeroes(_team.value!!.teamId.toString())
-                .enqueue(object : Callback<List<TeamHeroesResult>> {
-                    override fun onResponse(
-                        call: Call<List<TeamHeroesResult>>,
-                        response: Response<List<TeamHeroesResult>>
-                    ) {
-                        _heroes.value = response.body()
-                    }
-
-                    override fun onFailure(call: Call<List<TeamHeroesResult>>, t: Throwable) {
-                        _error.value = t.message.toString()
-                    }
-
-                })
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getTeamHeroes(_team.value!!.teamId.toString())
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let { _heroes.postValue(it) }
+                }
+            }
         }
     }
 }

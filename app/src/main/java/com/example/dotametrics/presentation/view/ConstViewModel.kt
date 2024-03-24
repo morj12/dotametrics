@@ -4,21 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.dotametrics.App
 import com.example.dotametrics.R
-import com.example.dotametrics.data.remote.model.constants.abilities.AbilityResult
-import com.example.dotametrics.data.remote.model.constants.abilities.HeroAbilitiesResult
-import com.example.dotametrics.data.remote.model.constants.aghs.AghsResult
-import com.example.dotametrics.data.remote.model.constants.heroes.HeroResult
-import com.example.dotametrics.data.remote.model.constants.items.ItemResult
-import com.example.dotametrics.data.remote.model.constants.lobbytypes.LobbyTypeResult
-import com.example.dotametrics.data.remote.service.RetrofitInstance
 import com.example.dotametrics.data.ConstData
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.dotametrics.data.remote.repository.OpenDotaRepository
+import com.example.dotametrics.domain.repository.IOpenDotaRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ConstViewModel(private val app: App) : ViewModel() {
+
+    private val openDotaRepository: IOpenDotaRepository = OpenDotaRepository()
 
     private var loadingHeroes = false
     private var loadingLobbies = false
@@ -70,8 +67,6 @@ class ConstViewModel(private val app: App) : ViewModel() {
     val constHeroAbilities: LiveData<Unit>
         get() = _constHeroAbilities
 
-    private val retrofit = RetrofitInstance.getService()
-
     fun loadHeroes() {
         if (loadingHeroes) return
         if (ConstData.heroes.isNotEmpty()) {
@@ -79,24 +74,18 @@ class ConstViewModel(private val app: App) : ViewModel() {
             loadingHeroes = false
         } else {
             loadingHeroes = true
-            retrofit.getConstHeroes().enqueue(object : Callback<Map<String, HeroResult>> {
-                override fun onResponse(
-                    call: Call<Map<String, HeroResult>>,
-                    response: Response<Map<String, HeroResult>>
-                ) {
-                    val body = response.body()
-                    if (body != null) {
-                        ConstData.heroes = body.values.toList().sortedBy { it.localizedName }
-                        _heroes.value = Unit
-                        loadingHeroes = false
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getConstHeroes()
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let {
+                        ConstData.heroes = it.values.toList().sortedBy { it.localizedName }
+                        _heroes.postValue(Unit)
                     }
                 }
-
-                override fun onFailure(call: Call<Map<String, HeroResult>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingHeroes = false
-                }
-            })
+                loadingHeroes = false
+            }
         }
     }
 
@@ -107,26 +96,20 @@ class ConstViewModel(private val app: App) : ViewModel() {
             loadingLobbies = false
         } else {
             loadingLobbies = true
-            retrofit.getConstLobbyTypes().enqueue(object : Callback<Map<String, LobbyTypeResult>> {
-                override fun onResponse(
-                    call: Call<Map<String, LobbyTypeResult>>,
-                    response: Response<Map<String, LobbyTypeResult>>
-                ) {
-                    val body = response.body()
-                    if (body != null) {
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getConstLobbyTypes()
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let {
                         val usefulLobbies = app.resources.getStringArray(R.array.lobbies_array)
                         ConstData.lobbies =
-                            body.values.toList().filter { usefulLobbies.contains(it.name) }
-                        _constLobbyTypes.value = Unit
-                        loadingLobbies = false
+                            it.values.toList().filter { v -> usefulLobbies.contains(v.name) }
+                        _constLobbyTypes.postValue(Unit)
                     }
                 }
-
-                override fun onFailure(call: Call<Map<String, LobbyTypeResult>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingLobbies = false
-                }
-            })
+                loadingLobbies = false
+            }
         }
     }
 
@@ -137,25 +120,18 @@ class ConstViewModel(private val app: App) : ViewModel() {
             loadingRegions = false
         } else {
             loadingRegions = true
-            retrofit.getRegions().enqueue(object : Callback<Map<String, String>> {
-                override fun onResponse(
-                    call: Call<Map<String, String>>,
-                    response: Response<Map<String, String>>
-                ) {
-                    val body = response.body()
-                    if (body != null) {
-                        ConstData.regions = body.mapKeys { it.key.toInt() }
-                        _constRegions.value = Unit
-                        loadingRegions = false
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getRegions()
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let {
+                        ConstData.regions = it.mapKeys { k -> k.key.toInt() }
+                        _constRegions.postValue(Unit)
                     }
                 }
-
-                override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingRegions = false
-                }
-
-            })
+                loadingRegions = false
+            }
         }
     }
 
@@ -166,25 +142,18 @@ class ConstViewModel(private val app: App) : ViewModel() {
             loadingItems = false
         } else {
             loadingItems = true
-            retrofit.getItems().enqueue(object : Callback<Map<String, ItemResult>> {
-                override fun onResponse(
-                    call: Call<Map<String, ItemResult>>,
-                    response: Response<Map<String, ItemResult>>
-                ) {
-                    val body = response.body()
-                    if (body != null) {
-                        ConstData.items = body
-                        _constItems.value = Unit
-                        loadingItems = false
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getItems()
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let {
+                        ConstData.items = it
+                        _constItems.postValue(Unit)
                     }
                 }
-
-                override fun onFailure(call: Call<Map<String, ItemResult>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingItems = false
-                }
-
-            })
+                loadingItems = false
+            }
         }
     }
 
@@ -195,25 +164,18 @@ class ConstViewModel(private val app: App) : ViewModel() {
             loadingAbilityIds = false
         } else {
             loadingAbilityIds = true
-            retrofit.getAbilityIds().enqueue(object : Callback<Map<String, String>> {
-                override fun onResponse(
-                    call: Call<Map<String, String>>,
-                    response: Response<Map<String, String>>
-                ) {
-                    val body = response.body()
-                    if (body != null) {
-                        ConstData.abilityIds = body
-                        _constAbilityIds.value = Unit
-                        loadingAbilityIds = false
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getAbilityIds()
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let {
+                        ConstData.abilityIds = it
+                        _constAbilityIds.postValue(Unit)
                     }
                 }
-
-                override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingAbilityIds = false
-                }
-
-            })
+                loadingAbilityIds = false
+            }
         }
     }
 
@@ -224,25 +186,18 @@ class ConstViewModel(private val app: App) : ViewModel() {
             loadingAbilities = false
         } else {
             loadingAbilities = true
-            retrofit.getAbilities().enqueue(object : Callback<Map<String, AbilityResult>> {
-                override fun onResponse(
-                    call: Call<Map<String, AbilityResult>>,
-                    response: Response<Map<String, AbilityResult>>
-                ) {
-                    val body = response.body()
-                    if (body != null) {
-                        ConstData.abilities = body
-                        _constAbilities.value = Unit
-                        loadingAbilities = false
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getAbilities()
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let {
+                        ConstData.abilities = it
+                        _constAbilities.postValue(Unit)
                     }
                 }
-
-                override fun onFailure(call: Call<Map<String, AbilityResult>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingAbilities = false
-                }
-
-            })
+                loadingAbilities = false
+            }
         }
     }
 
@@ -252,24 +207,19 @@ class ConstViewModel(private val app: App) : ViewModel() {
             _constLores.value = Unit
             loadingLore = false
         } else {
-            retrofit.getHeroLore().enqueue(object : Callback<Map<String, String>> {
-                override fun onResponse(
-                    call: Call<Map<String, String>>,
-                    response: Response<Map<String, String>>
-                ) {
-                    val body = response.body()
-                    if (body != null) {
-                        ConstData.lores = body
-                        _constLores.value = Unit
-                        loadingLore = false
+            loadingLore = true
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getHeroLore()
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let {
+                        ConstData.lores = it
+                        _constLores.postValue(Unit)
                     }
                 }
-
-                override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingLore = false
-                }
-            })
+                loadingLore = false
+            }
         }
     }
 
@@ -279,24 +229,19 @@ class ConstViewModel(private val app: App) : ViewModel() {
             _constAghs.value = Unit
             loadingAghs = false
         } else {
-            retrofit.getAghs().enqueue(object : Callback<List<AghsResult>> {
-                override fun onResponse(
-                    call: Call<List<AghsResult>>,
-                    response: Response<List<AghsResult>>
-                ) {
-                    val body = response.body()
-                    if (body != null) {
-                        ConstData.aghs = body
-                        _constAghs.value = Unit
-                        loadingAghs = false
+            loadingAghs = true
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getAghs()
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let {
+                        ConstData.aghs = it
+                        _constAghs.postValue(Unit)
                     }
                 }
-
-                override fun onFailure(call: Call<List<AghsResult>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingAghs = false
-                }
-            })
+                loadingAghs = false
+            }
         }
     }
 
@@ -306,28 +251,19 @@ class ConstViewModel(private val app: App) : ViewModel() {
             _constHeroAbilities.value = Unit
             loadingHeroAbilities = false
         } else {
-            retrofit.getHeroAbilities()
-                .enqueue(object : Callback<Map<String, HeroAbilitiesResult>> {
-                    override fun onResponse(
-                        call: Call<Map<String, HeroAbilitiesResult>>,
-                        response: Response<Map<String, HeroAbilitiesResult>>
-                    ) {
-                        val body = response.body()
-                        if (body != null) {
-                            ConstData.heroAbilities = body
-                            _constHeroAbilities.value = Unit
-                            loadingHeroAbilities = false
-                        }
+            loadingHeroAbilities = true
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getHeroAbilities()
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let {
+                        ConstData.heroAbilities = it
+                        _constHeroAbilities.postValue(Unit)
                     }
-
-                    override fun onFailure(
-                        call: Call<Map<String, HeroAbilitiesResult>>,
-                        t: Throwable
-                    ) {
-                        _error.value = t.message.toString()
-                        loadingHeroAbilities = false
-                    }
-                })
+                }
+                loadingHeroAbilities = false
+            }
         }
     }
 

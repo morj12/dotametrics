@@ -3,15 +3,18 @@ package com.example.dotametrics.presentation.view.match
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.dotametrics.data.remote.model.matches.MatchDataResult
-import com.example.dotametrics.data.remote.service.RetrofitInstance
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.dotametrics.data.remote.repository.OpenDotaRepository
+import com.example.dotametrics.domain.repository.IOpenDotaRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MatchViewModel : ViewModel() {
 
-    var loadingMatch = false
+    private val openDotaRepository: IOpenDotaRepository = OpenDotaRepository()
+
+    private var loadingMatch = false
 
     var matchId: String = ""
 
@@ -23,30 +26,19 @@ class MatchViewModel : ViewModel() {
     val error: LiveData<String>
         get() = _error
 
-    private val retrofit = RetrofitInstance.getService()
-
     fun loadMatch() {
         if (loadingMatch) return
         if (matchId.isNotBlank()) {
             loadingMatch = true
-            retrofit.getMatchData(matchId).enqueue(object : Callback<MatchDataResult> {
-                override fun onResponse(
-                    call: Call<MatchDataResult>,
-                    response: Response<MatchDataResult>
-                ) {
-                    val body = response.body()
-                    body?.let {
-                        if (!it.isNull()) _result.value = response.body()
-                    }
-
-                    loadingMatch = false
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getMatchData(matchId)
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let { if (!it.isNull()) _result.postValue(it) }
                 }
-
-                override fun onFailure(call: Call<MatchDataResult>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingMatch = false
-                }
-            })
+                loadingMatch = false
+            }
         }
     }
 

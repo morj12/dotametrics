@@ -3,15 +3,17 @@ package com.example.dotametrics.presentation.view.patch
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.dotametrics.data.remote.model.constants.patch.PatchResult
+import androidx.lifecycle.viewModelScope
 import com.example.dotametrics.data.remote.model.constants.patch.PatchNotesResult
-import com.example.dotametrics.data.remote.service.RetrofitInstance
 import com.example.dotametrics.data.ConstData
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.dotametrics.data.remote.repository.OpenDotaRepository
+import com.example.dotametrics.domain.repository.IOpenDotaRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class PatchViewModel : ViewModel() {
+
+    private val openDotaRepository: IOpenDotaRepository = OpenDotaRepository()
 
     private var loadingPatches = false
     private var loadingPatchNotes = false
@@ -36,8 +38,6 @@ class PatchViewModel : ViewModel() {
     val error: LiveData<String>
         get() = _error
 
-    private val retrofit = RetrofitInstance.getService()
-
     fun loadPatches() {
         if (loadingPatches) return
         if (ConstData.patches.isNotEmpty()) {
@@ -45,25 +45,18 @@ class PatchViewModel : ViewModel() {
             loadingPatches = false
         } else {
             loadingPatches = true
-            retrofit.getPatches().enqueue(object : Callback<List<PatchResult>> {
-                override fun onResponse(
-                    call: Call<List<PatchResult>>,
-                    response: Response<List<PatchResult>>
-                ) {
-                    val body = response.body()
-                    if (body != null) {
-                        ConstData.patches = body.reversed()
-                        _patches.value = Unit
-                        loadingPatches = false
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getPatches()
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let {
+                        ConstData.patches = it.reversed()
+                        _patches.postValue(Unit)
                     }
                 }
-
-                override fun onFailure(call: Call<List<PatchResult>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingPatches = false
-                }
+                loadingPatches = false
             }
-            )
         }
     }
 
@@ -74,24 +67,18 @@ class PatchViewModel : ViewModel() {
             loadingPatchNotes = false
         } else {
             loadingPatchNotes = true
-            retrofit.getPatchNotes().enqueue(object : Callback<Map<String, PatchNotesResult>> {
-                override fun onResponse(
-                    call: Call<Map<String, PatchNotesResult>>,
-                    response: Response<Map<String, PatchNotesResult>>
-                ) {
-                    val body = response.body()
-                    if (body != null) {
-                        ConstData.patchNotes = body
-                        _patchNotes.value = Unit
-                        loadingPatchNotes = false
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getPatchNotes()
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let {
+                        ConstData.patchNotes = it
+                        _patches.postValue(Unit)
                     }
                 }
-
-                override fun onFailure(call: Call<Map<String, PatchNotesResult>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                    loadingPatchNotes = false
-                }
-            })
+                loadingPatchNotes = false
+            }
         }
     }
 

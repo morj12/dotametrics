@@ -16,15 +16,18 @@ import com.example.dotametrics.data.remote.model.players.matches.MatchesResult
 import com.example.dotametrics.data.remote.model.players.peers.PeersResult
 import com.example.dotametrics.data.remote.model.players.totals.TotalsResult
 import com.example.dotametrics.data.remote.model.players.wl.WLResult
-import com.example.dotametrics.data.remote.service.RetrofitInstance
+import com.example.dotametrics.data.remote.repository.OpenDotaRepository
+import com.example.dotametrics.domain.repository.IOpenDotaRepository
 import com.example.dotametrics.domain.repository.IPlayerRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.concurrent.Executors
 
 class AccountViewModel(private val app: App) : ViewModel() {
+
+    private val repository: IPlayerRepository = PlayerRepository(app.db)
+
+    private val openDotaRepository: IOpenDotaRepository = OpenDotaRepository()
 
     var userId: String = ""
     var lobbyType: Int? = null
@@ -68,120 +71,82 @@ class AccountViewModel(private val app: App) : ViewModel() {
     private lateinit var matchDataSource: LiveData<MatchDataSource>
     private var executor = Executors.newCachedThreadPool()
 
-    private val retrofit = RetrofitInstance.getService()
-
-    private val repository: IPlayerRepository = PlayerRepository(app.db)
-
     fun loadUser() {
         if (userId.isNotBlank()) {
-            retrofit.getPlayersResults(userId).enqueue(object : Callback<PlayersResult> {
-                override fun onResponse(
-                    call: Call<PlayersResult>,
-                    response: Response<PlayersResult>
-                ) {
-                    val body = response.body()
-                    body?.let {
-                        if (!it.isNull()) _result.value = it
-                    }
-
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getPlayersResults(userId)
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let { if (!it.isNull()) _result.postValue(it) }
                 }
-
-                override fun onFailure(call: Call<PlayersResult>, t: Throwable) {
-                    _error.value = t.message.toString()
+            }
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getWLResults(userId, 20, null, null)
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let { if (!it.isNull()) _wl.postValue(it) }
                 }
-            })
-            retrofit.getWLResults(userId, 20, null, null).enqueue(object : Callback<WLResult> {
-                override fun onResponse(call: Call<WLResult>, response: Response<WLResult>) {
-                    val body = response.body()
-                    body?.let {
-                        if (!it.isNull()) _wl.value = it
-                    }
-                }
-
-                override fun onFailure(call: Call<WLResult>, t: Throwable) {
-                    _error.value = t.message.toString()
-                }
-
-            })
+            }
         }
     }
 
     fun loadFilteredWLResults() {
         if (userId.isNotBlank()) {
-            retrofit.getWLResults(userId, null, lobbyType, heroId)
-                .enqueue(object : Callback<WLResult> {
-                    override fun onResponse(call: Call<WLResult>, response: Response<WLResult>) {
-                        val body = response.body()
-                        body?.let {
-                            if (!it.isNull()) _filteredWl.value = it
-                        }
-                    }
-
-                    override fun onFailure(call: Call<WLResult>, t: Throwable) {
-                        _error.value = t.message.toString()
-                    }
-                })
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getWLResults(userId, null, lobbyType, heroId)
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let { if (!it.isNull()) _filteredWl.postValue(it) }
+                }
+            }
         }
     }
 
     fun loadTotals() {
         if (userId.isNotBlank()) {
-            retrofit.getTotals(userId).enqueue(object : Callback<List<TotalsResult>> {
-                override fun onResponse(
-                    call: Call<List<TotalsResult>>,
-                    response: Response<List<TotalsResult>>
-                ) {
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getTotals(userId)
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
                     val usefulTotals = app.resources.getStringArray(R.array.totals_array)
-                    _totals.value = response.body()?.filter { usefulTotals.contains(it.field) }
+                    _totals.postValue(result.data?.filter { usefulTotals.contains(it.field) })
                 }
-
-                override fun onFailure(call: Call<List<TotalsResult>>, t: Throwable) {
-                    _error.value = t.message.toString()
-                }
-
-            })
+            }
         }
     }
 
     fun loadPlayerHeroesResults() {
         if (userId.isNotBlank()) {
-            retrofit.getPlayerHeroesResults(userId)
-                .enqueue(object : Callback<List<PlayerHeroResult>> {
-                    override fun onResponse(
-                        call: Call<List<PlayerHeroResult>>,
-                        response: Response<List<PlayerHeroResult>>
-                    ) {
-                        _heroes.value = response.body()
-                    }
-
-                    override fun onFailure(call: Call<List<PlayerHeroResult>>, t: Throwable) {
-                        _error.value = t.message.toString()
-                    }
-
-                })
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getPlayerHeroesResults(userId)
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let { _heroes.postValue(it) }
+                }
+            }
         }
     }
 
     fun loadPeers() {
         if (userId.isNotBlank()) {
-            retrofit.getPeers(userId)
-                .enqueue(object : Callback<List<PeersResult>> {
-                    override fun onResponse(
-                        call: Call<List<PeersResult>>,
-                        response: Response<List<PeersResult>>
-                    ) {
-                        _peers.value = response.body()
-                    }
-
-                    override fun onFailure(call: Call<List<PeersResult>>, t: Throwable) {
-                        _error.value = t.message.toString()
-                    }
-
-                })
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = openDotaRepository.getPeers(userId)
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                } else {
+                    result.data?.let { _peers.postValue(it) }
+                }
+            }
         }
     }
 
     fun loadMatches(callback: () -> Unit) {
+        // TODO: change later
         if (userId.isNotBlank()) {
             val factory = MatchDataSourceFactory(userId, lobbyType, heroId, errorListener)
             matchDataSource = factory.mutableLiveData
