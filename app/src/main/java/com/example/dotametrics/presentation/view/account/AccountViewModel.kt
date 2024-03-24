@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.example.dotametrics.App
 import com.example.dotametrics.R
-import com.example.dotametrics.data.local.dbmodel.PlayerDbModel
+import com.example.dotametrics.domain.entity.local.PlayerDbModel
 import com.example.dotametrics.data.local.repository.PlayerRepository
 import com.example.dotametrics.domain.entity.remote.players.PlayersResult
 import com.example.dotametrics.domain.entity.remote.players.heroes.PlayerHeroResult

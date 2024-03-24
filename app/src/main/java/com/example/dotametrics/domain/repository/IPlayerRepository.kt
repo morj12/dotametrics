@@ -1,6 +1,6 @@
 package com.example.dotametrics.domain.repository
 
-import com.example.dotametrics.data.local.dbmodel.PlayerDbModel
+import com.example.dotametrics.domain.entity.local.PlayerDbModel
 import kotlinx.coroutines.flow.Flow
 
 interface IPlayerRepository {

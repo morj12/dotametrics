@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.dotametrics.data.local.dbmodel.PlayerDbModel
+import com.example.dotametrics.domain.entity.local.PlayerDbModel
 import com.example.dotametrics.databinding.FavoriteItemBinding
 import com.example.dotametrics.util.GlideManager.requestOptions
 

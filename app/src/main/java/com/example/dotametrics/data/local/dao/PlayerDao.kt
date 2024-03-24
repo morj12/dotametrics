@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.dotametrics.data.local.dbmodel.PlayerDbModel
+import com.example.dotametrics.domain.entity.local.PlayerDbModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

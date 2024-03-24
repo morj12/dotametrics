@@ -4,11 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.asLiveData
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.SmallTest
 import com.example.dotametrics.data.local.AppDatabase
 import com.example.dotametrics.data.local.dao.PlayerDao
-import com.example.dotametrics.data.local.dbmodel.PlayerDbModel
+import com.example.dotametrics.domain.entity.local.PlayerDbModel
 import com.example.dotametrics.getOrAwaitValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,7 +19,6 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
 
 @ExperimentalCoroutinesApi

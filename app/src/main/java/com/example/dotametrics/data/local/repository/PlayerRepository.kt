@@ -1,7 +1,7 @@
 package com.example.dotametrics.data.local.repository
 
 import com.example.dotametrics.data.local.AppDatabase
-import com.example.dotametrics.data.local.dbmodel.PlayerDbModel
+import com.example.dotametrics.domain.entity.local.PlayerDbModel
 import com.example.dotametrics.domain.repository.IPlayerRepository
 import kotlinx.coroutines.flow.Flow
 

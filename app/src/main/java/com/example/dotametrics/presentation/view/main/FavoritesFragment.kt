@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
-import com.example.dotametrics.data.local.dbmodel.PlayerDbModel
+import com.example.dotametrics.domain.entity.local.PlayerDbModel
 import com.example.dotametrics.databinding.FragmentFavoritesBinding
 import com.example.dotametrics.presentation.adapter.FavoriteAdapter
 import com.example.dotametrics.presentation.view.account.AccountActivity

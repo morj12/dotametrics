@@ -1,4 +1,4 @@
-package com.example.dotametrics.data.local.dbmodel
+package com.example.dotametrics.domain.entity.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
