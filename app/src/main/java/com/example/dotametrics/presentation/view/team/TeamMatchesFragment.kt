@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dotametrics.data.remote.model.teams.matches.TeamMatchesResult
+import com.example.dotametrics.domain.entity.remote.teams.matches.TeamMatchesResult
 import com.example.dotametrics.databinding.FragmentTeamMatchesBinding
 import com.example.dotametrics.presentation.adapter.TeamMatchesAdapter
 import com.example.dotametrics.presentation.view.match.MatchActivity

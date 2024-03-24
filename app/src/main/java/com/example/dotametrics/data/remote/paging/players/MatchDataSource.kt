@@ -1,7 +1,7 @@
 package com.example.dotametrics.data.remote.paging.players
 
 import androidx.paging.PageKeyedDataSource
-import com.example.dotametrics.data.remote.model.players.matches.MatchesResult
+import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResult
 import com.example.dotametrics.data.remote.service.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback

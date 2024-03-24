@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dotametrics.data.remote.model.matches.MatchDataResult
+import com.example.dotametrics.domain.entity.remote.matches.MatchDataResult
 import com.example.dotametrics.data.remote.repository.OpenDotaRepository
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
 import kotlinx.coroutines.Dispatchers

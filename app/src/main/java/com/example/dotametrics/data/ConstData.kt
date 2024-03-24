@@ -1,14 +1,14 @@
 package com.example.dotametrics.data
 
-import com.example.dotametrics.data.remote.model.constants.abilities.AbilityResult
-import com.example.dotametrics.data.remote.model.constants.abilities.HeroAbilitiesResult
-import com.example.dotametrics.data.remote.model.constants.aghs.AghsResult
-import com.example.dotametrics.data.remote.model.constants.heroes.HeroResult
-import com.example.dotametrics.data.remote.model.constants.items.ItemResult
-import com.example.dotametrics.data.remote.model.constants.lobbytypes.LobbyTypeResult
-import com.example.dotametrics.data.remote.model.constants.patch.PatchResult
-import com.example.dotametrics.data.remote.model.constants.patch.PatchNotesResult
-import com.example.dotametrics.data.remote.model.teams.TeamsResult
+import com.example.dotametrics.domain.entity.remote.constants.abilities.AbilityResult
+import com.example.dotametrics.domain.entity.remote.constants.abilities.HeroAbilitiesResult
+import com.example.dotametrics.domain.entity.remote.constants.aghs.AghsResult
+import com.example.dotametrics.domain.entity.remote.constants.heroes.HeroResult
+import com.example.dotametrics.domain.entity.remote.constants.items.ItemResult
+import com.example.dotametrics.domain.entity.remote.constants.lobbytypes.LobbyTypeResult
+import com.example.dotametrics.domain.entity.remote.constants.patch.PatchResult
+import com.example.dotametrics.domain.entity.remote.constants.patch.PatchNotesResult
+import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
 
 object ConstData {
 

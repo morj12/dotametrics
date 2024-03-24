@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.dotametrics.App
 import com.example.dotametrics.R
-import com.example.dotametrics.data.remote.model.constants.abilities.AbilityResult
-import com.example.dotametrics.data.remote.model.constants.heroes.HeroResult
+import com.example.dotametrics.domain.entity.remote.constants.abilities.AbilityResult
+import com.example.dotametrics.domain.entity.remote.constants.heroes.HeroResult
 import com.example.dotametrics.databinding.ActivityHeroBinding
 import com.example.dotametrics.presentation.adapter.HeroSkillsAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel

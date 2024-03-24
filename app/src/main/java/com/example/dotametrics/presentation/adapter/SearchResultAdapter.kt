@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.util.Datetime
 import com.example.dotametrics.R
-import com.example.dotametrics.data.remote.model.search.SearchResult
+import com.example.dotametrics.domain.entity.remote.search.SearchResult
 import com.example.dotametrics.databinding.SearchResultItemBinding
 import com.example.dotametrics.util.GlideManager.requestOptions
 

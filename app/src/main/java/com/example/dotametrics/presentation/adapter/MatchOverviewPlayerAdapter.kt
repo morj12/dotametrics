@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.R
-import com.example.dotametrics.data.remote.model.constants.items.ItemResult
-import com.example.dotametrics.data.remote.model.matches.Players
+import com.example.dotametrics.domain.entity.remote.constants.items.ItemResult
+import com.example.dotametrics.domain.entity.remote.matches.Players
 import com.example.dotametrics.databinding.MatchOverviewItemBinding
 import com.example.dotametrics.data.ConstData
 import com.example.dotametrics.util.GlideManager

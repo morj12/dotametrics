@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dotametrics.data.remote.model.constants.patch.PatchNotesResult
+import com.example.dotametrics.domain.entity.remote.constants.patch.PatchNotesResult
 import com.example.dotametrics.data.ConstData
 import com.example.dotametrics.data.remote.repository.OpenDotaRepository
 import com.example.dotametrics.domain.repository.IOpenDotaRepository

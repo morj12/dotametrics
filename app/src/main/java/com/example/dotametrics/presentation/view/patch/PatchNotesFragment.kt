@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
-import com.example.dotametrics.data.remote.model.constants.patch.PatchNotesResult
+import com.example.dotametrics.domain.entity.remote.constants.patch.PatchNotesResult
 import com.example.dotametrics.databinding.FragmentPatchNotesBinding
 import com.example.dotametrics.presentation.adapter.PatchNotesHeroesAdapter
 import com.example.dotametrics.presentation.adapter.PatchNotesItemsAdapter

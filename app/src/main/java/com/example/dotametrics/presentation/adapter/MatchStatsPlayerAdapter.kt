@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dotametrics.data.remote.model.matches.Players
+import com.example.dotametrics.domain.entity.remote.matches.Players
 import com.example.dotametrics.databinding.MatchStatsItemBinding
 
 class MatchStatsPlayerAdapter :

@@ -2,27 +2,27 @@ package com.example.dotametrics.domain.repository
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
-import com.example.dotametrics.data.remote.model.constants.abilities.AbilityResult
-import com.example.dotametrics.data.remote.model.constants.abilities.HeroAbilitiesResult
-import com.example.dotametrics.data.remote.model.constants.aghs.AghsResult
-import com.example.dotametrics.data.remote.model.constants.heroes.HeroResult
-import com.example.dotametrics.data.remote.model.constants.items.ItemResult
-import com.example.dotametrics.data.remote.model.constants.lobbytypes.LobbyTypeResult
-import com.example.dotametrics.data.remote.model.constants.patch.PatchNotesResult
-import com.example.dotametrics.data.remote.model.constants.patch.PatchResult
-import com.example.dotametrics.data.remote.model.matches.MatchDataResult
-import com.example.dotametrics.data.remote.model.players.PlayersResult
-import com.example.dotametrics.data.remote.model.players.heroes.PlayerHeroResult
-import com.example.dotametrics.data.remote.model.players.matches.MatchesResult
-import com.example.dotametrics.data.remote.model.players.peers.PeersResult
-import com.example.dotametrics.data.remote.model.players.totals.TotalsResult
-import com.example.dotametrics.data.remote.model.players.wl.WLResult
-import com.example.dotametrics.data.remote.model.search.SearchResult
-import com.example.dotametrics.data.remote.model.teams.TeamsResult
-import com.example.dotametrics.data.remote.model.teams.heroes.TeamHeroesResult
-import com.example.dotametrics.data.remote.model.teams.matches.TeamMatchesResult
-import com.example.dotametrics.data.remote.model.teams.players.TeamPlayersResult
-import com.example.dotametrics.domain.repository.response.BasicResponse
+import com.example.dotametrics.domain.entity.remote.constants.abilities.AbilityResult
+import com.example.dotametrics.domain.entity.remote.constants.abilities.HeroAbilitiesResult
+import com.example.dotametrics.domain.entity.remote.constants.aghs.AghsResult
+import com.example.dotametrics.domain.entity.remote.constants.heroes.HeroResult
+import com.example.dotametrics.domain.entity.remote.constants.items.ItemResult
+import com.example.dotametrics.domain.entity.remote.constants.lobbytypes.LobbyTypeResult
+import com.example.dotametrics.domain.entity.remote.constants.patch.PatchNotesResult
+import com.example.dotametrics.domain.entity.remote.constants.patch.PatchResult
+import com.example.dotametrics.domain.entity.remote.matches.MatchDataResult
+import com.example.dotametrics.domain.entity.remote.players.PlayersResult
+import com.example.dotametrics.domain.entity.remote.players.heroes.PlayerHeroResult
+import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResult
+import com.example.dotametrics.domain.entity.remote.players.peers.PeersResult
+import com.example.dotametrics.domain.entity.remote.players.totals.TotalsResult
+import com.example.dotametrics.domain.entity.remote.players.wl.WLResult
+import com.example.dotametrics.domain.entity.remote.search.SearchResult
+import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
+import com.example.dotametrics.domain.entity.remote.teams.heroes.TeamHeroesResult
+import com.example.dotametrics.domain.entity.remote.teams.matches.TeamMatchesResult
+import com.example.dotametrics.domain.entity.remote.teams.players.TeamPlayersResult
+import com.example.dotametrics.domain.entity.remote.BasicResponse
 
 interface IOpenDotaRepository {
     fun getSearchResults(name: String): BasicResponse<List<SearchResult>>

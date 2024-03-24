@@ -1,6 +1,6 @@
 package com.example.dotametrics.data.remote.service
 
-import com.example.dotametrics.data.remote.model.constants.abilities.CustomArrayList
+import com.example.dotametrics.domain.entity.remote.constants.abilities.CustomArrayList
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken

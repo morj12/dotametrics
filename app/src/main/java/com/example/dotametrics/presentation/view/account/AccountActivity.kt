@@ -7,8 +7,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.data.local.dbmodel.PlayerDbModel
-import com.example.dotametrics.data.remote.model.players.PlayersResult
-import com.example.dotametrics.data.remote.model.players.wl.WLResult
+import com.example.dotametrics.domain.entity.remote.players.PlayersResult
+import com.example.dotametrics.domain.entity.remote.players.wl.WLResult
 import com.example.dotametrics.databinding.ActivityAccountBinding
 import com.example.dotametrics.presentation.adapter.SectionsPagerAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel

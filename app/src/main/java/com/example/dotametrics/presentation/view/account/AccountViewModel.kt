@@ -1,27 +1,22 @@
 package com.example.dotametrics.presentation.view.account
 
 import androidx.lifecycle.*
-import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.data.local.dbmodel.PlayerDbModel
 import com.example.dotametrics.data.local.repository.PlayerRepository
-import com.example.dotametrics.data.remote.model.players.PlayersResult
-import com.example.dotametrics.data.remote.model.players.heroes.PlayerHeroResult
-import com.example.dotametrics.data.remote.paging.players.MatchDataSource
-import com.example.dotametrics.data.remote.paging.players.MatchDataSource.Companion.PAGE_SIZE
-import com.example.dotametrics.data.remote.paging.players.MatchDataSourceFactory
-import com.example.dotametrics.data.remote.model.players.matches.MatchesResult
-import com.example.dotametrics.data.remote.model.players.peers.PeersResult
-import com.example.dotametrics.data.remote.model.players.totals.TotalsResult
-import com.example.dotametrics.data.remote.model.players.wl.WLResult
+import com.example.dotametrics.domain.entity.remote.players.PlayersResult
+import com.example.dotametrics.domain.entity.remote.players.heroes.PlayerHeroResult
+import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResult
+import com.example.dotametrics.domain.entity.remote.players.peers.PeersResult
+import com.example.dotametrics.domain.entity.remote.players.totals.TotalsResult
+import com.example.dotametrics.domain.entity.remote.players.wl.WLResult
 import com.example.dotametrics.data.remote.repository.OpenDotaRepository
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
 import com.example.dotametrics.domain.repository.IPlayerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.concurrent.Executors
 
 class AccountViewModel(private val app: App) : ViewModel() {
 

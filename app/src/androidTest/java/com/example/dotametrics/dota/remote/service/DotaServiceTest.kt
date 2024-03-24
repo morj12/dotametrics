@@ -1,13 +1,11 @@
 package com.example.dotametrics.dota.remote.service
 
-import com.example.dotametrics.data.remote.model.players.PlayersResult
-import com.example.dotametrics.data.remote.model.players.Profile
+import com.example.dotametrics.domain.entity.remote.players.PlayersResult
+import com.example.dotametrics.domain.entity.remote.players.Profile
 import com.example.dotametrics.data.remote.service.DotaService
 import com.example.dotametrics.data.remote.service.RetrofitInstance
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.After
-import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Before

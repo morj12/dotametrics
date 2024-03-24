@@ -2,7 +2,7 @@ package com.example.dotametrics.data.remote.paging.players
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-import com.example.dotametrics.data.remote.model.players.matches.MatchesResult
+import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResult
 
 class MatchDataSourceFactory(
     private val id: String,

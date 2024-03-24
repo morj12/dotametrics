@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.R
-import com.example.dotametrics.data.remote.model.teams.TeamsResult
+import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
 import com.example.dotametrics.databinding.ActivityTeamSearchBinding
 import com.example.dotametrics.presentation.adapter.TeamSearchAdapter
 import com.example.dotametrics.presentation.view.DrawerActivity

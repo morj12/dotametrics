@@ -12,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
-import com.example.dotametrics.data.remote.model.search.SearchResult
+import com.example.dotametrics.domain.entity.remote.search.SearchResult
 import com.example.dotametrics.databinding.FragmentSearchBinding
 import com.example.dotametrics.presentation.adapter.SearchResultAdapter
 import com.example.dotametrics.presentation.view.account.AccountActivity

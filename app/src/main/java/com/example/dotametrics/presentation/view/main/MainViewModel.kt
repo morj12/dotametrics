@@ -3,7 +3,7 @@ package com.example.dotametrics.presentation.view.main
 import androidx.lifecycle.*
 import com.example.dotametrics.App
 import com.example.dotametrics.data.local.repository.PlayerRepository
-import com.example.dotametrics.data.remote.model.search.SearchResult
+import com.example.dotametrics.domain.entity.remote.search.SearchResult
 import com.example.dotametrics.data.remote.repository.OpenDotaRepository
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
 import com.example.dotametrics.domain.repository.IPlayerRepository

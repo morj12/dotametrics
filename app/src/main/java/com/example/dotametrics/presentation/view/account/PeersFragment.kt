@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
-import com.example.dotametrics.data.remote.model.players.peers.PeersResult
+import com.example.dotametrics.domain.entity.remote.players.peers.PeersResult
 import com.example.dotametrics.databinding.FragmentPeersBinding
 import com.example.dotametrics.presentation.adapter.PeersAdapter
 import com.example.dotametrics.util.startLoading

@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.App
 import com.example.dotametrics.R
-import com.example.dotametrics.data.remote.model.players.matches.MatchesResult
+import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResult
 import com.example.dotametrics.databinding.FragmentMatchesBinding
 import com.example.dotametrics.presentation.adapter.MatchesResultAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel

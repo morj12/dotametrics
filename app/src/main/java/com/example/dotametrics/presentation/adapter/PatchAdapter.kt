@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dotametrics.R
-import com.example.dotametrics.data.remote.model.constants.patch.PatchResult
+import com.example.dotametrics.domain.entity.remote.constants.patch.PatchResult
 import com.example.dotametrics.databinding.PatchSeriesItemBinding
 import com.example.dotametrics.util.Datetime
 

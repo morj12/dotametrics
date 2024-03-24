@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dotametrics.data.remote.model.teams.TeamsResult
-import com.example.dotametrics.data.remote.model.teams.heroes.TeamHeroesResult
-import com.example.dotametrics.data.remote.model.teams.matches.TeamMatchesResult
-import com.example.dotametrics.data.remote.model.teams.players.TeamPlayersResult
+import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
+import com.example.dotametrics.domain.entity.remote.teams.heroes.TeamHeroesResult
+import com.example.dotametrics.domain.entity.remote.teams.matches.TeamMatchesResult
+import com.example.dotametrics.domain.entity.remote.teams.players.TeamPlayersResult
 import com.example.dotametrics.data.remote.repository.OpenDotaRepository
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
 import kotlinx.coroutines.Dispatchers
