@@ -23,7 +23,6 @@ data class Players(
     @SerializedName("last_hits") var lastHits: Int? = null,
     @SerializedName("level") var level: Int? = null,
     @SerializedName("party_id") var partyId: Int? = null,
-    @SerializedName("permanent_buffs") var permanentBuffs: ArrayList<PermanentBuffs> = arrayListOf(),
     @SerializedName("tower_damage") var towerDamage: Int? = null,
     @SerializedName("xp_per_min") var xpPerMin: Int? = null,
     @SerializedName("personaname") var personaname: String? = null,

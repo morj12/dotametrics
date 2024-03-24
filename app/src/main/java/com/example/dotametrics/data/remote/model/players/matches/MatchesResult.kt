@@ -11,12 +11,9 @@ data class MatchesResult(
     @SerializedName("lobby_type") var lobbyType: Int? = null,
     @SerializedName("hero_id") var heroId: Int? = null,
     @SerializedName("start_time") var startTime: Long? = null,
-    @SerializedName("version") var version: String? = null,
     @SerializedName("kills") var kills: Int? = null,
     @SerializedName("deaths") var deaths: Int? = null,
     @SerializedName("assists") var assists: Int? = null,
-    @SerializedName("skill") var skill: String? = null,
     @SerializedName("average_rank") var averageRank: Int? = null,
-    @SerializedName("leaver_status") var leaverStatus: Int? = null,
     @SerializedName("party_size") var partySize: Int? = null
 )

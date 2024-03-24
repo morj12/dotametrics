@@ -7,5 +7,4 @@ data class SearchResult(
     @SerializedName("personaname") var personaname: String? = null,
     @SerializedName("avatarfull") var avatarfull: String? = null,
     @SerializedName("last_match_time") var lastMatchTime: String? = null,
-    @SerializedName("similarity") var similarity: Double? = null
 )
