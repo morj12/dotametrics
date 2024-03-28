@@ -15,7 +15,9 @@ import com.example.dotametrics.databinding.FragmentPatchBinding
 import com.example.dotametrics.presentation.adapter.PatchAdapter
 import com.example.dotametrics.data.ConstData
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PatchFragment : Fragment() {
 
     private var _binding: FragmentPatchBinding? = null

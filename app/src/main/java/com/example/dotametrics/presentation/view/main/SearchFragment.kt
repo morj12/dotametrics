@@ -11,13 +11,14 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dotametrics.App
 import com.example.dotametrics.domain.entity.remote.search.SearchResult
 import com.example.dotametrics.databinding.FragmentSearchBinding
 import com.example.dotametrics.presentation.adapter.SearchResultAdapter
 import com.example.dotametrics.presentation.view.account.AccountActivity
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
@@ -26,9 +27,7 @@ class SearchFragment : Fragment() {
 
     private lateinit var adapter: SearchResultAdapter
 
-    private val viewModel: MainViewModel by activityViewModels {
-        MainViewModel.MainViewModelFactory((context?.applicationContext as App))
-    }
+    private val viewModel: MainViewModel by activityViewModels()
 
     private val openAccount: (SearchResult) -> Unit = {
         val intent = Intent(requireActivity(), AccountActivity::class.java)

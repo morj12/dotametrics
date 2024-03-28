@@ -13,7 +13,9 @@ import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.constants.patch.PatchNotesResult
 import com.example.dotametrics.databinding.FragmentPatchSeriesBinding
 import com.example.dotametrics.presentation.adapter.PatchSeriesAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PatchSeriesFragment : Fragment() {
 
     private var _binding: FragmentPatchSeriesBinding? = null

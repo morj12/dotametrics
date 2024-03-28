@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResult
 import com.example.dotametrics.databinding.FragmentMatchesBinding
@@ -21,7 +20,9 @@ import com.example.dotametrics.util.LobbyTypeMapper
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MatchesFragment : Fragment() {
 
     private var _binding: FragmentMatchesBinding? = null
@@ -30,13 +31,9 @@ class MatchesFragment : Fragment() {
 
     private lateinit var adapter: MatchesResultAdapter
 
-    private val viewModel: AccountViewModel by activityViewModels {
-        AccountViewModel.AccountViewModelFactory((context?.applicationContext as App))
-    }
+    private val viewModel: AccountViewModel by activityViewModels()
 
-    private val constViewModel: ConstViewModel by activityViewModels {
-        ConstViewModel.ConstViewModelFactory((context?.applicationContext as App))
-    }
+    private val constViewModel: ConstViewModel by activityViewModels()
 
     private val openMatch: (MatchesResult) -> Unit = {
         val intent = Intent(requireActivity(), MatchActivity::class.java)
@@ -154,8 +151,8 @@ class MatchesFragment : Fragment() {
         viewModel.matches.observe(viewLifecycleOwner) {
             adapter.submitList(it) {
                 binding.rcMatches.scrollToPosition(0)
+                binding.rcMatches.stopLoading(binding.pbRcMatches)
             }
-            binding.rcMatches.stopLoading(binding.pbRcMatches)
         }
     }
 

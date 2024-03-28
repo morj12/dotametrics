@@ -4,8 +4,9 @@ import com.example.dotametrics.data.local.AppDatabase
 import com.example.dotametrics.domain.entity.local.PlayerDbModel
 import com.example.dotametrics.domain.repository.IPlayerRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class PlayerRepository(database: AppDatabase): IPlayerRepository {
+class PlayerRepository @Inject constructor(database: AppDatabase): IPlayerRepository {
 
     private val dao = database.playerDao()
 

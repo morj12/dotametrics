@@ -15,7 +15,9 @@ import com.example.dotametrics.presentation.adapter.TeamSearchAdapter
 import com.example.dotametrics.presentation.view.DrawerActivity
 import com.example.dotametrics.presentation.view.team.TeamActivity
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TeamSearchActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityTeamSearchBinding

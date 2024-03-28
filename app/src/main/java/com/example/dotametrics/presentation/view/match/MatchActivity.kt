@@ -2,7 +2,6 @@ package com.example.dotametrics.presentation.view.match
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.data.ConstData
 import com.example.dotametrics.databinding.ActivityMatchBinding
@@ -11,16 +10,16 @@ import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.presentation.view.DrawerActivity
 import com.example.dotametrics.util.*
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MatchActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityMatchBinding
 
     private val viewModel: MatchViewModel  by viewModels()
 
-    private val constViewModel: ConstViewModel by viewModels {
-        ConstViewModel.ConstViewModelFactory(applicationContext as App)
-    }
+    private val constViewModel: ConstViewModel by viewModels()
 
     private var id: Long = 0L
 

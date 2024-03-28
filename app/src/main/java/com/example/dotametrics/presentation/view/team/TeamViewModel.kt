@@ -1,5 +1,6 @@
 package com.example.dotametrics.presentation.view.team
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,14 +9,15 @@ import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
 import com.example.dotametrics.domain.entity.remote.teams.heroes.TeamHeroesResult
 import com.example.dotametrics.domain.entity.remote.teams.matches.TeamMatchesResult
 import com.example.dotametrics.domain.entity.remote.teams.players.TeamPlayersResult
-import com.example.dotametrics.data.remote.repository.OpenDotaRepository
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TeamViewModel : ViewModel() {
-
-    private val openDotaRepository: IOpenDotaRepository = OpenDotaRepository()
+@HiltViewModel
+class TeamViewModel @Inject constructor(private val openDotaRepository: IOpenDotaRepository) :
+    ViewModel() {
 
     private val _team = MutableLiveData<TeamsResult>()
     val team: LiveData<TeamsResult>
@@ -44,13 +46,19 @@ class TeamViewModel : ViewModel() {
     fun loadPlayers() {
         if (_team.value != null) {
             viewModelScope.launch(Dispatchers.IO) {
-                val result = openDotaRepository.getTeamPlayers(_team.value!!.teamId.toString())
-                if (result.error != "null") {
-                    _error.postValue(result.error)
-                } else {
-                    result.data?.let {
-                        _players.postValue(it.filter { p -> p.isCurrentTeamMember == true })
+                try {
+                    val result = openDotaRepository.getTeamPlayers(_team.value!!.teamId.toString())
+                    if (result.error != "null") {
+                        _error.postValue(result.error)
+                        Log.e("DOTA_RETROFIT", result.error)
+                    } else {
+                        result.data?.let {
+                            _players.postValue(it.filter { p -> p.isCurrentTeamMember == true })
+                        }
                     }
+                } catch (e: Exception) {
+                    _error.postValue(e.message.toString())
+                    Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }
         }
@@ -59,11 +67,17 @@ class TeamViewModel : ViewModel() {
     fun loadMatches() {
         if (_team.value != null) {
             viewModelScope.launch(Dispatchers.IO) {
-                val result = openDotaRepository.getTeamMatches(_team.value!!.teamId.toString())
-                if (result.error != "null") {
-                    _error.postValue(result.error)
-                } else {
-                    result.data?.let { _matches.postValue(it) }
+                try {
+                    val result = openDotaRepository.getTeamMatches(_team.value!!.teamId.toString())
+                    if (result.error != "null") {
+                        _error.postValue(result.error)
+                        Log.e("DOTA_RETROFIT", result.error)
+                    } else {
+                        result.data?.let { _matches.postValue(it) }
+                    }
+                } catch (e: Exception) {
+                    _error.postValue(e.message.toString())
+                    Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }
         }
@@ -72,11 +86,17 @@ class TeamViewModel : ViewModel() {
     fun loadHeroes() {
         if (_team.value != null) {
             viewModelScope.launch(Dispatchers.IO) {
-                val result = openDotaRepository.getTeamHeroes(_team.value!!.teamId.toString())
-                if (result.error != "null") {
-                    _error.postValue(result.error)
-                } else {
-                    result.data?.let { _heroes.postValue(it) }
+                try {
+                    val result = openDotaRepository.getTeamHeroes(_team.value!!.teamId.toString())
+                    if (result.error != "null") {
+                        _error.postValue(result.error)
+                        Log.e("DOTA_RETROFIT", result.error)
+                    } else {
+                        result.data?.let { _heroes.postValue(it) }
+                    }
+                } catch (e: Exception) {
+                    _error.postValue(e.message.toString())
+                    Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }
         }

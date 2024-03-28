@@ -1,18 +1,19 @@
 package com.example.dotametrics.presentation.view.match
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dotametrics.domain.entity.remote.matches.MatchDataResult
-import com.example.dotametrics.data.remote.repository.OpenDotaRepository
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MatchViewModel : ViewModel() {
-
-    private val openDotaRepository: IOpenDotaRepository = OpenDotaRepository()
+@HiltViewModel
+class MatchViewModel @Inject constructor(private val openDotaRepository: IOpenDotaRepository) : ViewModel() {
 
     private var loadingMatch = false
 
@@ -31,13 +32,19 @@ class MatchViewModel : ViewModel() {
         if (matchId.isNotBlank()) {
             loadingMatch = true
             viewModelScope.launch(Dispatchers.IO) {
-                val result = openDotaRepository.getMatchData(matchId)
-                if (result.error != "null") {
-                    _error.postValue(result.error)
-                } else {
-                    result.data?.let { if (!it.isNull()) _result.postValue(it) }
+                try {
+                    val result = openDotaRepository.getMatchData(matchId)
+                    if (result.error != "null") {
+                        _error.postValue(result.error)
+                        Log.e("DOTA_RETROFIT", result.error)
+                    } else {
+                        result.data?.let { if (!it.isNull()) _result.postValue(it) }
+                    }
+                    loadingMatch = false
+                } catch (e: Exception) {
+                    _error.postValue(e.message.toString())
+                    Log.e("DOTA_RETROFIT", e.message.toString())
                 }
-                loadingMatch = false
             }
         }
     }

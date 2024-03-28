@@ -1,19 +1,21 @@
 package com.example.dotametrics.presentation.view.patch
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dotametrics.domain.entity.remote.constants.patch.PatchNotesResult
 import com.example.dotametrics.data.ConstData
-import com.example.dotametrics.data.remote.repository.OpenDotaRepository
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PatchViewModel : ViewModel() {
+@HiltViewModel
+class PatchViewModel @Inject constructor(private val openDotaRepository: IOpenDotaRepository) : ViewModel() {
 
-    private val openDotaRepository: IOpenDotaRepository = OpenDotaRepository()
 
     private var loadingPatches = false
     private var loadingPatchNotes = false
@@ -45,16 +47,23 @@ class PatchViewModel : ViewModel() {
             loadingPatches = false
         } else {
             loadingPatches = true
-            viewModelScope.launch(Dispatchers.IO) {
-                val result = openDotaRepository.getPatches()
-                if (result.error != "null") {
-                    _error.postValue(result.error)
-                } else {
-                    result.data?.let {
-                        ConstData.patches = it.reversed()
-                        _patches.postValue(Unit)
+            try {
+                viewModelScope.launch(Dispatchers.IO) {
+                    val result = openDotaRepository.getPatches()
+                    if (result.error != "null") {
+                        _error.postValue(result.error)
+                        Log.e("DOTA_RETROFIT", result.error)
+                    } else {
+                        result.data?.let {
+                            ConstData.patches = it.reversed()
+                            _patches.postValue(Unit)
+                        }
                     }
+                    loadingPatches = false
                 }
+            } catch (e: Exception) {
+                _error.postValue(e.message.toString())
+                Log.e("DOTA_RETROFIT", e.message.toString())
                 loadingPatches = false
             }
         }
@@ -68,16 +77,23 @@ class PatchViewModel : ViewModel() {
         } else {
             loadingPatchNotes = true
             viewModelScope.launch(Dispatchers.IO) {
-                val result = openDotaRepository.getPatchNotes()
-                if (result.error != "null") {
-                    _error.postValue(result.error)
-                } else {
-                    result.data?.let {
-                        ConstData.patchNotes = it
-                        _patches.postValue(Unit)
+                try {
+                    val result = openDotaRepository.getPatchNotes()
+                    if (result.error != "null") {
+                        _error.postValue(result.error)
+                        Log.e("DOTA_RETROFIT", result.error)
+                    } else {
+                        result.data?.let {
+                            ConstData.patchNotes = it
+                            _patches.postValue(Unit)
+                        }
                     }
+                    loadingPatchNotes = false
+                } catch (e: Exception) {
+                    _error.postValue(e.message.toString())
+                    Log.e("DOTA_RETROFIT", e.message.toString())
+                    loadingPatchNotes = false
                 }
-                loadingPatchNotes = false
             }
         }
     }

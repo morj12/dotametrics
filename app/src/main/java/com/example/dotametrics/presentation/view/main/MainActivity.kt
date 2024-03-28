@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.example.dotametrics.databinding.ActivityMainBinding
 import com.example.dotametrics.presentation.adapter.MainPagerAdapter
 import com.example.dotametrics.presentation.view.DrawerActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityMainBinding

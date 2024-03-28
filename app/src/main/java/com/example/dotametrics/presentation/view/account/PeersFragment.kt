@@ -8,14 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dotametrics.App
 import com.example.dotametrics.domain.entity.remote.players.peers.PeersResult
 import com.example.dotametrics.databinding.FragmentPeersBinding
 import com.example.dotametrics.presentation.adapter.PeersAdapter
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PeersFragment : Fragment() {
 
     private var _binding: FragmentPeersBinding? = null
@@ -24,9 +25,7 @@ class PeersFragment : Fragment() {
 
     private lateinit var adapter: PeersAdapter
 
-    private val viewModel: AccountViewModel by activityViewModels {
-        AccountViewModel.AccountViewModelFactory((context?.applicationContext as App))
-    }
+    private val viewModel: AccountViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

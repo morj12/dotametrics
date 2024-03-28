@@ -15,7 +15,9 @@ import com.example.dotametrics.presentation.view.account.AccountActivity
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TeamPlayersFragment : Fragment() {
 
     private var _binding: FragmentTeamPlayersBinding? = null

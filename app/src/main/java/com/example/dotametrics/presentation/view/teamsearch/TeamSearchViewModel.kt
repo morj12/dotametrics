@@ -1,19 +1,21 @@
 package com.example.dotametrics.presentation.view.teamsearch
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
 import com.example.dotametrics.data.ConstData
-import com.example.dotametrics.data.remote.repository.OpenDotaRepository
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TeamSearchViewModel : ViewModel() {
-
-    private val openDotaRepository: IOpenDotaRepository = OpenDotaRepository()
+@HiltViewModel
+class TeamSearchViewModel @Inject constructor(private val openDotaRepository: IOpenDotaRepository) :
+    ViewModel() {
 
     private val _teams = MutableLiveData<Unit>()
     val teams: LiveData<Unit>
@@ -29,14 +31,20 @@ class TeamSearchViewModel : ViewModel() {
 
     fun loadTeams() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = openDotaRepository.getTeams()
-            if (result.error != "null") {
-                _error.postValue(result.error)
-            } else {
-                result.data?.let {
-                    ConstData.teams = it
-                    _teams.postValue(Unit)
+            try {
+                val result = openDotaRepository.getTeams()
+                if (result.error != "null") {
+                    _error.postValue(result.error)
+                    Log.e("DOTA_RETROFIT", result.error)
+                } else {
+                    result.data?.let {
+                        ConstData.teams = it
+                        _teams.postValue(Unit)
+                    }
                 }
+            } catch (e: Exception) {
+                _error.postValue(e.message.toString())
+                Log.e("DOTA_RETROFIT", e.message.toString())
             }
         }
     }

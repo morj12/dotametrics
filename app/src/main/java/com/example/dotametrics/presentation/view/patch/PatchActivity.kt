@@ -2,12 +2,12 @@ package com.example.dotametrics.presentation.view.patch
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
-import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.databinding.ActivityPatchBinding
 import com.example.dotametrics.presentation.view.DrawerActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PatchActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityPatchBinding

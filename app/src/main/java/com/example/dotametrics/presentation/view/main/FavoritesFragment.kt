@@ -10,12 +10,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dotametrics.App
 import com.example.dotametrics.domain.entity.local.PlayerDbModel
 import com.example.dotametrics.databinding.FragmentFavoritesBinding
 import com.example.dotametrics.presentation.adapter.FavoriteAdapter
 import com.example.dotametrics.presentation.view.account.AccountActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavoritesFragment : Fragment() {
 
     private var _binding: FragmentFavoritesBinding? = null
@@ -24,9 +25,7 @@ class FavoritesFragment : Fragment() {
 
     private lateinit var adapter: FavoriteAdapter
 
-    private val viewModel: MainViewModel by activityViewModels {
-        MainViewModel.MainViewModelFactory((context?.applicationContext as App))
-    }
+    private val viewModel: MainViewModel by activityViewModels()
 
     private val openAccount: (PlayerDbModel) -> Unit = {
         val intent = Intent(requireActivity(), AccountActivity::class.java)

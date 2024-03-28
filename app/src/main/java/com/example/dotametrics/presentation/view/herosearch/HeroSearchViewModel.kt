@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.dotametrics.domain.entity.remote.constants.heroes.HeroResult
 import com.example.dotametrics.data.ConstData
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HeroSearchViewModel : ViewModel() {
+@HiltViewModel
+class HeroSearchViewModel @Inject constructor() : ViewModel() {
 
     private val _filteredHeroes = MutableLiveData<List<HeroResult>>()
     val filteredHeroes: LiveData<List<HeroResult>>

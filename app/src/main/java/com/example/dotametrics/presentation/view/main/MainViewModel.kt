@@ -1,20 +1,20 @@
 package com.example.dotametrics.presentation.view.main
 
+import android.util.Log
 import androidx.lifecycle.*
-import com.example.dotametrics.App
-import com.example.dotametrics.data.local.repository.PlayerRepository
 import com.example.dotametrics.domain.entity.remote.search.SearchResult
-import com.example.dotametrics.data.remote.repository.OpenDotaRepository
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
 import com.example.dotametrics.domain.repository.IPlayerRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(private val app: App) : ViewModel() {
-
-    private val playerRepository: IPlayerRepository = PlayerRepository(app.db)
-
-    private val openDotaRepository: IOpenDotaRepository = OpenDotaRepository()
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val openDotaRepository: IOpenDotaRepository,
+    private val playerRepository: IPlayerRepository
+) : ViewModel() {
 
     private val _results = MutableLiveData<List<SearchResult>>()
     val results: LiveData<List<SearchResult>>
@@ -29,23 +29,19 @@ class MainViewModel(private val app: App) : ViewModel() {
     fun search(user: String) {
         if (user.isNotBlank()) {
             viewModelScope.launch(Dispatchers.IO) {
-                val result = openDotaRepository.getSearchResults(user)
-                if (result.error != "null") {
-                    _error.postValue(result.error)
-                } else {
-                    result.data?.let { _results.postValue(it) }
+                try {
+                    val result = openDotaRepository.getSearchResults(user)
+                    if (result.error != "null") {
+                        _error.postValue(result.error)
+                        Log.e("DOTA_RETROFIT", result.error)
+                    } else {
+                        result.data?.let { _results.postValue(it) }
+                    }
+                } catch (e: Exception) {
+                    _error.postValue(e.message.toString())
+                    Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }
-        }
-    }
-
-    class MainViewModelFactory(private val app: App) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return MainViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unknown view model class")
         }
     }
 

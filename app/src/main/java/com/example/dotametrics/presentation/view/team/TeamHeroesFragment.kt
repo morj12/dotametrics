@@ -5,18 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dotametrics.App
 import com.example.dotametrics.databinding.FragmentTeamHeroesBinding
 import com.example.dotametrics.presentation.adapter.TeamHeroesAdapter
-import com.example.dotametrics.presentation.adapter.TeamPlayersAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TeamHeroesFragment : Fragment() {
 
     private var _binding: FragmentTeamHeroesBinding? = null
@@ -25,9 +24,7 @@ class TeamHeroesFragment : Fragment() {
 
     private val viewModel: TeamViewModel by activityViewModels()
 
-    private val constViewModel: ConstViewModel by activityViewModels {
-        ConstViewModel.ConstViewModelFactory((context?.applicationContext as App))
-    }
+    private val constViewModel: ConstViewModel by activityViewModels()
 
     private lateinit var adapter: TeamHeroesAdapter
 

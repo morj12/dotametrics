@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.constants.abilities.AbilityResult
 import com.example.dotametrics.domain.entity.remote.constants.heroes.HeroResult
@@ -19,16 +18,16 @@ import com.example.dotametrics.util.GlideManager.requestOptions
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HeroActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityHeroBinding
 
     private val viewModel: HeroViewModel by viewModels()
 
-    private val constViewModel: ConstViewModel by viewModels {
-        ConstViewModel.ConstViewModelFactory(applicationContext as App)
-    }
+    private val constViewModel: ConstViewModel by viewModels()
 
     private lateinit var adapter: HeroSkillsAdapter
 

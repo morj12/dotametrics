@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dotametrics.App
 import com.example.dotametrics.domain.entity.remote.constants.patch.PatchNotesResult
 import com.example.dotametrics.databinding.FragmentPatchNotesBinding
 import com.example.dotametrics.presentation.adapter.PatchNotesHeroesAdapter
@@ -16,7 +15,9 @@ import com.example.dotametrics.presentation.adapter.PatchNotesItemsAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.data.ConstData
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PatchNotesFragment : Fragment() {
 
     private var _binding: FragmentPatchNotesBinding? = null
@@ -25,9 +26,7 @@ class PatchNotesFragment : Fragment() {
 
     private val viewModel: PatchViewModel by activityViewModels()
 
-    private val constViewModel: ConstViewModel by activityViewModels {
-        ConstViewModel.ConstViewModelFactory((context?.applicationContext as App))
-    }
+    private val constViewModel: ConstViewModel by activityViewModels()
 
     private lateinit var heroesAdapter: PatchNotesHeroesAdapter
     private lateinit var itemsAdapter: PatchNotesItemsAdapter

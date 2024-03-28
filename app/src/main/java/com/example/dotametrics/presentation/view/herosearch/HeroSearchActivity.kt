@@ -7,7 +7,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.constants.heroes.HeroResult
 import com.example.dotametrics.databinding.ActivityHeroSearchBinding
@@ -16,16 +15,16 @@ import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.presentation.view.DrawerActivity
 import com.example.dotametrics.presentation.view.hero.HeroActivity
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HeroSearchActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityHeroSearchBinding
 
     private val viewModel: HeroSearchViewModel by viewModels()
 
-    private val constViewModel: ConstViewModel by viewModels {
-        ConstViewModel.ConstViewModelFactory(applicationContext as App)
-    }
+    private val constViewModel: ConstViewModel by viewModels()
 
     private lateinit var adapter: HeroSearchAdapter
 

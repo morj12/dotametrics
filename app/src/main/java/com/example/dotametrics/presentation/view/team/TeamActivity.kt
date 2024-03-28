@@ -10,7 +10,9 @@ import com.example.dotametrics.presentation.adapter.TeamSectionsPagerAdapter
 import com.example.dotametrics.presentation.view.DrawerActivity
 import com.example.dotametrics.util.GlideManager.requestOptions
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TeamActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityTeamBinding

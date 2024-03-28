@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.local.PlayerDbModel
 import com.example.dotametrics.domain.entity.remote.players.PlayersResult
@@ -17,18 +16,16 @@ import com.example.dotametrics.util.GlideManager.requestOptions
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AccountActivity : DrawerActivity() {
 
     private lateinit var binding: ActivityAccountBinding
 
-    private val viewModel: AccountViewModel by viewModels {
-        AccountViewModel.AccountViewModelFactory(applicationContext as App)
-    }
+    private val viewModel: AccountViewModel by viewModels()
 
-    private val constViewModel: ConstViewModel by viewModels {
-        ConstViewModel.ConstViewModelFactory(applicationContext as App)
-    }
+    private val constViewModel: ConstViewModel by viewModels()
 
     private var isFav = false
 

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dotametrics.App
 import com.example.dotametrics.databinding.FragmentMatchSkillsBinding
 import com.example.dotametrics.presentation.adapter.MatchSkillsPlayerAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
@@ -16,7 +15,9 @@ import com.example.dotametrics.data.ConstData
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MatchSkillsFragment : Fragment() {
 
     private var _binding: FragmentMatchSkillsBinding? = null
@@ -28,9 +29,7 @@ class MatchSkillsFragment : Fragment() {
 
     private val viewModel: MatchViewModel by activityViewModels()
 
-    private val constViewModel: ConstViewModel by activityViewModels {
-        ConstViewModel.ConstViewModelFactory((context?.applicationContext as App))
-    }
+    private val constViewModel: ConstViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
