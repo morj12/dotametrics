@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.dotametrics.domain.entity.remote.constants.heroes.HeroResult
-import com.example.dotametrics.data.ConstData
+import com.example.dotametrics.domain.ConstData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -3,7 +3,7 @@ package com.example.dotametrics.presentation.view.match
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.example.dotametrics.R
-import com.example.dotametrics.data.ConstData
+import com.example.dotametrics.domain.ConstData
 import com.example.dotametrics.databinding.ActivityMatchBinding
 import com.example.dotametrics.presentation.adapter.MatchSectionsPagerAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel

@@ -10,7 +10,7 @@ import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResult
 import com.example.dotametrics.databinding.MatchItemBinding
-import com.example.dotametrics.data.ConstData
+import com.example.dotametrics.domain.ConstData
 import com.example.dotametrics.util.Datetime
 import com.example.dotametrics.util.GlideManager
 import com.example.dotametrics.util.GlideManager.requestOptions

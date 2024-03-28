@@ -17,7 +17,7 @@ import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.constants.abilities.AbilityResult
 import com.example.dotametrics.domain.entity.remote.matches.Players
 import com.example.dotametrics.databinding.MatchSkillsItemBinding
-import com.example.dotametrics.data.ConstData
+import com.example.dotametrics.domain.ConstData
 import com.example.dotametrics.util.GlideManager
 import com.example.dotametrics.util.GlideManager.ABILITIES_URL
 

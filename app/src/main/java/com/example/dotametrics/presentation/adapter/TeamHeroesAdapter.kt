@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.domain.entity.remote.teams.heroes.TeamHeroesResult
 import com.example.dotametrics.databinding.TeamHeroItemBinding
-import com.example.dotametrics.data.ConstData
+import com.example.dotametrics.domain.ConstData
 import com.example.dotametrics.util.GlideManager
 import com.example.dotametrics.util.GlideManager.HEROES_URL
 import com.example.dotametrics.util.GlideManager.requestOptions

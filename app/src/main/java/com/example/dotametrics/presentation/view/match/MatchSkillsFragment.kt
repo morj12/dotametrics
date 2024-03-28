@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.databinding.FragmentMatchSkillsBinding
 import com.example.dotametrics.presentation.adapter.MatchSkillsPlayerAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
-import com.example.dotametrics.data.ConstData
+import com.example.dotametrics.domain.ConstData
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar

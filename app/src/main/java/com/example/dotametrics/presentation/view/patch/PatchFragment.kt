@@ -13,7 +13,7 @@ import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.constants.patch.PatchResult
 import com.example.dotametrics.databinding.FragmentPatchBinding
 import com.example.dotametrics.presentation.adapter.PatchAdapter
-import com.example.dotametrics.data.ConstData
+import com.example.dotametrics.domain.ConstData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 

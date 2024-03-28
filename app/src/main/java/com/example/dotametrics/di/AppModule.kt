@@ -29,7 +29,6 @@ object AppModule {
     private const val DB_NAME = "dota_metrics_db"
 
     // TODO: different error listener for each request. reload on error
-    // TODO: use repository for ConstData
 
     @Provides
     @Singleton

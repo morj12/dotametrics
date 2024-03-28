@@ -1,4 +1,4 @@
-package com.example.dotametrics.data
+package com.example.dotametrics.domain
 
 import com.example.dotametrics.domain.entity.remote.constants.abilities.AbilityResult
 import com.example.dotametrics.domain.entity.remote.constants.abilities.HeroAbilitiesResult

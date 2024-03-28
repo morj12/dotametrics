@@ -13,7 +13,7 @@ import com.example.dotametrics.databinding.FragmentPatchNotesBinding
 import com.example.dotametrics.presentation.adapter.PatchNotesHeroesAdapter
 import com.example.dotametrics.presentation.adapter.PatchNotesItemsAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
-import com.example.dotametrics.data.ConstData
+import com.example.dotametrics.domain.ConstData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
