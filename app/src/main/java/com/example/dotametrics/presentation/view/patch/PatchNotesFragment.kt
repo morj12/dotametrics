@@ -14,6 +14,8 @@ import com.example.dotametrics.presentation.adapter.PatchNotesHeroesAdapter
 import com.example.dotametrics.presentation.adapter.PatchNotesItemsAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.domain.ConstData
+import com.example.dotametrics.util.startLoading
+import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,6 +43,7 @@ class PatchNotesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.clPatchNotes.startLoading(binding.pbClPatchNotes)
         constViewModel.loadItems()
         constViewModel.loadHeroes()
         initRecyclerView()
@@ -79,6 +82,7 @@ class PatchNotesFragment : Fragment() {
                     requireActivity().supportFragmentManager.popBackStack()
                 } else {
                     loadData(it)
+                    binding.clPatchNotes.stopLoading(binding.pbClPatchNotes)
                 }
             }
         } else {

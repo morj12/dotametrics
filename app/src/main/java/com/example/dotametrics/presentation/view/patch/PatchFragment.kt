@@ -14,6 +14,8 @@ import com.example.dotametrics.domain.entity.remote.constants.patch.PatchResult
 import com.example.dotametrics.databinding.FragmentPatchBinding
 import com.example.dotametrics.presentation.adapter.PatchAdapter
 import com.example.dotametrics.domain.ConstData
+import com.example.dotametrics.util.startLoading
+import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,11 +56,11 @@ class PatchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rcPatchSeries.startLoading(binding.pbRcPatchSeries)
         viewModel.loadPatches()
         viewModel.loadPatchNotes()
         initRecyclerView()
         observe()
-
     }
 
     private fun checkData() {
@@ -87,7 +89,9 @@ class PatchFragment : Fragment() {
     }
 
     private fun showData() {
-        adapter.submitList(ConstData.patches)
+        adapter.submitList(ConstData.patches) {
+            binding.rcPatchSeries.stopLoading(binding.pbRcPatchSeries)
+        }
     }
 
     private fun observe() {
@@ -107,12 +111,6 @@ class PatchFragment : Fragment() {
 
     private fun openSeries() {
         requireActivity().supportFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.enter_from_left,
-                R.anim.exit_to_right,
-                R.anim.enter_from_right,
-                R.anim.exit_to_left
-            )
             .replace(R.id.patch_placeholder, PatchSeriesFragment.newInstance())
             .addToBackStack(null)
             .commit()

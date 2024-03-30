@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".presentation.view.patch.PatchFragment">
 
+    <ProgressBar
+        android:id="@+id/pb_rc_patch_series"
+        style="@style/DotaMetricsProgressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_patch_series"
         android:layout_width="match_parent"

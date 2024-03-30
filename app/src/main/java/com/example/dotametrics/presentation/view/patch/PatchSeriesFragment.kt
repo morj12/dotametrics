@@ -13,6 +13,8 @@ import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.constants.patch.PatchNotesResult
 import com.example.dotametrics.databinding.FragmentPatchSeriesBinding
 import com.example.dotametrics.presentation.adapter.PatchSeriesAdapter
+import com.example.dotametrics.util.startLoading
+import com.example.dotametrics.util.stopLoading
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,6 +42,7 @@ class PatchSeriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rcPatches.startLoading(binding.pbRcPatches)
         initRecyclerView()
         observe()
     }
@@ -67,6 +70,7 @@ class PatchSeriesFragment : Fragment() {
                 requireActivity().supportFragmentManager.popBackStack()
             } else {
                 loadData(it)
+                binding.rcPatches.stopLoading(binding.pbRcPatches)
             }
         }
         viewModel.currentPatchNotes.observe(viewLifecycleOwner) {
@@ -76,12 +80,6 @@ class PatchSeriesFragment : Fragment() {
 
     private fun openPatchNotes() {
         requireActivity().supportFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.enter_from_left,
-                R.anim.exit_to_right,
-                R.anim.enter_from_right,
-                R.anim.exit_to_left
-            )
             .replace(R.id.patch_placeholder, PatchNotesFragment.newInstance())
             .addToBackStack(null)
             .commit()
