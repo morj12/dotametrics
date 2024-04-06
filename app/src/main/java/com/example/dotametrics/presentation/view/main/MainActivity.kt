@@ -50,6 +50,46 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         setTitle(resources.getString(R.string.player))
+
+        setupBottomNavigationBar()
+    }
+
+    private fun setupBottomNavigationBar() {
+        binding.bottomNavigation.setOnItemSelectedListener {
+            when(it.itemId) {
+                R.id.nav_players -> {
+                    setTitle(resources.getString(R.string.player))
+                    findNavController(R.id.fragment_placeholder).navigate(R.id.action_mainFragment)
+                    true
+                }
+
+                R.id.nav_heroes -> {
+                    setTitle(resources.getString(R.string.heroes))
+                    findNavController(R.id.fragment_placeholder).navigate(R.id.action_heroSearchFragment)
+                    true
+                }
+
+                R.id.nav_teams -> {
+                    setTitle(resources.getString(R.string.teams))
+                    findNavController(R.id.fragment_placeholder).navigate(R.id.action_teamSearchFragment)
+                    true
+                }
+
+                R.id.nav_patches -> {
+                    setTitle(resources.getString(R.string.patches))
+                    findNavController(R.id.fragment_placeholder).navigate(R.id.action_patchFragment)
+                    true
+                }
+
+                R.id.nav_info -> {
+                    setTitle(resources.getString(R.string.about))
+                    findNavController(R.id.fragment_placeholder).navigate(R.id.action_infoFragment)
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
