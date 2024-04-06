@@ -1,6 +1,5 @@
 package com.example.dotametrics.presentation.view.main
 
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.search.SearchResult
 import com.example.dotametrics.databinding.FragmentSearchBinding
 import com.example.dotametrics.presentation.adapter.SearchResultAdapter
-import com.example.dotametrics.presentation.view.account.AccountActivity
+import com.example.dotametrics.presentation.view.account.AccountFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,9 +31,10 @@ class SearchFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
 
     private val openAccount: (SearchResult) -> Unit = {
-        val intent = Intent(requireActivity(), AccountActivity::class.java)
-        intent.putExtra("id", it.accountId)
-        startActivity(intent)
+        val bundle = Bundle().apply {
+            putLong("id", it.accountId ?: 0)
+        }
+        findNavController().navigate(R.id.action_mainFragment_to_accountFragment, bundle)
     }
 
     override fun onCreateView(

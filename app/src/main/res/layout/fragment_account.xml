@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.view.account.AccountActivity">
+    tools:context=".presentation.view.account.AccountFragment">
 
     <ImageView
         android:id="@+id/bkg"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/bkg_land"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/bkg"
+        app:layout_constraintBottom_toBottomOf="@id/tv_account_loses_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.33" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ProgressBar
         android:id="@+id/pb_profile_image"
@@ -29,9 +31,9 @@
         android:id="@+id/profile_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_margin="12dp"
+        android:layout_marginHorizontal="12dp"
         android:padding="3dp"
-        app:layout_constraintEnd_toEndOf="@id/bkg"
+        app:layout_constraintBottom_toTopOf="@id/tabs"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
@@ -57,9 +59,9 @@
         android:maxLength="30"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/profile_image"
-        app:layout_constraintStart_toStartOf="@+id/profile_image"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image"
+        app:layout_constraintEnd_toStartOf="@+id/iv_account_rank"
+        app:layout_constraintStart_toEndOf="@+id/profile_image"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Account name" />
 
     <TextView
@@ -71,56 +73,56 @@
         android:textColor="@color/gray"
         android:textSize="14sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tv_account_id"
         app:layout_constraintStart_toStartOf="@+id/tv_account_id"
         app:layout_constraintTop_toBottomOf="@+id/tv_account_id" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="32dp"
         android:background="@color/purple_900"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/bkg"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bkg" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/bkg"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tabs" />
 
     <ImageView
         android:id="@+id/iv_account_fav"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_account_name"
+        app:layout_constraintEnd_toEndOf="@+id/iv_account_rank"
+        app:layout_constraintStart_toStartOf="@+id/iv_account_rank"
+        app:layout_constraintTop_toTopOf="@+id/tv_account_name"
         tools:srcCompat="@drawable/ic_fav" />
 
     <ImageView
         android:id="@+id/iv_account_flag"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_margin="12dp"
-        app:layout_constraintEnd_toEndOf="@id/bkg"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/iv_account_rank"
+        app:layout_constraintEnd_toEndOf="@id/iv_account_rank"
+        app:layout_constraintStart_toStartOf="@id/iv_account_rank"
+        app:layout_constraintTop_toBottomOf="@id/iv_account_fav"
         tools:src="@drawable/ic_placeholder" />
 
     <ImageView
         android:id="@+id/iv_account_rank"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_margin="12dp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_account_id"
-        app:layout_constraintStart_toStartOf="@+id/tv_account_id"
-        app:layout_constraintTop_toBottomOf="@+id/tv_account_id"
+        app:layout_constraintBottom_toBottomOf="@+id/bkg"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:srcCompat="@drawable/r82" />
 
     <TextView
@@ -128,7 +130,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_account_rank"
         app:layout_constraintEnd_toEndOf="@id/iv_account_rank"
@@ -139,11 +141,12 @@
         android:id="@+id/tv_account_wins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:text="@string/wins"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_account_loses"
         app:layout_constraintEnd_toStartOf="@+id/tv_account_loses"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profile_image"
         app:layout_constraintTop_toTopOf="@+id/tv_account_loses" />
 
     <ProgressBar
@@ -164,18 +167,20 @@
         android:layout_marginTop="8dp"
         android:text="@string/loses"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/bkg"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_last_games" />
+        app:layout_constraintEnd_toStartOf="@id/tv_account_wr"
+        app:layout_constraintStart_toEndOf="@id/tv_account_wins"
+        app:layout_constraintTop_toBottomOf="@+id/tv_last_games"
+        tools:layout_editor_absoluteX="296dp" />
 
     <TextView
         android:id="@+id/tv_account_wr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
         android:text="@string/winrate"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_account_loses"
-        app:layout_constraintEnd_toEndOf="@+id/bkg"
+        app:layout_constraintEnd_toStartOf="@+id/iv_account_rank"
         app:layout_constraintStart_toEndOf="@+id/tv_account_loses"
         app:layout_constraintTop_toTopOf="@+id/tv_account_loses" />
 

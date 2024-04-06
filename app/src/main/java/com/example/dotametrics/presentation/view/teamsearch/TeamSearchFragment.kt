@@ -1,44 +1,52 @@
 package com.example.dotametrics.presentation.view.teamsearch
 
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.R
+import com.example.dotametrics.databinding.FragmentTeamSearchBinding
 import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
-import com.example.dotametrics.databinding.ActivityTeamSearchBinding
 import com.example.dotametrics.presentation.adapter.TeamSearchAdapter
-import com.example.dotametrics.presentation.view.DrawerActivity
-import com.example.dotametrics.presentation.view.team.TeamActivity
+import com.example.dotametrics.presentation.view.team.TeamFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TeamSearchActivity : DrawerActivity() {
+class TeamSearchFragment : Fragment() {
 
-    private lateinit var binding: ActivityTeamSearchBinding
+    private var _binding: FragmentTeamSearchBinding? = null
+    private val binding: FragmentTeamSearchBinding
+        get() = _binding ?: throw RuntimeException("FragmentTeamSearchBinding is null")
 
     private val viewModel: TeamSearchViewModel by viewModels()
 
     private lateinit var adapter: TeamSearchAdapter
 
     private val openTeam: (TeamsResult) -> Unit = {
-        val intent = Intent(this, TeamActivity::class.java)
-        intent.putExtra("team", it)
-        startActivity(intent)
+        val bundle = Bundle().apply {
+            putParcelable("team", it)
+        }
+        findNavController().navigate(R.id.action_teamSearchFragment_to_teamFragment, bundle)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityTeamSearchBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentTeamSearchBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        allocateActivityTitle(getString(R.string.teams))
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (viewModel.teams.value == null) viewModel.loadTeams()
         initRecyclerView()
         initListeners()
@@ -49,9 +57,9 @@ class TeamSearchActivity : DrawerActivity() {
         adapter = TeamSearchAdapter()
         val orientation: Int = binding.root.resources.configuration.orientation
         val layoutManager = if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            GridLayoutManager(this, 2)
+            GridLayoutManager(requireContext(), 2)
         } else {
-            LinearLayoutManager(this)
+            LinearLayoutManager(requireContext())
         }
         binding.rcTeams.layoutManager = layoutManager
         binding.rcTeams.adapter = adapter
@@ -87,25 +95,25 @@ class TeamSearchActivity : DrawerActivity() {
     }
 
     private fun observe() {
-        viewModel.teams.observe(this) {
+        viewModel.teams.observe(viewLifecycleOwner) {
             loadData()
         }
-        viewModel.filteredTeams.observe(this) {
+        viewModel.filteredTeams.observe(viewLifecycleOwner) {
             adapter.submitList(it) {
                 binding.rcTeams.scrollToPosition(0)
                 binding.btSearchTeams.visibility = View.VISIBLE
                 binding.pbSearchTeams.visibility = View.INVISIBLE
             }
         }
-        viewModel.error.observe(this) {
+        viewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
             binding.btSearchTeams.visibility = View.VISIBLE
             binding.pbSearchTeams.visibility = View.INVISIBLE
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finishAffinity()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -4,29 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.view.teamsearch.TeamSearchActivity">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_title_teams"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bkg"
-        android:padding="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/main_icon_teams"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@mipmap/ic_launcher_round"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    tools:context=".presentation.view.teamsearch.TeamSearchFragment">
 
     <ProgressBar
         android:id="@+id/pb_search_teams"
@@ -51,7 +29,7 @@
         android:inputType="text"
         app:layout_constraintEnd_toStartOf="@id/bt_search_teams"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_title_teams"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/bt_search_teams"
@@ -68,10 +46,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_teams"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/teams_item" />
+        tools:listitem="@layout/search_result_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

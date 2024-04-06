@@ -1,17 +1,18 @@
 package com.example.dotametrics.presentation.view.team
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.teams.players.TeamPlayersResult
 import com.example.dotametrics.databinding.FragmentTeamPlayersBinding
 import com.example.dotametrics.presentation.adapter.TeamPlayersAdapter
-import com.example.dotametrics.presentation.view.account.AccountActivity
+import com.example.dotametrics.presentation.view.account.AccountFragment
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
@@ -25,13 +26,15 @@ class TeamPlayersFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentTeamPlayersBinding is null")
 
     private val openAccount: (TeamPlayersResult) -> Unit = {
-        val intent = Intent(requireActivity(), AccountActivity::class.java)
-        intent.putExtra("id", it.accountId)
-        intent.putExtra("from", "teams")
-        startActivity(intent)
+        val bundle = Bundle().apply {
+            putLong("id", it.accountId ?: 0)
+        }
+        findNavController().navigate(R.id.action_teamFragment_to_accountFragment, bundle)
     }
 
-    private val viewModel: TeamViewModel by activityViewModels()
+    private val viewModel: TeamViewModel by viewModels<TeamViewModel>(
+        ownerProducer = { requireParentFragment() }
+    )
 
     private lateinit var adapter: TeamPlayersAdapter
 

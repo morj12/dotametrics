@@ -1,17 +1,18 @@
 package com.example.dotametrics.presentation.view.match
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.matches.Players
 import com.example.dotametrics.databinding.FragmentMatchOverviewBinding
 import com.example.dotametrics.presentation.adapter.MatchOverviewPlayerAdapter
-import com.example.dotametrics.presentation.view.account.AccountActivity
+import com.example.dotametrics.presentation.view.account.AccountFragment
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
@@ -27,12 +28,15 @@ class MatchOverviewFragment : Fragment() {
     private lateinit var radiantAdapter: MatchOverviewPlayerAdapter
     private lateinit var direAdapter: MatchOverviewPlayerAdapter
 
-    private val viewModel: MatchViewModel  by activityViewModels()
+    private val viewModel: MatchViewModel  by viewModels<MatchViewModel>(
+        ownerProducer = { requireParentFragment() }
+    )
 
     private val openAccount: (Players) -> Unit = {
-        val intent = Intent(requireActivity(), AccountActivity::class.java)
-        intent.putExtra("id", it.accountId)
-        startActivity(intent)
+        val bundle = Bundle().apply {
+            putLong("id", it.accountId ?: 0)
+        }
+        findNavController().navigate(R.id.action_matchFragment_to_accountFragment, bundle)
     }
 
     override fun onCreateView(

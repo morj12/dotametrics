@@ -1,6 +1,5 @@
 package com.example.dotametrics.presentation.view.account
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +7,16 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResult
 import com.example.dotametrics.databinding.FragmentMatchesBinding
 import com.example.dotametrics.presentation.adapter.MatchesResultAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
-import com.example.dotametrics.presentation.view.match.MatchActivity
 import com.example.dotametrics.domain.ConstData
+import com.example.dotametrics.presentation.view.match.MatchFragment
 import com.example.dotametrics.util.LobbyTypeMapper
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
@@ -31,14 +32,17 @@ class MatchesFragment : Fragment() {
 
     private lateinit var adapter: MatchesResultAdapter
 
-    private val viewModel: AccountViewModel by activityViewModels()
+    private val viewModel: AccountViewModel by viewModels<AccountViewModel>(
+        ownerProducer = { requireParentFragment() }
+    )
 
     private val constViewModel: ConstViewModel by activityViewModels()
 
     private val openMatch: (MatchesResult) -> Unit = {
-        val intent = Intent(requireActivity(), MatchActivity::class.java)
-        intent.putExtra("id", it.matchId)
-        startActivity(intent)
+        val bundle = Bundle().apply {
+            putLong("id", it.matchId ?: 0)
+        }
+        findNavController().navigate(R.id.action_accountFragment_to_matchFragment, bundle)
     }
 
     override fun onCreateView(
