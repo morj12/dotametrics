@@ -53,8 +53,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         setTitle(resources.getString(R.string.player))
-
-        onBackPressedDispatcher.addCallback {  }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
