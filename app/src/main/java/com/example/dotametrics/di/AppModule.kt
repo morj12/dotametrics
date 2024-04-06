@@ -28,8 +28,6 @@ object AppModule {
     private const val RETROFIT_URL = "https://api.opendota.com/api/"
     private const val DB_NAME = "dota_metrics_db"
 
-    // TODO: different error listener for each request. reload on error
-
     @Provides
     @Singleton
     fun providesDotaService(httpClient: OkHttpClient): DotaService = Retrofit.Builder()

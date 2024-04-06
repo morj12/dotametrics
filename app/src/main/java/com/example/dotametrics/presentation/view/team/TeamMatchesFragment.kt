@@ -1,17 +1,18 @@
 package com.example.dotametrics.presentation.view.team
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.teams.matches.TeamMatchesResult
 import com.example.dotametrics.databinding.FragmentTeamMatchesBinding
 import com.example.dotametrics.presentation.adapter.TeamMatchesAdapter
-import com.example.dotametrics.presentation.view.match.MatchActivity
+import com.example.dotametrics.presentation.view.match.MatchFragment
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
@@ -24,13 +25,15 @@ class TeamMatchesFragment : Fragment() {
     private val binding: FragmentTeamMatchesBinding
         get() = _binding ?: throw RuntimeException("FragmentTeamMatchesBinding is null")
 
-    private val viewModel: TeamViewModel by activityViewModels()
+    private val viewModel: TeamViewModel by viewModels<TeamViewModel>(
+        ownerProducer = { requireParentFragment() }
+    )
 
     private val openMatch: (TeamMatchesResult) -> Unit = {
-        val intent = Intent(requireActivity(), MatchActivity::class.java)
-        intent.putExtra("id", it.matchId)
-        intent.putExtra("from", "teams")
-        startActivity(intent)
+        val bundle = Bundle().apply {
+            putLong("id", it.matchId ?: 0)
+        }
+        findNavController().navigate(R.id.action_teamFragment_to_matchFragment, bundle)
     }
 
     private lateinit var adapter: TeamMatchesAdapter

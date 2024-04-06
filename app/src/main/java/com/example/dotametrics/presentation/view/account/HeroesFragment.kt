@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.databinding.FragmentHeroesBinding
 import com.example.dotametrics.presentation.adapter.PlayerHeroesAdapter
@@ -24,7 +25,9 @@ class HeroesFragment : Fragment() {
 
     private lateinit var adapter: PlayerHeroesAdapter
 
-    private val viewModel: AccountViewModel by activityViewModels()
+    private val viewModel: AccountViewModel by viewModels<AccountViewModel>(
+        ownerProducer = { requireParentFragment() }
+    )
 
     private val constViewModel: ConstViewModel by activityViewModels()
 

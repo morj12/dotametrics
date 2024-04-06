@@ -1,51 +1,64 @@
 package com.example.dotametrics.presentation.view.account
 
 import android.os.Bundle
-import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.dotametrics.R
+import com.example.dotametrics.databinding.FragmentAccountBinding
 import com.example.dotametrics.domain.entity.local.PlayerDbModel
 import com.example.dotametrics.domain.entity.remote.players.PlayersResult
 import com.example.dotametrics.domain.entity.remote.players.wl.WLResult
-import com.example.dotametrics.databinding.ActivityAccountBinding
 import com.example.dotametrics.presentation.adapter.SectionsPagerAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
-import com.example.dotametrics.presentation.view.DrawerActivity
-import com.example.dotametrics.util.GlideManager.requestOptions
+import com.example.dotametrics.util.GlideManager
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AccountActivity : DrawerActivity() {
+class AccountFragment : Fragment() {
 
-    private lateinit var binding: ActivityAccountBinding
+    private var _binding: FragmentAccountBinding? = null
+    private val binding: FragmentAccountBinding
+        get() = _binding ?: throw RuntimeException("FragmentAccountBinding is null")
 
-    private val viewModel: AccountViewModel by viewModels()
+    private val viewModel: AccountViewModel by viewModels<AccountViewModel>()
 
-    private val constViewModel: ConstViewModel by viewModels()
+    private val constViewModel: ConstViewModel by activityViewModels()
 
     private var isFav = false
 
+    private var id: Long = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAccountBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        val from = intent.getStringExtra("from")
-        if (from == "teams") {
-            allocateActivityTitle(getString(R.string.teams))
-        } else {
-            allocateActivityTitle(getString(R.string.players))
+        arguments?.let {
+            id = it.getLong("id")
         }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAccountBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         initTabs()
         initConstants()
         initListeners()
 
-        val id = intent.getLongExtra("id", 0L)
         if (id != 0L) {
             viewModel.userId = id.toString()
             if (viewModel.result.value == null && viewModel.wl.value == null) viewModel.loadUser()
@@ -57,7 +70,7 @@ class AccountActivity : DrawerActivity() {
     }
 
     private fun initTabs() {
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+        val sectionsPagerAdapter = SectionsPagerAdapter(requireContext(), childFragmentManager)
         binding.viewPager.adapter = sectionsPagerAdapter
         binding.viewPager.offscreenPageLimit = 3
         binding.tabs.setupWithViewPager(binding.viewPager)
@@ -94,22 +107,22 @@ class AccountActivity : DrawerActivity() {
     }
 
     private fun observe() {
-        viewModel.result.observe(this) {
+        viewModel.result.observe(viewLifecycleOwner) {
             showData(it)
             binding.profileImage.stopLoading(binding.pbProfileImage)
             updateFavorite()
         }
-        viewModel.wl.observe(this) {
+        viewModel.wl.observe(viewLifecycleOwner) {
             showData(it)
             binding.tvAccountLosesNumber.stopLoading(binding.pbTvAccountLoses)
         }
-        viewModel.error.observe(this) {
+        viewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
-        constViewModel.error.observe(this) {
+        constViewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
-        viewModel.isFav.observe(this) {
+        viewModel.isFav.observe(viewLifecycleOwner) {
             isFav = it
             if (isFav) {
                 updateFavorite()
@@ -126,14 +139,14 @@ class AccountActivity : DrawerActivity() {
     }
 
     private fun showData(player: PlayersResult) = with(binding) {
-        Glide.with(this@AccountActivity)
+        Glide.with(this@AccountFragment)
             .load(player.profile?.avatarfull)
-            .apply(requestOptions(root.context))
+            .apply(GlideManager.requestOptions(root.context))
             .into(profileImage)
         tvAccountName.text = player.profile?.personaname
         setRank(player)
         tvAccountId.text = player.profile?.accountId.toString()
-        Glide.with(this@AccountActivity)
+        Glide.with(this@AccountFragment)
             .load("https://flagcdn.com/w80/${player.profile?.loccountrycode?.lowercase()}.png")
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(ivAccountFlag)
@@ -156,7 +169,7 @@ class AccountActivity : DrawerActivity() {
             player.leaderboardRank == null -> resources.getIdentifier(
                 "r${player.rankTier}",
                 "drawable",
-                packageName
+                requireActivity().packageName
             )
             player.leaderboardRank!!.toInt() <= 100 -> {
                 tvAccountPosition.text = player.leaderboardRank
@@ -170,4 +183,8 @@ class AccountActivity : DrawerActivity() {
         binding.ivAccountRank.setImageResource(id)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

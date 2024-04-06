@@ -4,26 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.view.team.TeamActivity">
+    tools:context=".presentation.view.team.TeamFragment">
 
     <ImageView
         android:id="@+id/bkg_team"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:src="@drawable/bkg"
+        android:src="@drawable/bkg_land"
         app:layout_constraintBottom_toBottomOf="@id/tv_team_loses_number"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.33" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/team_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginHorizontal="12dp"
+        android:layout_margin="8dp"
         android:padding="3dp"
-        app:layout_constraintBottom_toTopOf="@id/tabs_team"
+        app:layout_constraintEnd_toEndOf="@+id/bkg_team"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
@@ -35,85 +35,86 @@
         android:id="@+id/tv_team_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/tv_team_name"
         app:layout_constraintStart_toStartOf="@id/tv_team_name"
-        app:layout_constraintTop_toBottomOf="@id/tv_team_name"
+        app:layout_constraintTop_toBottomOf="@+id/team_image"
+        app:layout_constraintVertical_bias="0.5"
         tools:text="Rating: 1496" />
 
     <TextView
         android:id="@+id/tv_team_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_margin="16dp"
         android:maxLength="30"
-        android:textSize="24sp"
+
+        android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/team_image"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_team_rating"
+        app:layout_constraintEnd_toEndOf="@id/bkg_team"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/team_image"
         tools:text="Team name" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs_team"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:background="@color/purple_900"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bkg_team" />
+        app:layout_constraintStart_toEndOf="@id/bkg_team"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager_team"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/bkg_team"
         app:layout_constraintTop_toBottomOf="@id/tabs_team" />
 
     <TextView
         android:id="@+id/tv_team_wins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:text="@string/wins"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_team_loses"
-        app:layout_constraintEnd_toStartOf="@+id/tv_team_loses"
-        app:layout_constraintStart_toEndOf="@+id/team_image"
+        app:layout_constraintEnd_toStartOf="@id/tv_team_wr"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_team_loses" />
 
     <TextView
         android:id="@+id/tv_team_loses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/loses"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_team_rating"
-        app:layout_constraintStart_toStartOf="@+id/tv_team_rating"
-        app:layout_constraintTop_toBottomOf="@+id/tv_team_rating" />
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/view_pager_team"
+        app:layout_constraintStart_toEndOf="@id/tv_team_wr"
+        app:layout_constraintTop_toTopOf="@+id/tv_team_wr" />
 
     <TextView
         android:id="@+id/tv_team_wr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
         android:text="@string/winrate"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_team_loses"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_team_loses"
-        app:layout_constraintTop_toTopOf="@+id/tv_team_loses" />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/bkg_team"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_team_rating" />
 
     <TextView
         android:id="@+id/tv_team_wins_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/green"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tv_team_wins"
         app:layout_constraintStart_toStartOf="@+id/tv_team_wins"
@@ -126,7 +127,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:textColor="@color/red"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tv_team_loses"
         app:layout_constraintStart_toStartOf="@+id/tv_team_loses"
@@ -137,7 +138,7 @@
         android:id="@+id/tv_team_winrate_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tv_team_wr"
         app:layout_constraintStart_toStartOf="@+id/tv_team_wr"

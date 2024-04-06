@@ -1,26 +1,30 @@
 package com.example.dotametrics.presentation.view.herosearch
 
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dotametrics.R
+import com.example.dotametrics.databinding.FragmentHeroSearchBinding
 import com.example.dotametrics.domain.entity.remote.constants.heroes.HeroResult
-import com.example.dotametrics.databinding.ActivityHeroSearchBinding
 import com.example.dotametrics.presentation.adapter.HeroSearchAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
-import com.example.dotametrics.presentation.view.DrawerActivity
-import com.example.dotametrics.presentation.view.hero.HeroActivity
+import com.example.dotametrics.presentation.view.hero.HeroFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HeroSearchActivity : DrawerActivity() {
+class HeroSearchFragment : Fragment() {
 
-    private lateinit var binding: ActivityHeroSearchBinding
+    private var _binding: FragmentHeroSearchBinding? = null
+    private val binding: FragmentHeroSearchBinding
+        get() = _binding ?: throw RuntimeException("FragmentHeroSearchBinding is null")
 
     private val viewModel: HeroSearchViewModel by viewModels()
 
@@ -29,18 +33,22 @@ class HeroSearchActivity : DrawerActivity() {
     private lateinit var adapter: HeroSearchAdapter
 
     private val openHero: (HeroResult) -> Unit = {
-        val intent = Intent(this, HeroActivity::class.java)
-        intent.putExtra("hero", it)
-        startActivity(intent)
+        val bundle = Bundle().apply {
+            putParcelable("hero", it)
+        }
+        findNavController().navigate(R.id.action_heroSearchFragment_to_heroFragment, bundle)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityHeroSearchBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentHeroSearchBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        allocateActivityTitle(getString(R.string.heroes))
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         constViewModel.loadHeroes()
         initRecyclerView()
         initListeners()
@@ -51,9 +59,9 @@ class HeroSearchActivity : DrawerActivity() {
         adapter = HeroSearchAdapter()
         val orientation: Int = binding.root.resources.configuration.orientation
         val layoutManager = if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            GridLayoutManager(this@HeroSearchActivity, 5)
+            GridLayoutManager(requireContext(), 5)
         } else {
-            GridLayoutManager(this@HeroSearchActivity, 3)
+            GridLayoutManager(requireContext(), 3)
         }
         binding.rcHeroes.layoutManager = layoutManager
         binding.rcHeroes.adapter = adapter
@@ -89,25 +97,25 @@ class HeroSearchActivity : DrawerActivity() {
     }
 
     private fun observe() {
-        constViewModel.heroes.observe(this) {
+        constViewModel.heroes.observe(viewLifecycleOwner) {
             loadData()
         }
-        viewModel.filteredHeroes.observe(this) {
+        viewModel.filteredHeroes.observe(viewLifecycleOwner) {
             adapter.submitList(it) {
                 binding.rcHeroes.scrollToPosition(0)
                 binding.btSearchHeroes.visibility = View.VISIBLE
                 binding.pbSearchHeroes.visibility = View.INVISIBLE
             }
         }
-        constViewModel.error.observe(this) {
+        constViewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
             binding.btSearchHeroes.visibility = View.VISIBLE
             binding.pbSearchHeroes.visibility = View.INVISIBLE
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finishAffinity()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

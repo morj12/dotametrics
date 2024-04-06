@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.R
@@ -42,6 +43,7 @@ class PatchFragment : Fragment() {
                 ).show()
             } else {
                 viewModel.setSeries(series)
+                openSeries()
             }
         }
     }
@@ -101,28 +103,17 @@ class PatchFragment : Fragment() {
         viewModel.patchNotes.observe(viewLifecycleOwner) {
             checkData()
         }
-        viewModel.currentSeries.observe(viewLifecycleOwner) {
-            if (it != null) openSeries()
-        }
         viewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
     }
 
     private fun openSeries() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.patch_placeholder, PatchSeriesFragment.newInstance())
-            .addToBackStack(null)
-            .commit()
+        findNavController().navigate(R.id.action_patchFragment_to_patchSeriesFragment)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = PatchFragment()
     }
 }

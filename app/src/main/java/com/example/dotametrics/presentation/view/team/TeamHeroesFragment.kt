@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.databinding.FragmentTeamHeroesBinding
 import com.example.dotametrics.presentation.adapter.TeamHeroesAdapter
@@ -22,7 +23,9 @@ class TeamHeroesFragment : Fragment() {
     private val binding: FragmentTeamHeroesBinding
         get() = _binding ?: throw RuntimeException("FragmentTeamHeroesBinding is null")
 
-    private val viewModel: TeamViewModel by activityViewModels()
+    private val viewModel: TeamViewModel by viewModels<TeamViewModel>(
+        ownerProducer = { requireParentFragment() }
+    )
 
     private val constViewModel: ConstViewModel by activityViewModels()
 

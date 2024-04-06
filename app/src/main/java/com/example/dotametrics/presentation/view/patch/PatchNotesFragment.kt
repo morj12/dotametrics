@@ -78,12 +78,8 @@ class PatchNotesFragment : Fragment() {
 
         if (heroesLoaded && itemsLoaded) {
             viewModel.currentPatchNotes.observe(viewLifecycleOwner) {
-                if (it == null) {
-                    requireActivity().supportFragmentManager.popBackStack()
-                } else {
-                    loadData(it)
-                    binding.clPatchNotes.stopLoading(binding.pbClPatchNotes)
-                }
+                loadData(it)
+                binding.clPatchNotes.stopLoading(binding.pbClPatchNotes)
             }
         } else {
             if (!heroesLoaded) constViewModel.loadHeroes()
@@ -105,10 +101,5 @@ class PatchNotesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = PatchNotesFragment()
     }
 }

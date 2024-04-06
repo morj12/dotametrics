@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.databinding.FragmentMatchSkillsBinding
 import com.example.dotametrics.presentation.adapter.MatchSkillsPlayerAdapter
@@ -27,7 +28,9 @@ class MatchSkillsFragment : Fragment() {
     private lateinit var radiantAdapter: MatchSkillsPlayerAdapter
     private lateinit var direAdapter: MatchSkillsPlayerAdapter
 
-    private val viewModel: MatchViewModel by activityViewModels()
+    private val viewModel: MatchViewModel by viewModels<MatchViewModel>(
+        ownerProducer = { requireParentFragment() }
+    )
 
     private val constViewModel: ConstViewModel by activityViewModels()
 

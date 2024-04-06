@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.R
@@ -30,6 +31,7 @@ class PatchSeriesFragment : Fragment() {
 
     private val setSeries: ((Pair<String, PatchNotesResult>) -> Unit) = {
         viewModel.setPatch(it)
+        openPatchNotes()
     }
 
     override fun onCreateView(
@@ -66,32 +68,17 @@ class PatchSeriesFragment : Fragment() {
 
     private fun observe() {
         viewModel.currentSeries.observe(viewLifecycleOwner) {
-            if (it == null) {
-                requireActivity().supportFragmentManager.popBackStack()
-            } else {
-                loadData(it)
-                binding.rcPatches.stopLoading(binding.pbRcPatches)
-            }
-        }
-        viewModel.currentPatchNotes.observe(viewLifecycleOwner) {
-            if (it != null) openPatchNotes()
+            loadData(it)
+            binding.rcPatches.stopLoading(binding.pbRcPatches)
         }
     }
 
     private fun openPatchNotes() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.patch_placeholder, PatchNotesFragment.newInstance())
-            .addToBackStack(null)
-            .commit()
+        findNavController().navigate(R.id.action_patchSeriesFragment_to_patchNotesFragment)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = PatchSeriesFragment()
     }
 }
