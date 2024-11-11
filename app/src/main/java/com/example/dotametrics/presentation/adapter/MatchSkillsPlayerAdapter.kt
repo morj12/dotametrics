@@ -62,64 +62,58 @@ class MatchSkillsPlayerAdapter(private val activity: AppCompatActivity) :
             val dpWidth = (width / activity.resources.displayMetrics.density)
             val cellSize = (dpWidth / ITEMS_PER_ROW)
 
-            try {
-                for (i in 0..1) {
-                    val tableRow = TableRow(root.context)
-                    for (j in 0 until ITEMS_PER_ROW) {
-                        if (item.abilityUpgradesArr != null) {
-                            if (skillCount < item.abilityUpgradesArr.size) {
-                                val abilityId = item.abilityUpgradesArr[skillCount]
-                                val abilityName = ConstData.abilityIds[abilityId.toString()]
-                                var ability: Pair<String, AbilityResult>? = null
-                                var type: String? = null
-                                abilityName?.let {
-                                    ability = ConstData.abilities.entries.firstOrNull { it.key == abilityName }?.toPair()
-                                    type = when {
-                                        abilityName.contains("attributes") -> "attributes"
-                                        abilityName.contains("special_bonus") -> "talent"
-                                        else -> "ability"
-                                    }
+            for (i in 0..1) {
+                val tableRow = TableRow(root.context)
+                for (j in 0 until ITEMS_PER_ROW) {
+                    if (item.abilityUpgradesArr != null) {
+                        if (skillCount < item.abilityUpgradesArr.size) {
+                            val abilityId = item.abilityUpgradesArr[skillCount]
+                            val abilityName = ConstData.abilityIds[abilityId.toString()]
+                            var ability: Pair<String, AbilityResult>? = null
+                            var type: String? = null
+                            abilityName?.let {
+                                ability = ConstData.abilities.entries.firstOrNull { it.key == abilityName }.toPair()
+                                type = when {
+                                    abilityName.contains("attributes") -> "attributes"
+                                    abilityName.contains("special_bonus") -> "talent"
+                                    else -> "ability"
                                 }
-                                ability?.let {
-                                    val cell =
-                                        if (type == "talent" || type == "attributes") TextView(root.context)
-                                        else ImageView(root.context)
-
-                                    val typedSize = TypedValue.applyDimension(
-                                        TypedValue.COMPLEX_UNIT_DIP,
-                                        cellSize,
-                                        activity.resources.displayMetrics
-                                    ).toInt()
-                                    cell.layoutParams = TableRow.LayoutParams(typedSize, typedSize)
-
-                                    if (cell is TextView) {
-                                        if (type == "talent") {
-                                            cell.text = ability!!.second.dname
-                                            cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6f)
-                                            cell.setBackgroundResource(R.drawable.talent)
-                                            cell.textAlignment = TEXT_ALIGNMENT_CENTER
-                                        } else {
-                                            cell.setBackgroundResource(R.drawable.attr)
-                                        }
-                                    } else if (cell is ImageView) {
-                                        Glide.with(root)
-                                            .load("${ABILITIES_URL}/${ability!!.first}.png")
-                                            .apply(GlideManager.requestOptions(root.context))
-                                            .into(cell)
-                                    }
-                                    tableRow.addView(cell)
-                                }
-                                skillCount++
                             }
+                            ability?.let {
+                                val cell =
+                                    if (type == "talent" || type == "attributes") TextView(root.context)
+                                    else ImageView(root.context)
+
+                                val typedSize = TypedValue.applyDimension(
+                                    TypedValue.COMPLEX_UNIT_DIP,
+                                    cellSize,
+                                    activity.resources.displayMetrics
+                                ).toInt()
+                                cell.layoutParams = TableRow.LayoutParams(typedSize, typedSize)
+
+                                if (cell is TextView) {
+                                    if (type == "talent") {
+                                        cell.text = ability!!.second.dname
+                                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6f)
+                                        cell.setBackgroundResource(R.drawable.talent)
+                                        cell.textAlignment = TEXT_ALIGNMENT_CENTER
+                                    } else {
+                                        cell.setBackgroundResource(R.drawable.attr)
+                                    }
+                                } else if (cell is ImageView) {
+                                    Glide.with(root)
+                                        .load("${ABILITIES_URL}/${ability!!.first}.png")
+                                        .apply(GlideManager.requestOptions(root.context))
+                                        .into(cell)
+                                }
+                                tableRow.addView(cell)
+                            }
+                            skillCount++
                         }
                     }
-                    tlSkills.addView(tableRow)
                 }
-            } catch (e: Exception) {
-                var a = 2;
+                tlSkills.addView(tableRow)
             }
-
-
         }
         skillCount = 0
 
