@@ -72,7 +72,7 @@ class MatchSkillsPlayerAdapter(private val activity: AppCompatActivity) :
                             var ability: Pair<String, AbilityResult>? = null
                             var type: String? = null
                             abilityName?.let {
-                                ability = ConstData.abilities.entries.firstOrNull { it.key == abilityName }.toPair()
+                                ability = ConstData.abilities.entries.firstOrNull { it.key == abilityName }?.toPair()
                                 type = when {
                                     abilityName.contains("attributes") -> "attributes"
                                     abilityName.contains("special_bonus") -> "talent"
