@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun setupBottomNavigationBar() {
         binding.bottomNavigation.setOnItemSelectedListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.nav_players -> {
                     setTitle(resources.getString(R.string.player))
                     findNavController(R.id.fragment_placeholder).navigate(R.id.action_mainFragment)
@@ -72,12 +72,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 R.id.nav_teams -> {
                     setTitle(resources.getString(R.string.teams))
                     findNavController(R.id.fragment_placeholder).navigate(R.id.action_teamSearchFragment)
-                    true
-                }
-
-                R.id.nav_patches -> {
-                    setTitle(resources.getString(R.string.patches))
-                    findNavController(R.id.fragment_placeholder).navigate(R.id.action_patchFragment)
                     true
                 }
 
