@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.R
-import com.example.dotametrics.domain.entity.remote.constants.lobbytypes.LobbyTypeResult
-import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResult
 import com.example.dotametrics.databinding.MatchItemBinding
 import com.example.dotametrics.domain.ConstData
+import com.example.dotametrics.domain.entity.remote.constants.lobbytypes.LobbyTypeResult
+import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResult
 import com.example.dotametrics.util.Datetime
 import com.example.dotametrics.util.GlideManager
 import com.example.dotametrics.util.GlideManager.requestOptions
@@ -47,7 +47,14 @@ class MatchesResultAdapter :
         with(holder.binding) {
             if (heroInfo != null)
                 Glide.with(root)
-                    .load("${GlideManager.HEROES_URL}/${heroInfo.name?.replace(GlideManager.HEROES_URL_REPLACE, "")}.png")
+                    .load(
+                        "${GlideManager.HEROES_URL}/${
+                            heroInfo.name?.replace(
+                                GlideManager.HEROES_URL_REPLACE,
+                                ""
+                            )
+                        }.png"
+                    )
                     .apply(requestOptions(root.context))
                     .into(ivMatchHero)
             item.startTime?.let { tvMatchDate.text = Datetime.formatDate(it) }

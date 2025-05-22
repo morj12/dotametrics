@@ -49,29 +49,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
-        setTitle(resources.getString(R.string.player))
+        title = resources.getString(R.string.player)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         drawerLayout.closeDrawer(GravityCompat.START)
         when (item.itemId) {
             R.id.nav_players -> {
-                setTitle(resources.getString(R.string.player))
+                title = resources.getString(R.string.player)
                 findNavController(R.id.fragment_placeholder).navigate(R.id.action_mainFragment)
             }
 
             R.id.nav_heroes -> {
-                setTitle(resources.getString(R.string.heroes))
+                title = resources.getString(R.string.heroes)
                 findNavController(R.id.fragment_placeholder).navigate(R.id.action_heroSearchFragment)
             }
 
             R.id.nav_teams -> {
-                setTitle(resources.getString(R.string.teams))
+                title = resources.getString(R.string.teams)
                 findNavController(R.id.fragment_placeholder).navigate(R.id.action_teamSearchFragment)
             }
 
             R.id.nav_info -> {
-                setTitle(resources.getString(R.string.about))
+                title = resources.getString(R.string.about)
                 findNavController(R.id.fragment_placeholder).navigate(R.id.action_infoFragment)
             }
         }

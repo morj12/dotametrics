@@ -1,10 +1,10 @@
 package com.example.dotametrics.presentation.view.team
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.dotametrics.databinding.FragmentTeamBinding
 import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
@@ -59,13 +59,16 @@ class TeamFragment : Fragment() {
             .apply(com.example.dotametrics.util.GlideManager.requestOptions(root.context))
             .into(teamImage)
         tvTeamName.text = team.name
-        tvTeamRating.text = root.context.getString(com.example.dotametrics.R.string.team_rating, team.rating.toString())
+        tvTeamRating.text = root.context.getString(
+            com.example.dotametrics.R.string.team_rating,
+            team.rating.toString()
+        )
         tvTeamWinsNumber.text = team.wins.toString()
         tvTeamLosesNumber.text = team.losses.toString()
         if (team.wins != null && team.losses != null) {
             val winrate =
                 team.wins!!.toDouble() / (team.losses!! + team.wins!!).toDouble() * 100
-            tvTeamWinrateNumber.text = "${kotlin.String.format("%.2f", winrate)}%"
+            tvTeamWinrateNumber.text = "${String.format("%.2f", winrate)}%"
         }
     }
 
