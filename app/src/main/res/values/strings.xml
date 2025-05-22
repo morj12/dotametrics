@@ -80,23 +80,10 @@
     <string name="hero_name">Hero name</string>
     <string name="apply_filter">Apply filter</string>
     <string name="players">Players</string>
-    <string name="patches">Patches</string>
     <string name="teams">Teams</string>
     <string name="heroes">Heroes</string>
     <string name="drawer_open">Drawer open</string>
     <string name="drawer_closed">Drawer closed</string>
-    <string name="patch_series">Series: %1$s</string>
-    <string name="patch_date">First patch date: %1$s</string>
-
-    <string name="no_patch_info">No info for this patch series</string>
-    <string name="patch_changes">Changes:</string>
-
-    <string name="patch_general_count">General: %1$s</string>
-    <string name="patch_hero_count">Heroes: %1$s</string>
-    <string name="patch_item_count">Items: %1$s</string>
-    <string name="patch_general">General</string>
-    <string name="patchnotes_heroes">Heroes</string>
-    <string name="patchnotes_items">Items</string>
 
     <string name="team_rating">Rating: %1$s</string>
     <string name="tab_team_1">Players</string>
@@ -130,7 +117,5 @@
         \n\nThe app does not collect any personal data.
         \n\nAll the data the application gets from the open data source OpenDota API.</string>
     <string name="name">Name</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

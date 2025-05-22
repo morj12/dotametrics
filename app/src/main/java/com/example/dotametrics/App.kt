@@ -1,7 +1,7 @@
 package com.example.dotametrics
 
 import android.app.Application
-import com.example.dotametrics.util.GlobalExceptionHandler
+//import com.example.dotametrics.util.GlobalExceptionHandler
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -9,7 +9,7 @@ import javax.inject.Inject
 class App @Inject constructor() : Application() {
     override fun onCreate() {
         super.onCreate()
-        Thread.setDefaultUncaughtExceptionHandler(GlobalExceptionHandler())
+//        Thread.setDefaultUncaughtExceptionHandler(GlobalExceptionHandler())
     }
 
 }

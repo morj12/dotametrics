@@ -9,13 +9,10 @@
         android:id="@+id/mainFragment"
         android:name="com.example.dotametrics.presentation.view.main.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_infoFragment"
             app:destination="@id/infoFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_patchFragment"
-            app:destination="@id/patchFragment" />
         <action
             android:id="@+id/action_mainFragment_to_teamSearchFragment"
             app:destination="@id/teamSearchFragment" />
@@ -35,7 +32,7 @@
         android:id="@+id/accountFragment"
         android:name="com.example.dotametrics.presentation.view.account.AccountFragment"
         android:label="fragment_account"
-        tools:layout="@layout/fragment_account" >
+        tools:layout="@layout/fragment_account">
         <action
             android:id="@+id/action_accountFragment_to_matchFragment"
             app:destination="@id/matchFragment" />
@@ -47,25 +44,16 @@
         android:id="@+id/heroSearchFragment"
         android:name="com.example.dotametrics.presentation.view.herosearch.HeroSearchFragment"
         android:label="fragment_hero_search"
-        tools:layout="@layout/fragment_hero_search" >
+        tools:layout="@layout/fragment_hero_search">
         <action
             android:id="@+id/action_heroSearchFragment_to_heroFragment"
             app:destination="@id/heroFragment" />
     </fragment>
     <fragment
-        android:id="@+id/patchFragment"
-        android:name="com.example.dotametrics.presentation.view.patch.PatchFragment"
-        android:label="fragment_patch"
-        tools:layout="@layout/fragment_patch" >
-        <action
-            android:id="@+id/action_patchFragment_to_patchSeriesFragment"
-            app:destination="@id/patchSeriesFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/teamSearchFragment"
         android:name="com.example.dotametrics.presentation.view.teamsearch.TeamSearchFragment"
         android:label="fragment_team_search"
-        tools:layout="@layout/fragment_team_search" >
+        tools:layout="@layout/fragment_team_search">
         <action
             android:id="@+id/action_teamSearchFragment_to_teamFragment"
             app:destination="@id/teamFragment" />
@@ -79,7 +67,7 @@
         android:id="@+id/teamFragment"
         android:name="com.example.dotametrics.presentation.view.team.TeamFragment"
         android:label="fragment_team"
-        tools:layout="@layout/fragment_team" >
+        tools:layout="@layout/fragment_team">
         <action
             android:id="@+id/action_teamFragment_to_matchFragment"
             app:destination="@id/matchFragment" />
@@ -88,24 +76,10 @@
             app:destination="@id/accountFragment" />
     </fragment>
     <fragment
-        android:id="@+id/patchNotesFragment"
-        android:name="com.example.dotametrics.presentation.view.patch.PatchNotesFragment"
-        android:label="fragment_patch_notes"
-        tools:layout="@layout/fragment_patch_notes" />
-    <fragment
-        android:id="@+id/patchSeriesFragment"
-        android:name="com.example.dotametrics.presentation.view.patch.PatchSeriesFragment"
-        android:label="fragment_patch_series"
-        tools:layout="@layout/fragment_patch_series" >
-        <action
-            android:id="@+id/action_patchSeriesFragment_to_patchNotesFragment"
-            app:destination="@id/patchNotesFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/matchFragment"
         android:name="com.example.dotametrics.presentation.view.match.MatchFragment"
         android:label="fragment_match"
-        tools:layout="@layout/fragment_match" >
+        tools:layout="@layout/fragment_match">
         <action
             android:id="@+id/action_matchFragment_to_accountFragment"
             app:destination="@id/accountFragment" />
@@ -120,9 +94,6 @@
     <action
         android:id="@+id/action_teamSearchFragment"
         app:destination="@id/teamSearchFragment" />
-    <action
-        android:id="@+id/action_patchFragment"
-        app:destination="@id/patchFragment" />
     <action
         android:id="@+id/action_infoFragment"
         app:destination="@id/infoFragment" />

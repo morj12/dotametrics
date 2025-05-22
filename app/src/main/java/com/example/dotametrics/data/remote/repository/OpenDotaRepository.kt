@@ -3,14 +3,16 @@ package com.example.dotametrics.data.remote.repository
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.example.dotametrics.data.remote.paging.players.MatchDataSource
+import com.example.dotametrics.data.remote.paging.players.MatchDataSourceFactory
+import com.example.dotametrics.data.remote.service.DotaService
+import com.example.dotametrics.domain.entity.remote.BasicResponse
 import com.example.dotametrics.domain.entity.remote.constants.abilities.AbilityResult
 import com.example.dotametrics.domain.entity.remote.constants.abilities.HeroAbilitiesResult
 import com.example.dotametrics.domain.entity.remote.constants.aghs.AghsResult
 import com.example.dotametrics.domain.entity.remote.constants.heroes.HeroResult
 import com.example.dotametrics.domain.entity.remote.constants.items.ItemResult
 import com.example.dotametrics.domain.entity.remote.constants.lobbytypes.LobbyTypeResult
-import com.example.dotametrics.domain.entity.remote.constants.patch.PatchNotesResult
-import com.example.dotametrics.domain.entity.remote.constants.patch.PatchResult
 import com.example.dotametrics.domain.entity.remote.matches.MatchDataResult
 import com.example.dotametrics.domain.entity.remote.players.PlayersResult
 import com.example.dotametrics.domain.entity.remote.players.heroes.PlayerHeroResult
@@ -23,15 +25,12 @@ import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
 import com.example.dotametrics.domain.entity.remote.teams.heroes.TeamHeroesResult
 import com.example.dotametrics.domain.entity.remote.teams.matches.TeamMatchesResult
 import com.example.dotametrics.domain.entity.remote.teams.players.TeamPlayersResult
-import com.example.dotametrics.data.remote.paging.players.MatchDataSource
-import com.example.dotametrics.data.remote.paging.players.MatchDataSourceFactory
-import com.example.dotametrics.data.remote.service.DotaService
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
-import com.example.dotametrics.domain.entity.remote.BasicResponse
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
-class OpenDotaRepository @Inject constructor(private val service: DotaService): IOpenDotaRepository {
+class OpenDotaRepository @Inject constructor(private val service: DotaService) :
+    IOpenDotaRepository {
 
     private lateinit var matchDataSource: LiveData<MatchDataSource>
 
@@ -115,16 +114,6 @@ class OpenDotaRepository @Inject constructor(private val service: DotaService): 
 
     override fun getAbilities(): BasicResponse<Map<String, AbilityResult>> {
         val call = service.getAbilities().execute()
-        return BasicResponse(call.body(), call.errorBody()?.string() ?: "null")
-    }
-
-    override fun getPatches(): BasicResponse<List<PatchResult>> {
-        val call = service.getPatches().execute()
-        return BasicResponse(call.body(), call.errorBody()?.string() ?: "null")
-    }
-
-    override fun getPatchNotes(): BasicResponse<Map<String, PatchNotesResult>> {
-        val call = service.getPatchNotes().execute()
         return BasicResponse(call.body(), call.errorBody()?.string() ?: "null")
     }
 

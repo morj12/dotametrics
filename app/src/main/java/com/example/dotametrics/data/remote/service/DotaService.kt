@@ -6,8 +6,6 @@ import com.example.dotametrics.domain.entity.remote.constants.aghs.AghsResult
 import com.example.dotametrics.domain.entity.remote.constants.heroes.HeroResult
 import com.example.dotametrics.domain.entity.remote.constants.items.ItemResult
 import com.example.dotametrics.domain.entity.remote.constants.lobbytypes.LobbyTypeResult
-import com.example.dotametrics.domain.entity.remote.constants.patch.PatchResult
-import com.example.dotametrics.domain.entity.remote.constants.patch.PatchNotesResult
 import com.example.dotametrics.domain.entity.remote.matches.MatchDataResult
 import com.example.dotametrics.domain.entity.remote.players.PlayersResult
 import com.example.dotametrics.domain.entity.remote.players.heroes.PlayerHeroResult
@@ -80,12 +78,6 @@ interface DotaService {
 
     @GET("constants/abilities")
     fun getAbilities(): Call<Map<String, AbilityResult>>
-
-    @GET("constants/patch")
-    fun getPatches(): Call<List<PatchResult>>
-
-    @GET("constants/patchnotes")
-    fun getPatchNotes(): Call<Map<String, PatchNotesResult>>
 
     @GET("teams")
     fun getTeams(): Call<List<TeamsResult>>
