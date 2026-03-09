@@ -11,13 +11,13 @@ object Datetime {
     fun formatDate(datetime: String?): String {
         if (datetime == null) return ""
         val date = SimpleDateFormat(ISO_8601_FORMAT, Locale.getDefault()).parse(datetime)
-        return DateUtils.getRelativeTimeSpanString(date.time).toString()
+        return DateUtils.getRelativeTimeSpanString(date!!.time).toString()
     }
 
     fun formatDate(timestamp: Long): String {
         val datetime = getDateTime(timestamp)
         val date = SimpleDateFormat(ISO_8601_FORMAT, Locale.getDefault()).parse(datetime)
-        return DateUtils.getRelativeTimeSpanString(date.time).toString()
+        return DateUtils.getRelativeTimeSpanString(date!!.time).toString()
     }
 
     private fun getDateTime(timestamp: Long): String {

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.serialization'
     id 'kotlin-parcelize'
     id 'com.google.dagger.hilt.android'
     id 'com.google.devtools.ksp'
@@ -69,16 +70,18 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:4.12.0"
     implementation "com.squareup.okhttp3:logging-interceptor:4.12.0"
 
-    implementation "com.github.bumptech.glide:glide:4.16.0"
-    ksp "com.github.bumptech.glide:ksp:4.16.0"
+    implementation "com.github.bumptech.glide:glide:5.0.0-rc01"
+    ksp "com.github.bumptech.glide:ksp:5.0.0-rc01"
 
-    def paging_version = "3.3.5"
+    def paging_version = "3.4.1"
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
-    def room_version = "2.6.1"
+    def room_version = "2.7.0-alpha11"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     ksp "androidx.room:room-compiler:$room_version"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3"
 
     implementation "com.google.dagger:hilt-android:2.52"
     ksp "com.google.dagger:hilt-compiler:2.52"
