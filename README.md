@@ -14,7 +14,7 @@ This app allows you to view your or your friends Dota 2 stats. There are 4 categ
 	<img src="img/2.jpg" alt="Screenshot" width="150"/>
   &nbsp; &nbsp; &nbsp; &nbsp;
 	<img src="img/3.jpg" alt="Screenshot" width="150"/>
-<p/>
+<p></p>
 
 ### Data source
 

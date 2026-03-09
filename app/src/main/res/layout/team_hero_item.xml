@@ -10,6 +10,7 @@
         android:layout_marginVertical="8dp"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:importantForAccessibility="no"
         tools:src="@drawable/ic_hero"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

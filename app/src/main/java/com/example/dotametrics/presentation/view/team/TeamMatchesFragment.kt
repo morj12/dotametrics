@@ -1,18 +1,17 @@
 package com.example.dotametrics.presentation.view.team
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.R
-import com.example.dotametrics.domain.entity.remote.teams.matches.TeamMatchesResult
 import com.example.dotametrics.databinding.FragmentTeamMatchesBinding
+import com.example.dotametrics.domain.entity.remote.teams.matches.TeamMatchesResult
 import com.example.dotametrics.presentation.adapter.TeamMatchesAdapter
-import com.example.dotametrics.presentation.view.match.MatchFragment
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
 import com.google.android.material.snackbar.Snackbar

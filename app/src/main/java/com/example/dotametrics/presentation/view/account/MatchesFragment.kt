@@ -11,12 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.R
-import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResult
 import com.example.dotametrics.databinding.FragmentMatchesBinding
+import com.example.dotametrics.domain.ConstData
+import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResult
 import com.example.dotametrics.presentation.adapter.MatchesResultAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
-import com.example.dotametrics.domain.ConstData
-import com.example.dotametrics.presentation.view.match.MatchFragment
 import com.example.dotametrics.util.LobbyTypeMapper
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading

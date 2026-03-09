@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
+        android:importantForAccessibility="no"
         android:src="@drawable/bkg"
         app:layout_constraintBottom_toBottomOf="@id/tv_team_loses_number"
         app:layout_constraintEnd_toEndOf="parent"

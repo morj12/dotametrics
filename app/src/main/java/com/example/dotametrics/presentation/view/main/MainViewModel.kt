@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val openDotaRepository: IOpenDotaRepository,
-    private val playerRepository: IPlayerRepository
+    playerRepository: IPlayerRepository
 ) : ViewModel() {
 
     private val _results = MutableLiveData<List<SearchResult>>()

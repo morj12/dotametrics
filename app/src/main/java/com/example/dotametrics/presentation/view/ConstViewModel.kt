@@ -84,8 +84,8 @@ class ConstViewModel @Inject constructor(
                         _error.postValue(result.error)
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
-                        result.data?.let {
-                            ConstData.heroes = it.values.toList().sortedBy { it.localizedName }
+                        result.data?.let { heroMap ->
+                            ConstData.heroes = heroMap.values.toList().sortedBy { it.localizedName }
                             _heroes.postValue(Unit)
                         }
                     }

@@ -110,7 +110,7 @@ class HeroFragment : Fragment() {
     }
 
     private fun checkStopLoading() {
-        if (loreLoaded && aghsLoaded && abilitiesLoaded && aghsLoaded && talentsLoaded) {
+        if (loreLoaded && aghsLoaded && abilitiesLoaded && talentsLoaded) {
             binding.clHero.stopLoading(binding.pbClHero)
             binding.clHero.visibility = View.VISIBLE
         }

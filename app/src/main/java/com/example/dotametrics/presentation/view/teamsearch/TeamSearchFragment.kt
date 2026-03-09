@@ -2,11 +2,11 @@ package com.example.dotametrics.presentation.view.teamsearch
 
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,7 +15,6 @@ import com.example.dotametrics.R
 import com.example.dotametrics.databinding.FragmentTeamSearchBinding
 import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
 import com.example.dotametrics.presentation.adapter.TeamSearchAdapter
-import com.example.dotametrics.presentation.view.team.TeamFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 

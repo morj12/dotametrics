@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.dotametrics.App
+import com.example.dotametrics.BuildConfig
 import com.example.dotametrics.data.local.AppDatabase
 import com.example.dotametrics.data.local.repository.PlayerRepository
 import com.example.dotametrics.data.remote.repository.OpenDotaRepository
@@ -16,6 +17,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -39,12 +41,22 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesOkHttpClient(): OkHttpClient =
-        OkHttpClient().newBuilder()
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
+    fun providesOkHttpClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BASIC
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
+        }
+
+        return OkHttpClient().newBuilder()
+            .addInterceptor(loggingInterceptor)
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS)
+            .writeTimeout(20, TimeUnit.SECONDS)
             .build()
+    }
 
     @Provides
     @Singleton

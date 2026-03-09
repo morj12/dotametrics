@@ -11,6 +11,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginHorizontal="8dp"
+        android:importantForAccessibility="no"
         android:src="@drawable/ic_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +47,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginVertical="8dp"
+        android:importantForAccessibility="no"
         android:src="@drawable/r00"
         app:layout_constraintStart_toStartOf="@id/tv_match_overview_name"
         app:layout_constraintTop_toBottomOf="@id/tv_match_overview_name" />
@@ -84,6 +86,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="4dp"
+            android:importantForAccessibility="no"
             android:src="@drawable/ic_box"
             app:layout_constraintEnd_toStartOf="@id/tv_match_overview_item1"
             app:layout_constraintTop_toTopOf="@+id/tv_match_overview_item5" />
@@ -93,6 +96,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="4dp"
+            android:importantForAccessibility="no"
             android:src="@drawable/ic_box"
             app:layout_constraintEnd_toStartOf="@id/tv_match_overview_item2"
             app:layout_constraintTop_toTopOf="@+id/tv_match_overview_item5" />
@@ -102,6 +106,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="4dp"
+            android:importantForAccessibility="no"
             android:src="@drawable/ic_box"
             app:layout_constraintEnd_toStartOf="@id/tv_match_overview_item3"
             app:layout_constraintTop_toTopOf="@id/tv_match_overview_item5" />
@@ -111,6 +116,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="4dp"
+            android:importantForAccessibility="no"
             android:src="@drawable/ic_box"
             app:layout_constraintEnd_toStartOf="@id/tv_match_overview_item4"
             app:layout_constraintTop_toTopOf="@id/tv_match_overview_item5" />
@@ -120,6 +126,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="4dp"
+            android:importantForAccessibility="no"
             android:src="@drawable/ic_box"
             app:layout_constraintEnd_toStartOf="@id/tv_match_overview_item5"
             app:layout_constraintTop_toTopOf="@id/tv_match_overview_item5" />
@@ -129,6 +136,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="16dp"
+            android:importantForAccessibility="no"
             android:src="@drawable/ic_box"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

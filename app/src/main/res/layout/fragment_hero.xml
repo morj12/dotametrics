@@ -33,6 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
+                android:importantForAccessibility="no"
                 android:src="@drawable/bkg"
                 app:layout_constraintBottom_toBottomOf="@+id/hero_int"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +44,7 @@
                 android:id="@+id/hero_image"
                 android:layout_width="160dp"
                 android:layout_height="120dp"
+                android:importantForAccessibility="no"
                 android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="@+id/tv_hero_name"
                 app:layout_constraintStart_toStartOf="@+id/tv_hero_name"
@@ -183,7 +185,7 @@
                         android:layout_margin="8dp"
                         android:gravity="top"
                         android:lines="2"
-                        android:text="10"
+                        android:text="@string/_10"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -197,7 +199,7 @@
                         android:layout_margin="8dp"
                         android:gravity="top"
                         android:lines="2"
-                        android:text="15"
+                        android:text="@string/_15"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -211,7 +213,7 @@
                         android:layout_margin="8dp"
                         android:gravity="top"
                         android:lines="2"
-                        android:text="20"
+                        android:text="@string/_20"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -225,7 +227,7 @@
                         android:layout_margin="8dp"
                         android:gravity="top"
                         android:lines="2"
-                        android:text="25"
+                        android:text="@string/_25"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -364,6 +366,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_margin="8dp"
+                    android:importantForAccessibility="no"
                     android:src="@drawable/scepter" />
 
                 <TextView
@@ -397,6 +400,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_margin="8dp"
+                    android:importantForAccessibility="no"
                     android:src="@drawable/shard" />
 
                 <TextView

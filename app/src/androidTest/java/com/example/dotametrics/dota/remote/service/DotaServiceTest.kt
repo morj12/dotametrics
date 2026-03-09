@@ -3,7 +3,6 @@ package com.example.dotametrics.dota.remote.service
 import com.example.dotametrics.domain.entity.remote.players.PlayersResult
 import com.example.dotametrics.domain.entity.remote.players.Profile
 import com.example.dotametrics.data.remote.service.DotaService
-import com.example.dotametrics.di.AppModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
@@ -18,12 +17,12 @@ import java.util.concurrent.TimeUnit
 class DotaServiceTest {
 
     private lateinit var service: DotaService
-    private val RETROFIT_URL = "https://api.opendota.com/api/"
+    private val retrofitUrl = "https://api.opendota.com/api/"
 
     @Before
     fun setup() {
         service = Retrofit.Builder()
-            .baseUrl(RETROFIT_URL)
+            .baseUrl(retrofitUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .client(
                 OkHttpClient().newBuilder()
