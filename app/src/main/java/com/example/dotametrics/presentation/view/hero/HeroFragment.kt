@@ -1,10 +1,10 @@
 package com.example.dotametrics.presentation.view.hero
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -19,7 +19,6 @@ import com.example.dotametrics.util.AttrMapper
 import com.example.dotametrics.util.GlideManager
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -144,9 +143,6 @@ class HeroFragment : Fragment() {
                 showAbilities()
                 showTalents()
             }
-        }
-        constViewModel.error.observe(viewLifecycleOwner) {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
     }
 

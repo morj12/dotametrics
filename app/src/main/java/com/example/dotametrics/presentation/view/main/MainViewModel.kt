@@ -1,6 +1,5 @@
 package com.example.dotametrics.presentation.view.main
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.dotametrics.domain.entity.remote.search.SearchResult
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
@@ -19,26 +18,14 @@ class MainViewModel @Inject constructor(
     val results: LiveData<List<SearchResult>>
         get() = _results
 
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String>
-        get() = _error
-
     val players = playerRepository.getPlayers().asLiveData()
 
     fun search(user: String) {
         if (user.isNotBlank()) {
             viewModelScope.launch {
-                try {
-                    val result = openDotaRepository.getSearchResults(user)
-                    if (result.error != "null") {
-                        _error.value = result.error
-                        Log.e("DOTA_RETROFIT", result.error)
-                    } else {
-                        result.data?.let { _results.value = it }
-                    }
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
+                val result = openDotaRepository.getSearchResults(user)
+                if (result.error == "null") {
+                    result.data?.let { _results.value = it }
                 }
             }
         }

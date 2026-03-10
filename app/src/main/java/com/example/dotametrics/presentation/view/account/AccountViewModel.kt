@@ -1,6 +1,5 @@
 package com.example.dotametrics.presentation.view.account
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -55,10 +54,6 @@ class AccountViewModel @Inject constructor(
     val heroes: LiveData<List<PlayerHeroResult>>
         get() = _heroes
 
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String>
-        get() = _error
-
     private val _peers = MutableLiveData<List<PeersResult>>()
     val peers: LiveData<List<PeersResult>>
         get() = _peers
@@ -73,30 +68,14 @@ class AccountViewModel @Inject constructor(
     fun loadUser() {
         if (userId.isNotBlank()) {
             viewModelScope.launch {
-                try {
-                    val res = openDotaRepository.getPlayersResults(userId)
-                    if (res.error != "null") {
-                        _error.value = res.error
-                        Log.e("DOTA_RETROFIT", res.error)
-                    } else {
-                        res.data?.let { if (!it.isNull()) _result.value = it }
-                    }
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
+                val resProfile = openDotaRepository.getPlayersResults(userId)
+                if (resProfile.error == "null") {
+                    resProfile.data?.let { if (!it.isNull()) _result.value = it }
                 }
 
-                try {
-                    val res = openDotaRepository.getWLResults(userId, 20, null, null)
-                    if (res.error != "null") {
-                        _error.value = res.error
-                        Log.e("DOTA_RETROFIT", res.error)
-                    } else {
-                        res.data?.let { if (!it.isNull()) _wl.value = it }
-                    }
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
+                val resWl = openDotaRepository.getWLResults(userId, 20, null, null)
+                if (resWl.error == "null") {
+                    resWl.data?.let { if (!it.isNull()) _wl.value = it }
                 }
             }
         }
@@ -105,17 +84,9 @@ class AccountViewModel @Inject constructor(
     fun loadFilteredWLResults() {
         if (userId.isNotBlank()) {
             viewModelScope.launch {
-                try {
-                    val res = openDotaRepository.getWLResults(userId, null, lobbyType, heroId)
-                    if (res.error != "null") {
-                        _error.value = res.error
-                        Log.e("DOTA_RETROFIT", res.error)
-                    } else {
-                        res.data?.let { if (!it.isNull()) _filteredWl.value = it }
-                    }
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
+                val res = openDotaRepository.getWLResults(userId, null, lobbyType, heroId)
+                if (res.error == "null") {
+                    res.data?.let { if (!it.isNull()) _filteredWl.value = it }
                 }
             }
         }
@@ -124,18 +95,10 @@ class AccountViewModel @Inject constructor(
     fun loadTotals() {
         if (userId.isNotBlank()) {
             viewModelScope.launch {
-                try {
-                    val res = openDotaRepository.getTotals(userId)
-                    if (res.error != "null") {
-                        _error.value = res.error
-                        Log.e("DOTA_RETROFIT", res.error)
-                    } else {
-                        val usefulTotals = app.resources.getStringArray(R.array.totals_array)
-                        _totals.value = res.data?.filter { usefulTotals.contains(it.field) }
-                    }
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
+                val res = openDotaRepository.getTotals(userId)
+                if (res.error == "null") {
+                    val usefulTotals = app.resources.getStringArray(R.array.totals_array)
+                    _totals.value = res.data?.filter { usefulTotals.contains(it.field) }
                 }
             }
         }
@@ -144,17 +107,9 @@ class AccountViewModel @Inject constructor(
     fun loadPlayerHeroesResults() {
         if (userId.isNotBlank()) {
             viewModelScope.launch {
-                try {
-                    val res = openDotaRepository.getPlayerHeroesResults(userId)
-                    if (res.error != "null") {
-                        _error.value = res.error
-                        Log.e("DOTA_RETROFIT", res.error)
-                    } else {
-                        res.data?.let { _heroes.value = it }
-                    }
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
+                val res = openDotaRepository.getPlayerHeroesResults(userId)
+                if (res.error == "null") {
+                    res.data?.let { _heroes.value = it }
                 }
             }
         }
@@ -163,17 +118,9 @@ class AccountViewModel @Inject constructor(
     fun loadPeers() {
         if (userId.isNotBlank()) {
             viewModelScope.launch {
-                try {
-                    val res = openDotaRepository.getPeers(userId)
-                    if (res.error != "null") {
-                        _error.value = res.error
-                        Log.e("DOTA_RETROFIT", res.error)
-                    } else {
-                        res.data?.let { _peers.value = it }
-                    }
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
+                val res = openDotaRepository.getPeers(userId)
+                if (res.error == "null") {
+                    res.data?.let { _peers.value = it }
                 }
             }
         }

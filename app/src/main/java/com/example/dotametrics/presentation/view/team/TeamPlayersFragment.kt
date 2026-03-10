@@ -14,7 +14,6 @@ import com.example.dotametrics.domain.entity.remote.teams.players.TeamPlayersRes
 import com.example.dotametrics.presentation.adapter.TeamPlayersAdapter
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -64,9 +63,6 @@ class TeamPlayersFragment : Fragment() {
         viewModel.players.observe(viewLifecycleOwner) {
             adapter.submitList(it)
             binding.rcTeamPlayers.stopLoading(binding.pbTeamPlayers)
-        }
-        viewModel.error.observe(viewLifecycleOwner) {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
     }
 

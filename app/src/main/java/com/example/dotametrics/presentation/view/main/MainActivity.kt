@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.dotametrics.R
@@ -16,8 +19,12 @@ import com.example.dotametrics.databinding.ActivityMainBinding
 import com.example.dotametrics.presentation.view.herosearch.HeroSearchFragment
 import com.example.dotametrics.presentation.view.info.InfoFragment
 import com.example.dotametrics.presentation.view.teamsearch.TeamSearchFragment
+import com.example.dotametrics.util.DotaLogger
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -59,6 +66,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         onBackPressedDispatcher.addCallback(this) {
             handleBackPressed()
+        }
+
+        observeUiEvents()
+    }
+
+    private fun observeUiEvents() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                DotaLogger.uiEvents.collectLatest { event ->
+                    if (event == "RATE_LIMIT_EXCEEDED") {
+                        Snackbar.make(
+                            binding.root,
+                            R.string.rate_limit_error,
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            }
         }
     }
 

@@ -122,4 +122,6 @@
     <string name="_20">20</string>
     <string name="_25">25</string>
 
+    <string name="rate_limit_error">API rate limit exceeded. Please try again in a few seconds.</string>
+
 </resources>

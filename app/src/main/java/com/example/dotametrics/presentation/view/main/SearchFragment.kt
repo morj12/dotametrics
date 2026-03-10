@@ -15,7 +15,6 @@ import com.example.dotametrics.R
 import com.example.dotametrics.databinding.FragmentSearchBinding
 import com.example.dotametrics.domain.entity.remote.search.SearchResult
 import com.example.dotametrics.presentation.adapter.SearchResultAdapter
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -71,11 +70,6 @@ class SearchFragment : Fragment() {
                 binding.btSearch.visibility = View.VISIBLE
                 binding.pbSearch.visibility = View.INVISIBLE
             }
-        }
-        viewModel.error.observe(viewLifecycleOwner) {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
-            binding.btSearch.visibility = View.VISIBLE
-            binding.pbSearch.visibility = View.INVISIBLE
         }
     }
 

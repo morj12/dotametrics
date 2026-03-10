@@ -15,7 +15,6 @@ import com.example.dotametrics.databinding.FragmentHeroSearchBinding
 import com.example.dotametrics.domain.entity.remote.constants.heroes.HeroResult
 import com.example.dotametrics.presentation.adapter.HeroSearchAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -105,11 +104,6 @@ class HeroSearchFragment : Fragment() {
                 binding.btSearchHeroes.visibility = View.VISIBLE
                 binding.pbSearchHeroes.visibility = View.INVISIBLE
             }
-        }
-        constViewModel.error.observe(viewLifecycleOwner) {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
-            binding.btSearchHeroes.visibility = View.VISIBLE
-            binding.pbSearchHeroes.visibility = View.INVISIBLE
         }
     }
 

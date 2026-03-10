@@ -1,6 +1,5 @@
 package com.example.dotametrics.presentation.view.match
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,28 +21,16 @@ class MatchViewModel @Inject constructor(private val openDotaRepository: IOpenDo
     val result: LiveData<MatchDataResult>
         get() = _result
 
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String>
-        get() = _error
-
     fun loadMatch() {
         if (loadingMatch) return
         if (matchId.isNotBlank()) {
             loadingMatch = true
             viewModelScope.launch {
-                try {
-                    val result = openDotaRepository.getMatchData(matchId)
-                    if (result.error != "null") {
-                        _error.value = result.error
-                        Log.e("DOTA_RETROFIT", result.error)
-                    } else {
-                        result.data?.let { if (!it.isNull()) _result.value = it }
-                    }
-                    loadingMatch = false
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
+                val result = openDotaRepository.getMatchData(matchId)
+                if (result.error == "null") {
+                    result.data?.let { if (!it.isNull()) _result.value = it }
                 }
+                loadingMatch = false
             }
         }
     }

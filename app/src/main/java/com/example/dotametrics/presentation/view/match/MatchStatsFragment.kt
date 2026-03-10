@@ -1,17 +1,16 @@
 package com.example.dotametrics.presentation.view.match
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.databinding.FragmentMatchStatsBinding
 import com.example.dotametrics.presentation.adapter.MatchStatsPlayerAdapter
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -62,9 +61,6 @@ class MatchStatsFragment : Fragment() {
                 .filter { player -> player.playerSlot!! >= 100 })
             binding.rcMatchStatsRadiant.stopLoading(binding.pbRcMatchStatsRadiant)
             binding.rcMatchStatsDire.stopLoading(binding.pbRcMatchStatsDire)
-        }
-        viewModel.error.observe(viewLifecycleOwner) {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
     }
 

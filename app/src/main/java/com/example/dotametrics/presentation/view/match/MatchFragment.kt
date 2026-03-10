@@ -16,7 +16,6 @@ import com.example.dotametrics.util.Datetime
 import com.example.dotametrics.util.LobbyTypeMapper
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -116,12 +115,6 @@ class MatchFragment : Fragment() {
                 )
             tvMatchRegion.text = ConstData.regions[it.region]
             binding.tvMatchResult.stopLoading(binding.pbTvMatchResult)
-        }
-        viewModel.error.observe(viewLifecycleOwner) {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
-        }
-        constViewModel.error.observe(viewLifecycleOwner) {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
     }
 

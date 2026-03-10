@@ -15,7 +15,6 @@ import com.example.dotametrics.R
 import com.example.dotametrics.databinding.FragmentTeamSearchBinding
 import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
 import com.example.dotametrics.presentation.adapter.TeamSearchAdapter
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -103,11 +102,6 @@ class TeamSearchFragment : Fragment() {
                 binding.btSearchTeams.visibility = View.VISIBLE
                 binding.pbSearchTeams.visibility = View.INVISIBLE
             }
-        }
-        viewModel.error.observe(viewLifecycleOwner) {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
-            binding.btSearchTeams.visibility = View.VISIBLE
-            binding.pbSearchTeams.visibility = View.INVISIBLE
         }
     }
 

@@ -1,6 +1,5 @@
 package com.example.dotametrics.presentation.view
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,10 +27,6 @@ class ConstViewModel @Inject constructor(
     private var loadingLore = false
     private var loadingAghs = false
     private var loadingHeroAbilities = false
-
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String>
-        get() = _error
 
     private val _heroes = MutableLiveData<Unit>()
     val heroes: LiveData<Unit>
@@ -77,23 +72,14 @@ class ConstViewModel @Inject constructor(
         } else {
             loadingHeroes = true
             viewModelScope.launch {
-                try {
-                    val result = openDotaRepository.getConstHeroes()
-                    if (result.error != "null") {
-                        _error.value = result.error
-                        Log.e("DOTA_RETROFIT", result.error)
-                    } else {
-                        result.data?.let { heroMap ->
-                            ConstData.heroes = heroMap.values.toList().sortedBy { it.localizedName }
-                            _heroes.value = Unit
-                        }
+                val result = openDotaRepository.getConstHeroes()
+                if (result.error == "null") {
+                    result.data?.let { heroMap ->
+                        ConstData.heroes = heroMap.values.toList().sortedBy { it.localizedName }
+                        _heroes.value = Unit
                     }
-                    loadingHeroes = false
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
-                    loadingHeroes = false
                 }
+                loadingHeroes = false
             }
         }
     }
@@ -106,25 +92,16 @@ class ConstViewModel @Inject constructor(
         } else {
             loadingLobbies = true
             viewModelScope.launch {
-                try {
-                    val result = openDotaRepository.getConstLobbyTypes()
-                    if (result.error != "null") {
-                        _error.value = result.error
-                        Log.e("DOTA_RETROFIT", result.error)
-                    } else {
-                        result.data?.let {
-                            val usefulLobbies = app.resources.getStringArray(R.array.lobbies_array)
-                            ConstData.lobbies =
-                                it.values.toList().filter { v -> usefulLobbies.contains(v.name) }
-                            _constLobbyTypes.value = Unit
-                        }
+                val result = openDotaRepository.getConstLobbyTypes()
+                if (result.error == "null") {
+                    result.data?.let {
+                        val usefulLobbies = app.resources.getStringArray(R.array.lobbies_array)
+                        ConstData.lobbies =
+                            it.values.toList().filter { v -> usefulLobbies.contains(v.name) }
+                        _constLobbyTypes.value = Unit
                     }
-                    loadingLobbies = false
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
-                    loadingLobbies = false
                 }
+                loadingLobbies = false
             }
         }
     }
@@ -137,23 +114,14 @@ class ConstViewModel @Inject constructor(
         } else {
             loadingRegions = true
             viewModelScope.launch {
-                try {
-                    val result = openDotaRepository.getRegions()
-                    if (result.error != "null") {
-                        _error.value = result.error
-                        Log.e("DOTA_RETROFIT", result.error)
-                    } else {
-                        result.data?.let {
-                            ConstData.regions = it.mapKeys { k -> k.key.toInt() }
-                            _constRegions.value = Unit
-                        }
+                val result = openDotaRepository.getRegions()
+                if (result.error == "null") {
+                    result.data?.let {
+                        ConstData.regions = it.mapKeys { k -> k.key.toInt() }
+                        _constRegions.value = Unit
                     }
-                    loadingRegions = false
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
-                    loadingRegions = false
                 }
+                loadingRegions = false
             }
         }
     }
@@ -166,23 +134,14 @@ class ConstViewModel @Inject constructor(
         } else {
             loadingItems = true
             viewModelScope.launch {
-                try {
-                    val result = openDotaRepository.getItems()
-                    if (result.error != "null") {
-                        _error.value = result.error
-                        Log.e("DOTA_RETROFIT", result.error)
-                    } else {
-                        result.data?.let {
-                            ConstData.items = it
-                            _constItems.value = Unit
-                        }
+                val result = openDotaRepository.getItems()
+                if (result.error == "null") {
+                    result.data?.let {
+                        ConstData.items = it
+                        _constItems.value = Unit
                     }
-                    loadingItems = false
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
-                    loadingItems = false
                 }
+                loadingItems = false
             }
         }
     }
@@ -195,23 +154,14 @@ class ConstViewModel @Inject constructor(
         } else {
             loadingAbilityIds = true
             viewModelScope.launch {
-                try {
-                    val result = openDotaRepository.getAbilityIds()
-                    if (result.error != "null") {
-                        _error.value = result.error
-                        Log.e("DOTA_RETROFIT", result.error)
-                    } else {
-                        result.data?.let {
-                            ConstData.abilityIds = it
-                            _constAbilityIds.value = Unit
-                        }
+                val result = openDotaRepository.getAbilityIds()
+                if (result.error == "null") {
+                    result.data?.let {
+                        ConstData.abilityIds = it
+                        _constAbilityIds.value = Unit
                     }
-                    loadingAbilityIds = false
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
-                    loadingAbilityIds = false
                 }
+                loadingAbilityIds = false
             }
         }
     }
@@ -224,23 +174,14 @@ class ConstViewModel @Inject constructor(
         } else {
             loadingAbilities = true
             viewModelScope.launch {
-                try {
-                    val result = openDotaRepository.getAbilities()
-                    if (result.error != "null") {
-                        _error.value = result.error
-                        Log.e("DOTA_RETROFIT", result.error)
-                    } else {
-                        result.data?.let {
-                            ConstData.abilities = it
-                            _constAbilities.value = Unit
-                        }
+                val result = openDotaRepository.getAbilities()
+                if (result.error == "null") {
+                    result.data?.let {
+                        ConstData.abilities = it
+                        _constAbilities.value = Unit
                     }
-                    loadingAbilities = false
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
-                    loadingAbilities = false
                 }
+                loadingAbilities = false
             }
         }
     }
@@ -253,23 +194,14 @@ class ConstViewModel @Inject constructor(
         } else {
             loadingLore = true
             viewModelScope.launch {
-                try {
-                    val result = openDotaRepository.getHeroLore()
-                    if (result.error != "null") {
-                        _error.value = result.error
-                        Log.e("DOTA_RETROFIT", result.error)
-                    } else {
-                        result.data?.let {
-                            ConstData.lores = it
-                            _constLores.value = Unit
-                        }
+                val result = openDotaRepository.getHeroLore()
+                if (result.error == "null") {
+                    result.data?.let {
+                        ConstData.lores = it
+                        _constLores.value = Unit
                     }
-                    loadingLore = false
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
-                    loadingLore = false
                 }
+                loadingLore = false
             }
         }
     }
@@ -282,23 +214,14 @@ class ConstViewModel @Inject constructor(
         } else {
             loadingAghs = true
             viewModelScope.launch {
-                try {
-                    val result = openDotaRepository.getAghs()
-                    if (result.error != "null") {
-                        _error.value = result.error
-                        Log.e("DOTA_RETROFIT", result.error)
-                    } else {
-                        result.data?.let {
-                            ConstData.aghs = it
-                            _constAghs.value = Unit
-                        }
+                val result = openDotaRepository.getAghs()
+                if (result.error == "null") {
+                    result.data?.let {
+                        ConstData.aghs = it
+                        _constAghs.value = Unit
                     }
-                    loadingAghs = false
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
-                    loadingAghs = false
                 }
+                loadingAghs = false
             }
         }
     }
@@ -311,23 +234,14 @@ class ConstViewModel @Inject constructor(
         } else {
             loadingHeroAbilities = true
             viewModelScope.launch {
-                try {
-                    val result = openDotaRepository.getHeroAbilities()
-                    if (result.error != "null") {
-                        _error.value = result.error
-                        Log.e("DOTA_RETROFIT", result.error)
-                    } else {
-                        result.data?.let {
-                            ConstData.heroAbilities = it
-                            _constHeroAbilities.value = Unit
-                        }
+                val result = openDotaRepository.getHeroAbilities()
+                if (result.error == "null") {
+                    result.data?.let {
+                        ConstData.heroAbilities = it
+                        _constHeroAbilities.value = Unit
                     }
-                    loadingHeroAbilities = false
-                } catch (e: Exception) {
-                    _error.value = e.message.toString()
-                    Log.e("DOTA_RETROFIT", e.message.toString())
-                    loadingHeroAbilities = false
                 }
+                loadingHeroAbilities = false
             }
         }
     }

@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.dotametrics.data.remote.service.DotaService
 import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResult
+import com.example.dotametrics.util.DotaLogger
 
 class MatchDataSource(
     private val service: DotaService,
@@ -23,14 +24,23 @@ class MatchDataSource(
         return try {
             val offset = params.key ?: 0L
             val response = service.getMatches(id, params.loadSize, offset, lobbyType, heroId)
-            val data = response.body() ?: emptyList()
+            val url = response.raw().request.url.toString()
 
-            LoadResult.Page(
-                data = data,
-                prevKey = if (offset == 0L) null else offset - params.loadSize,
-                nextKey = if (data.isEmpty()) null else offset + params.loadSize
-            )
+            if (response.isSuccessful) {
+                val data = response.body() ?: emptyList()
+                LoadResult.Page(
+                    data = data,
+                    prevKey = if (offset == 0L) null else offset - params.loadSize,
+                    nextKey = if (data.isEmpty()) null else offset + params.loadSize
+                )
+            } else {
+                val errorBody = response.errorBody()?.string() ?: "Unknown error"
+                val isRateLimit = response.code() == 429
+                DotaLogger.logApiError(url, errorBody, isRateLimit)
+                LoadResult.Error(Exception(if (isRateLimit) "RATE_LIMIT_EXCEEDED" else "API Error: $errorBody"))
+            }
         } catch (e: Exception) {
+            DotaLogger.logApiException(e.message, e)
             LoadResult.Error(e)
         }
     }

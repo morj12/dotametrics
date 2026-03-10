@@ -1,21 +1,20 @@
 package com.example.dotametrics.presentation.view.match
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.databinding.FragmentMatchSkillsBinding
+import com.example.dotametrics.domain.ConstData
 import com.example.dotametrics.presentation.adapter.MatchSkillsPlayerAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
-import com.example.dotametrics.domain.ConstData
 import com.example.dotametrics.util.startLoading
 import com.example.dotametrics.util.stopLoading
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -88,12 +87,6 @@ class MatchSkillsFragment : Fragment() {
         }
         constViewModel.constAbilities.observe(viewLifecycleOwner) {
             loadData()
-        }
-        viewModel.error.observe(viewLifecycleOwner) {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
-        }
-        constViewModel.error.observe(viewLifecycleOwner) {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
     }
 

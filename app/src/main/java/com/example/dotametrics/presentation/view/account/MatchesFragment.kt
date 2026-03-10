@@ -22,7 +22,7 @@ import com.example.dotametrics.domain.entity.remote.players.matches.MatchesResul
 import com.example.dotametrics.presentation.adapter.MatchesResultAdapter
 import com.example.dotametrics.presentation.view.ConstViewModel
 import com.example.dotametrics.util.LobbyTypeMapper
-import com.google.android.material.snackbar.Snackbar
+import com.example.dotametrics.util.showError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -123,7 +123,7 @@ class MatchesFragment : Fragment() {
                         ?: loadStates.prepend as? LoadState.Error
 
                     errorState?.let {
-                        Snackbar.make(root, it.error.message ?: "Unknown Error", Snackbar.LENGTH_SHORT).show()
+                        showError(it.error.message ?: "", root)
                     }
                 }
             }
@@ -151,9 +151,6 @@ class MatchesFragment : Fragment() {
             loadData()
             initLobbyFilter()
         }
-        constViewModel.error.observe(viewLifecycleOwner) {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
-        }
         viewModel.filteredWl.observe(viewLifecycleOwner) { player ->
             with(binding) {
                 tvAccountWinsNumberFilter.text = player.win.toString()
@@ -164,9 +161,6 @@ class MatchesFragment : Fragment() {
                     tvAccountWinrateNumberFilter.text = "${String.format("%.2f", winrate)}%"
                 }
             }
-        }
-        viewModel.error.observe(viewLifecycleOwner) {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
     }
 
