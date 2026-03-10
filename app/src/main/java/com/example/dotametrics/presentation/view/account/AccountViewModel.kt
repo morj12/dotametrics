@@ -1,8 +1,12 @@
 package com.example.dotametrics.presentation.view.account
 
 import android.util.Log
-import androidx.lifecycle.*
-import androidx.paging.PagedList
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.local.PlayerDbModel
@@ -15,7 +19,8 @@ import com.example.dotametrics.domain.entity.remote.players.wl.WLResult
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
 import com.example.dotametrics.domain.repository.IPlayerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -58,8 +63,8 @@ class AccountViewModel @Inject constructor(
     val peers: LiveData<List<PeersResult>>
         get() = _peers
 
-    private val _matches = MutableLiveData<PagedList<MatchesResult>>()
-    var matches: LiveData<PagedList<MatchesResult>> = _matches
+    private val _matchesFlow = MutableStateFlow<PagingData<MatchesResult>>(PagingData.empty())
+    val matchesFlow: StateFlow<PagingData<MatchesResult>> = _matchesFlow
 
     private val _isFav = MutableLiveData<Boolean>()
     val isFav: LiveData<Boolean>
@@ -67,32 +72,30 @@ class AccountViewModel @Inject constructor(
 
     fun loadUser() {
         if (userId.isNotBlank()) {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
-                    val result = openDotaRepository.getPlayersResults(userId)
-                    if (result.error != "null") {
-                        _error.postValue(result.error)
-                        Log.e("DOTA_RETROFIT", result.error)
+                    val res = openDotaRepository.getPlayersResults(userId)
+                    if (res.error != "null") {
+                        _error.value = res.error
+                        Log.e("DOTA_RETROFIT", res.error)
                     } else {
-                        result.data?.let { if (!it.isNull()) _result.postValue(it) }
+                        res.data?.let { if (!it.isNull()) _result.value = it }
                     }
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                 }
 
-            }
-            viewModelScope.launch(Dispatchers.IO) {
                 try {
-                    val result = openDotaRepository.getWLResults(userId, 20, null, null)
-                    if (result.error != "null") {
-                        _error.postValue(result.error)
-                        Log.e("DOTA_RETROFIT", result.error)
+                    val res = openDotaRepository.getWLResults(userId, 20, null, null)
+                    if (res.error != "null") {
+                        _error.value = res.error
+                        Log.e("DOTA_RETROFIT", res.error)
                     } else {
-                        result.data?.let { if (!it.isNull()) _wl.postValue(it) }
+                        res.data?.let { if (!it.isNull()) _wl.value = it }
                     }
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }
@@ -101,17 +104,17 @@ class AccountViewModel @Inject constructor(
 
     fun loadFilteredWLResults() {
         if (userId.isNotBlank()) {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
-                    val result = openDotaRepository.getWLResults(userId, null, lobbyType, heroId)
-                    if (result.error != "null") {
-                        _error.postValue(result.error)
-                        Log.e("DOTA_RETROFIT", result.error)
+                    val res = openDotaRepository.getWLResults(userId, null, lobbyType, heroId)
+                    if (res.error != "null") {
+                        _error.value = res.error
+                        Log.e("DOTA_RETROFIT", res.error)
                     } else {
-                        result.data?.let { if (!it.isNull()) _filteredWl.postValue(it) }
+                        res.data?.let { if (!it.isNull()) _filteredWl.value = it }
                     }
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }
@@ -120,18 +123,18 @@ class AccountViewModel @Inject constructor(
 
     fun loadTotals() {
         if (userId.isNotBlank()) {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
-                    val result = openDotaRepository.getTotals(userId)
-                    if (result.error != "null") {
-                        _error.postValue(result.error)
-                        Log.e("DOTA_RETROFIT", result.error)
+                    val res = openDotaRepository.getTotals(userId)
+                    if (res.error != "null") {
+                        _error.value = res.error
+                        Log.e("DOTA_RETROFIT", res.error)
                     } else {
                         val usefulTotals = app.resources.getStringArray(R.array.totals_array)
-                        _totals.postValue(result.data?.filter { usefulTotals.contains(it.field) })
+                        _totals.value = res.data?.filter { usefulTotals.contains(it.field) }
                     }
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }
@@ -140,17 +143,17 @@ class AccountViewModel @Inject constructor(
 
     fun loadPlayerHeroesResults() {
         if (userId.isNotBlank()) {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
-                    val result = openDotaRepository.getPlayerHeroesResults(userId)
-                    if (result.error != "null") {
-                        _error.postValue(result.error)
-                        Log.e("DOTA_RETROFIT", result.error)
+                    val res = openDotaRepository.getPlayerHeroesResults(userId)
+                    if (res.error != "null") {
+                        _error.value = res.error
+                        Log.e("DOTA_RETROFIT", res.error)
                     } else {
-                        result.data?.let { _heroes.postValue(it) }
+                        res.data?.let { _heroes.value = it }
                     }
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }
@@ -159,17 +162,17 @@ class AccountViewModel @Inject constructor(
 
     fun loadPeers() {
         if (userId.isNotBlank()) {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
-                    val result = openDotaRepository.getPeers(userId)
-                    if (result.error != "null") {
-                        _error.postValue(result.error)
-                        Log.e("DOTA_RETROFIT", result.error)
+                    val res = openDotaRepository.getPeers(userId)
+                    if (res.error != "null") {
+                        _error.value = res.error
+                        Log.e("DOTA_RETROFIT", res.error)
                     } else {
-                        result.data?.let { _peers.postValue(it) }
+                        res.data?.let { _peers.value = it }
                     }
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }
@@ -178,11 +181,15 @@ class AccountViewModel @Inject constructor(
 
     fun loadMatches() {
         if (userId.isNotBlank()) {
-            matches = openDotaRepository.loadPagingMatches(userId, lobbyType, heroId, errorListener)
+            viewModelScope.launch {
+                openDotaRepository.loadPagingMatches(userId, lobbyType, heroId)
+                    .cachedIn(viewModelScope)
+                    .collect {
+                        _matchesFlow.value = it
+                    }
+            }
         }
     }
-
-    private val errorListener: ((String) -> Unit) = { _error.value = it }
 
     fun checkFavorite(id: Long) = viewModelScope.launch {
         val player = playerRepository.getPlayer(id)

@@ -2,7 +2,8 @@ package com.example.dotametrics.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.core.content.ContextCompat
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,7 +18,7 @@ import com.example.dotametrics.util.GlideManager.requestOptions
 import com.example.dotametrics.util.LobbyTypeMapper
 
 class MatchesResultAdapter :
-    PagedListAdapter<MatchesResult, MatchesResultAdapter.ViewHolder>(MatchesCallback()) {
+    PagingDataAdapter<MatchesResult, MatchesResultAdapter.ViewHolder>(MatchesCallback()) {
 
     var onItemClickedListener: ((MatchesResult) -> Unit)? = null
 
@@ -39,7 +40,7 @@ class MatchesResultAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)!!
+        val item = getItem(position) ?: return
 
         val heroInfo = ConstData.heroes.firstOrNull { it.id == item.heroId }
         val lobbyInfo = ConstData.lobbies.firstOrNull { it.id == item.lobbyType }
@@ -87,10 +88,10 @@ class MatchesResultAdapter :
     private fun setResult(item: MatchesResult, binding: MatchItemBinding) = with(binding) {
         if (isWin(item)) {
             tvMatchWl.text = root.context.getString(R.string.win)
-            tvMatchWl.setTextColor(root.resources.getColor(R.color.green))
+            tvMatchWl.setTextColor(ContextCompat.getColor(root.context, R.color.green))
         } else {
             tvMatchWl.text = root.context.getString(R.string.lose)
-            tvMatchWl.setTextColor(root.resources.getColor(R.color.red))
+            tvMatchWl.setTextColor(ContextCompat.getColor(root.context, R.color.red))
         }
 
     }

@@ -18,7 +18,7 @@ import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
 import com.example.dotametrics.domain.entity.remote.teams.heroes.TeamHeroesResult
 import com.example.dotametrics.domain.entity.remote.teams.matches.TeamMatchesResult
 import com.example.dotametrics.domain.entity.remote.teams.players.TeamPlayersResult
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -27,77 +27,77 @@ import retrofit2.http.Query
 interface DotaService {
 
     @GET("search")
-    fun getSearchResults(@Query("q") name: String): Call<List<SearchResult>>
+    suspend fun getSearchResults(@Query("q") name: String): Response<List<SearchResult>>
 
     @GET("players/{id}")
-    fun getPlayersResults(@Path("id") id: String): Call<PlayersResult>
+    suspend fun getPlayersResults(@Path("id") id: String): Response<PlayersResult>
 
     @GET("players/{id}/wl")
-    fun getWLResults(
+    suspend fun getWLResults(
         @Path("id") id: String,
         @Query("limit") limit: Int?,
         @Query("lobby_type") lobbyType: Int?,
         @Query("hero_id") heroId: Int?
-    ): Call<WLResult>
+    ): Response<WLResult>
 
     @GET("players/{id}/totals")
-    fun getTotals(@Path("id") id: String): Call<List<TotalsResult>>
+    suspend fun getTotals(@Path("id") id: String): Response<List<TotalsResult>>
 
     @GET("players/{id}/heroes")
-    fun getPlayerHeroesResults(@Path("id") id: String): Call<List<PlayerHeroResult>>
+    suspend fun getPlayerHeroesResults(@Path("id") id: String): Response<List<PlayerHeroResult>>
 
     @GET("constants/heroes")
-    fun getConstHeroes(): Call<Map<String, HeroResult>>
+    suspend fun getConstHeroes(): Response<Map<String, HeroResult>>
 
     @GET("players/{id}/peers")
-    fun getPeers(@Path("id") id: String): Call<List<PeersResult>>
+    suspend fun getPeers(@Path("id") id: String): Response<List<PeersResult>>
 
     @GET("players/{id}/matches")
-    fun getMatches(
+    suspend fun getMatches(
         @Path("id") id: String,
         @Query("limit") limit: Int,
         @Query("offset") offset: Long,
         @Query("lobby_type") lobbyType: Int?,
         @Query("hero_id") heroId: Int?
-    ): Call<List<MatchesResult>>
+    ): Response<List<MatchesResult>>
 
     @GET("constants/lobby_type")
-    fun getConstLobbyTypes(): Call<Map<String, LobbyTypeResult>>
+    suspend fun getConstLobbyTypes(): Response<Map<String, LobbyTypeResult>>
 
     @GET("matches/{id}")
-    fun getMatchData(@Path("id") id: String): Call<MatchDataResult>
+    suspend fun getMatchData(@Path("id") id: String): Response<MatchDataResult>
 
     @GET("constants/region")
-    fun getRegions(): Call<Map<String, String>>
+    suspend fun getRegions(): Response<Map<String, String>>
 
     @GET("constants/items")
-    fun getItems(): Call<Map<String, ItemResult>>
+    suspend fun getItems(): Response<Map<String, ItemResult>>
 
     @GET("constants/ability_ids")
-    fun getAbilityIds(): Call<Map<String, String>>
+    suspend fun getAbilityIds(): Response<Map<String, String>>
 
     @GET("constants/abilities")
-    fun getAbilities(): Call<Map<String, AbilityResult>>
+    suspend fun getAbilities(): Response<Map<String, AbilityResult>>
 
     @GET("teams")
-    fun getTeams(): Call<List<TeamsResult>>
+    suspend fun getTeams(): Response<List<TeamsResult>>
 
     @GET("teams/{id}/players")
-    fun getTeamPlayers(@Path("id") id: String): Call<List<TeamPlayersResult>>
+    suspend fun getTeamPlayers(@Path("id") id: String): Response<List<TeamPlayersResult>>
 
     @GET("teams/{id}/matches")
-    fun getTeamMatches(@Path("id") id: String): Call<List<TeamMatchesResult>>
+    suspend fun getTeamMatches(@Path("id") id: String): Response<List<TeamMatchesResult>>
 
     @GET("teams/{id}/heroes")
-    fun getTeamHeroes(@Path("id") id: String): Call<List<TeamHeroesResult>>
+    suspend fun getTeamHeroes(@Path("id") id: String): Response<List<TeamHeroesResult>>
 
     @GET("constants/aghs_desc")
-    fun getAghs(): Call<List<AghsResult>>
+    suspend fun getAghs(): Response<List<AghsResult>>
 
     @GET("constants/hero_abilities")
-    fun getHeroAbilities(): Call<Map<String, HeroAbilitiesResult>>
+    suspend fun getHeroAbilities(): Response<Map<String, HeroAbilitiesResult>>
 
     @GET("constants/hero_lore")
-    fun getHeroLore(): Call<Map<String, String>>
+    suspend fun getHeroLore(): Response<Map<String, String>>
 
 }

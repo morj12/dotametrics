@@ -11,7 +11,6 @@ import com.example.dotametrics.domain.entity.remote.teams.matches.TeamMatchesRes
 import com.example.dotametrics.domain.entity.remote.teams.players.TeamPlayersResult
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -45,19 +44,19 @@ class TeamViewModel @Inject constructor(private val openDotaRepository: IOpenDot
 
     fun loadPlayers() {
         if (_team.value != null) {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getTeamPlayers(_team.value!!.teamId.toString())
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
                         result.data?.let {
-                            _players.postValue(it.filter { p -> p.isCurrentTeamMember == true })
+                            _players.value = it.filter { p -> p.isCurrentTeamMember == true }
                         }
                     }
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }
@@ -66,17 +65,17 @@ class TeamViewModel @Inject constructor(private val openDotaRepository: IOpenDot
 
     fun loadMatches() {
         if (_team.value != null) {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getTeamMatches(_team.value!!.teamId.toString())
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
-                        result.data?.let { _matches.postValue(it) }
+                        result.data?.let { _matches.value = it }
                     }
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }
@@ -85,17 +84,17 @@ class TeamViewModel @Inject constructor(private val openDotaRepository: IOpenDot
 
     fun loadHeroes() {
         if (_team.value != null) {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getTeamHeroes(_team.value!!.teamId.toString())
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
-                        result.data?.let { _heroes.postValue(it) }
+                        result.data?.let { _heroes.value = it }
                     }
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }

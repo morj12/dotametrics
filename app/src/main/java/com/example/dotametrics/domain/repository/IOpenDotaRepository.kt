@@ -1,7 +1,6 @@
 package com.example.dotametrics.domain.repository
 
-import androidx.lifecycle.LiveData
-import androidx.paging.PagedList
+import androidx.paging.PagingData
 import com.example.dotametrics.domain.entity.remote.BasicResponse
 import com.example.dotametrics.domain.entity.remote.constants.abilities.AbilityResult
 import com.example.dotametrics.domain.entity.remote.constants.abilities.HeroAbilitiesResult
@@ -21,22 +20,23 @@ import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
 import com.example.dotametrics.domain.entity.remote.teams.heroes.TeamHeroesResult
 import com.example.dotametrics.domain.entity.remote.teams.matches.TeamMatchesResult
 import com.example.dotametrics.domain.entity.remote.teams.players.TeamPlayersResult
+import kotlinx.coroutines.flow.Flow
 
 interface IOpenDotaRepository {
-    fun getSearchResults(name: String): BasicResponse<List<SearchResult>>
-    fun getPlayersResults(id: String): BasicResponse<PlayersResult>
-    fun getWLResults(
+    suspend fun getSearchResults(name: String): BasicResponse<List<SearchResult>>
+    suspend fun getPlayersResults(id: String): BasicResponse<PlayersResult>
+    suspend fun getWLResults(
         id: String,
         limit: Int?,
         lobbyType: Int?,
         heroId: Int?
     ): BasicResponse<WLResult>
 
-    fun getTotals(id: String): BasicResponse<List<TotalsResult>>
-    fun getPlayerHeroesResults(id: String): BasicResponse<List<PlayerHeroResult>>
-    fun getConstHeroes(): BasicResponse<Map<String, HeroResult>>
-    fun getPeers(id: String): BasicResponse<List<PeersResult>>
-    fun getMatches(
+    suspend fun getTotals(id: String): BasicResponse<List<TotalsResult>>
+    suspend fun getPlayerHeroesResults(id: String): BasicResponse<List<PlayerHeroResult>>
+    suspend fun getConstHeroes(): BasicResponse<Map<String, HeroResult>>
+    suspend fun getPeers(id: String): BasicResponse<List<PeersResult>>
+    suspend fun getMatches(
         id: String,
         limit: Int,
         offset: Long,
@@ -44,23 +44,22 @@ interface IOpenDotaRepository {
         heroId: Int?
     ): BasicResponse<List<MatchesResult>>
 
-    fun getConstLobbyTypes(): BasicResponse<Map<String, LobbyTypeResult>>
-    fun getMatchData(id: String): BasicResponse<MatchDataResult>
-    fun getRegions(): BasicResponse<Map<String, String>>
-    fun getItems(): BasicResponse<Map<String, ItemResult>>
-    fun getAbilityIds(): BasicResponse<Map<String, String>>
-    fun getAbilities(): BasicResponse<Map<String, AbilityResult>>
-    fun getTeams(): BasicResponse<List<TeamsResult>>
-    fun getTeamPlayers(id: String): BasicResponse<List<TeamPlayersResult>>
-    fun getTeamMatches(id: String): BasicResponse<List<TeamMatchesResult>>
-    fun getTeamHeroes(id: String): BasicResponse<List<TeamHeroesResult>>
-    fun getAghs(): BasicResponse<List<AghsResult>>
-    fun getHeroAbilities(): BasicResponse<Map<String, HeroAbilitiesResult>>
-    fun getHeroLore(): BasicResponse<Map<String, String>>
+    suspend fun getConstLobbyTypes(): BasicResponse<Map<String, LobbyTypeResult>>
+    suspend fun getMatchData(id: String): BasicResponse<MatchDataResult>
+    suspend fun getRegions(): BasicResponse<Map<String, String>>
+    suspend fun getItems(): BasicResponse<Map<String, ItemResult>>
+    suspend fun getAbilityIds(): BasicResponse<Map<String, String>>
+    suspend fun getAbilities(): BasicResponse<Map<String, AbilityResult>>
+    suspend fun getTeams(): BasicResponse<List<TeamsResult>>
+    suspend fun getTeamPlayers(id: String): BasicResponse<List<TeamPlayersResult>>
+    suspend fun getTeamMatches(id: String): BasicResponse<List<TeamMatchesResult>>
+    suspend fun getTeamHeroes(id: String): BasicResponse<List<TeamHeroesResult>>
+    suspend fun getAghs(): BasicResponse<List<AghsResult>>
+    suspend fun getHeroAbilities(): BasicResponse<Map<String, HeroAbilitiesResult>>
+    suspend fun getHeroLore(): BasicResponse<Map<String, String>>
     fun loadPagingMatches(
         userId: String,
         lobbyType: Int?,
-        heroId: Int?,
-        errorListener: (String) -> Unit
-    ): LiveData<PagedList<MatchesResult>>
+        heroId: Int?
+    ): Flow<PagingData<MatchesResult>>
 }

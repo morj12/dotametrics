@@ -10,7 +10,6 @@ import com.example.dotametrics.R
 import com.example.dotametrics.domain.ConstData
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -77,21 +76,21 @@ class ConstViewModel @Inject constructor(
             loadingHeroes = false
         } else {
             loadingHeroes = true
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getConstHeroes()
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
                         result.data?.let { heroMap ->
                             ConstData.heroes = heroMap.values.toList().sortedBy { it.localizedName }
-                            _heroes.postValue(Unit)
+                            _heroes.value = Unit
                         }
                     }
                     loadingHeroes = false
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                     loadingHeroes = false
                 }
@@ -106,23 +105,23 @@ class ConstViewModel @Inject constructor(
             loadingLobbies = false
         } else {
             loadingLobbies = true
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getConstLobbyTypes()
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
                         result.data?.let {
                             val usefulLobbies = app.resources.getStringArray(R.array.lobbies_array)
                             ConstData.lobbies =
                                 it.values.toList().filter { v -> usefulLobbies.contains(v.name) }
-                            _constLobbyTypes.postValue(Unit)
+                            _constLobbyTypes.value = Unit
                         }
                     }
                     loadingLobbies = false
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                     loadingLobbies = false
                 }
@@ -137,21 +136,21 @@ class ConstViewModel @Inject constructor(
             loadingRegions = false
         } else {
             loadingRegions = true
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getRegions()
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
                         result.data?.let {
                             ConstData.regions = it.mapKeys { k -> k.key.toInt() }
-                            _constRegions.postValue(Unit)
+                            _constRegions.value = Unit
                         }
                     }
                     loadingRegions = false
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                     loadingRegions = false
                 }
@@ -166,21 +165,21 @@ class ConstViewModel @Inject constructor(
             loadingItems = false
         } else {
             loadingItems = true
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getItems()
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
                         result.data?.let {
                             ConstData.items = it
-                            _constItems.postValue(Unit)
+                            _constItems.value = Unit
                         }
                     }
                     loadingItems = false
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                     loadingItems = false
                 }
@@ -195,21 +194,21 @@ class ConstViewModel @Inject constructor(
             loadingAbilityIds = false
         } else {
             loadingAbilityIds = true
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getAbilityIds()
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
                         result.data?.let {
                             ConstData.abilityIds = it
-                            _constAbilityIds.postValue(Unit)
+                            _constAbilityIds.value = Unit
                         }
                     }
                     loadingAbilityIds = false
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                     loadingAbilityIds = false
                 }
@@ -224,21 +223,21 @@ class ConstViewModel @Inject constructor(
             loadingAbilities = false
         } else {
             loadingAbilities = true
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getAbilities()
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
                         result.data?.let {
                             ConstData.abilities = it
-                            _constAbilities.postValue(Unit)
+                            _constAbilities.value = Unit
                         }
                     }
                     loadingAbilities = false
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                     loadingAbilities = false
                 }
@@ -253,21 +252,21 @@ class ConstViewModel @Inject constructor(
             loadingLore = false
         } else {
             loadingLore = true
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getHeroLore()
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
                         result.data?.let {
                             ConstData.lores = it
-                            _constLores.postValue(Unit)
+                            _constLores.value = Unit
                         }
                     }
                     loadingLore = false
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                     loadingLore = false
                 }
@@ -282,21 +281,21 @@ class ConstViewModel @Inject constructor(
             loadingAghs = false
         } else {
             loadingAghs = true
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getAghs()
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
                         result.data?.let {
                             ConstData.aghs = it
-                            _constAghs.postValue(Unit)
+                            _constAghs.value = Unit
                         }
                     }
                     loadingAghs = false
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                     loadingAghs = false
                 }
@@ -311,21 +310,21 @@ class ConstViewModel @Inject constructor(
             loadingHeroAbilities = false
         } else {
             loadingHeroAbilities = true
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getHeroAbilities()
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
                         result.data?.let {
                             ConstData.heroAbilities = it
-                            _constHeroAbilities.postValue(Unit)
+                            _constHeroAbilities.value = Unit
                         }
                     }
                     loadingHeroAbilities = false
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                     loadingHeroAbilities = false
                 }

@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.dotametrics.domain.entity.remote.matches.MatchDataResult
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,22 +30,21 @@ class MatchViewModel @Inject constructor(private val openDotaRepository: IOpenDo
         if (loadingMatch) return
         if (matchId.isNotBlank()) {
             loadingMatch = true
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getMatchData(matchId)
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
-                        result.data?.let { if (!it.isNull()) _result.postValue(it) }
+                        result.data?.let { if (!it.isNull()) _result.value = it }
                     }
                     loadingMatch = false
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }
         }
     }
-
 }

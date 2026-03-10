@@ -6,7 +6,6 @@ import com.example.dotametrics.domain.entity.remote.search.SearchResult
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
 import com.example.dotametrics.domain.repository.IPlayerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,21 +27,20 @@ class MainViewModel @Inject constructor(
 
     fun search(user: String) {
         if (user.isNotBlank()) {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 try {
                     val result = openDotaRepository.getSearchResults(user)
                     if (result.error != "null") {
-                        _error.postValue(result.error)
+                        _error.value = result.error
                         Log.e("DOTA_RETROFIT", result.error)
                     } else {
-                        result.data?.let { _results.postValue(it) }
+                        result.data?.let { _results.value = it }
                     }
                 } catch (e: Exception) {
-                    _error.postValue(e.message.toString())
+                    _error.value = e.message.toString()
                     Log.e("DOTA_RETROFIT", e.message.toString())
                 }
             }
         }
     }
-
 }
