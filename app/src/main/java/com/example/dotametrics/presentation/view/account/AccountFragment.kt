@@ -139,10 +139,12 @@ class AccountFragment : Fragment() {
         tvAccountName.text = player.profile?.personaname
         setRank(player)
         tvAccountId.text = player.profile?.accountId.toString()
-        Glide.with(this@AccountFragment)
-            .load("https://flagcdn.com/w80/${player.profile?.loccountrycode?.lowercase()}.png")
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(ivAccountFlag)
+        player.profile?.loccountrycode?.lowercase()?.let {
+            Glide.with(this@AccountFragment)
+                .load("https://flagcdn.com/w80/$it}.png")
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(ivAccountFlag)
+        }
     }
 
 

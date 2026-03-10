@@ -44,7 +44,7 @@ class TeamMatchesAdapter :
                 .load(item.opposingTeamLogo)
                 .apply(requestOptions(root.context))
                 .into(ivTeamMatchesEnemy)
-            item.duration?.let { tvTeamMatchesDuration.text = Datetime.getStringTime(it) }
+            item.duration?.let { tvTeamMatchesDuration.text = Datetime.getStringTime(it, root.context) }
             tvTeamMatchesLeague.text = item.leagueName
             tvTeamMatchesEnemyName.text = item.opposingTeamName
             tvTeamMatchesDate.text = item.startTime?.let { Datetime.formatDate(it) }

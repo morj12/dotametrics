@@ -99,7 +99,7 @@ class MatchFragment : Fragment() {
             loadData()
         }
         viewModel.result.observe(viewLifecycleOwner) {
-            tvMatchDuration.text = Datetime.getStringTime(it.duration!!)
+            tvMatchDuration.text = Datetime.getStringTime(it.duration!!, requireContext())
             tvMatchDatetime.text = Datetime.formatDate(it.startTime!!)
             tvMatchRadiantPoints.text = it.radiantScore.toString()
             tvMatchDirePoints.text = it.direScore.toString()
