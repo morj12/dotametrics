@@ -56,7 +56,7 @@ class MatchOverviewPlayerAdapter :
             tvMatchOverviewLvl.text = item.level.toString()
             tvMatchOverviewName.text =
                 item.personaname ?: root.context.getString(R.string.anonymous)
-            tvMatchOverviewKda.text = "${item.kills} / ${item.deaths} / ${item.assists}"
+            tvMatchOverviewKda.text = root.context.getString(R.string.sample_kda_format, item.kills, item.deaths, item.assists)
             setItems(item, this)
             setPartyColor(item, this)
 

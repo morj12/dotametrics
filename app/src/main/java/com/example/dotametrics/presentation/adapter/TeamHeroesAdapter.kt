@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.teams.heroes.TeamHeroesResult
 import com.example.dotametrics.databinding.TeamHeroItemBinding
 import com.example.dotametrics.domain.ConstData
@@ -51,8 +52,7 @@ class TeamHeroesAdapter :
             if (item.gamesPlayed != null && item.wins != null) {
                 tvTeamHeroItemLoses.text = (item.gamesPlayed!! - item.wins!!).toString()
                 val winrate = item.wins!!.toDouble() / item.gamesPlayed!! * 100
-                tvTeamHeroItemWinrate.text =
-                    "${String.format("%.2f", winrate)}%"
+                tvTeamHeroItemWinrate.text = root.context.getString(R.string.percent_format, winrate)
             }
 
         }

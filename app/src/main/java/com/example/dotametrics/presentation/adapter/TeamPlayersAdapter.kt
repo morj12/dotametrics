@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.teams.players.TeamPlayersResult
 import com.example.dotametrics.databinding.TeamPlayerItemBinding
 
@@ -42,8 +43,7 @@ class TeamPlayersAdapter :
             if (item.gamesPlayed != null && item.wins != null) {
                 tvTeamPlayerItemLoses.text = (item.gamesPlayed!! - item.wins!!).toString()
                 val winrate = item.wins!!.toDouble() / item.gamesPlayed!! * 100
-                tvTeamPlayerItemWinrate.text =
-                    "${String.format("%.2f", winrate)}%"
+                tvTeamPlayerItemWinrate.text = root.context.getString(R.string.percent_format, winrate)
             }
             root.setOnClickListener {
                 onItemClickedListener?.invoke(item)

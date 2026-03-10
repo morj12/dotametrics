@@ -52,8 +52,7 @@ class PlayerHeroesAdapter :
                 tvAccHeroCount.text = item.games.toString()
                 if (item.win != null && item.games != null) {
                     val winrate = item.win!!.toDouble() / item.games!! * 100
-                    tvAccHeroWinrate.text =
-                        "${String.format("%.2f", winrate)}%"
+                    tvAccHeroWinrate.text = root.context.getString(R.string.percent_format, winrate)
                     tvAccHeroWinrate.setTextColor(
                         when {
                             winrate > 55 -> root.context.getColor(R.color.green)

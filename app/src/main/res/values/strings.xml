@@ -124,4 +124,10 @@
 
     <string name="rate_limit_error">API rate limit exceeded. Please try again in a few seconds.</string>
 
+    <string name="percent_format">%.2f%%</string>
+    <string name="double_format">%.2f</string>
+    <string name="time_format_hms">%1$02d:%2$02d:%3$02d</string>
+    <string name="time_format_ms">%1$02d:%2$02d</string>
+    <string name="kda_format">%1$d / %2$d / %3$d</string>
+
 </resources>

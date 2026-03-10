@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.dotametrics.R
 import com.example.dotametrics.databinding.FragmentTeamBinding
 import com.example.dotametrics.domain.entity.remote.teams.TeamsResult
 import com.example.dotametrics.presentation.adapter.TeamSectionsPagerAdapter
@@ -59,7 +60,7 @@ class TeamFragment : Fragment() {
             .into(teamImage)
         tvTeamName.text = team.name
         tvTeamRating.text = root.context.getString(
-            com.example.dotametrics.R.string.team_rating,
+            R.string.team_rating,
             team.rating.toString()
         )
         tvTeamWinsNumber.text = team.wins.toString()
@@ -67,7 +68,7 @@ class TeamFragment : Fragment() {
         if (team.wins != null && team.losses != null) {
             val winrate =
                 team.wins!!.toDouble() / (team.losses!! + team.wins!!).toDouble() * 100
-            tvTeamWinrateNumber.text = "${String.format("%.2f", winrate)}%"
+            tvTeamWinrateNumber.text = getString(R.string.percent_format, winrate)
         }
     }
 

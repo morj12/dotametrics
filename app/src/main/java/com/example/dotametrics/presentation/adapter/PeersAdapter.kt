@@ -47,8 +47,7 @@ class PeersAdapter : ListAdapter<PeersResult, PeersAdapter.ViewHolder>(PeersCall
             tvPeerCount.text = item.withGames.toString()
             if (item.withWin != null && item.withGames != null) {
                 val winrate = item.withWin!!.toDouble() / item.withGames!! * 100
-                tvPeerWinrate.text =
-                    "${String.format("%.2f", winrate)}%"
+                tvPeerWinrate.text = root.context.getString(R.string.percent_format, winrate)
                 tvPeerWinrate.setTextColor(
                     when {
                         winrate > 55 -> root.context.getColor(R.color.green)

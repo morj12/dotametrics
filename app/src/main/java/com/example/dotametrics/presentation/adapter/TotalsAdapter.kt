@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dotametrics.R
 import com.example.dotametrics.domain.entity.remote.players.totals.TotalsResult
 import com.example.dotametrics.databinding.TotalsItemBinding
 import com.example.dotametrics.util.StatsMapper
@@ -36,7 +37,7 @@ class TotalsAdapter : ListAdapter<TotalsResult, TotalsAdapter.ViewHolder>(Totals
             if (item.field != null && item.sum != null && item.n != null) {
                 tvTotalsName.text =
                     root.context.getString(StatsMapper().getStatsResource(item.field!!, root.context))
-                tvTotalsValue.text = String.format("%.2f", item.sum!! / item.n!!)
+                tvTotalsValue.text = root.context.getString(R.string.double_format, item.sum!! / item.n!!)
             }
         }
     }

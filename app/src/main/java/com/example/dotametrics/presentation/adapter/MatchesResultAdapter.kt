@@ -59,7 +59,7 @@ class MatchesResultAdapter :
                     .apply(requestOptions(root.context))
                     .into(ivMatchHero)
             item.startTime?.let { tvMatchDate.text = Datetime.formatDate(it) }
-            tvMatchKda.text = "${item.kills} / ${item.deaths} / ${item.assists}"
+            tvMatchKda.text = root.context.getString(R.string.kda_format, item.kills, item.deaths, item.assists)
             setLobbyType(item, lobbyInfo, this)
             setResult(item, this)
             setRank(item, this)

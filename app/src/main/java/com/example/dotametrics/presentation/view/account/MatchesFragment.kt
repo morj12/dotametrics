@@ -158,7 +158,7 @@ class MatchesFragment : Fragment() {
                 if (player.win != null && player.lose != null) {
                     val winrate =
                         player.win!!.toDouble() / (player.lose!! + player.win!!).toDouble() * 100
-                    tvAccountWinrateNumberFilter.text = "${String.format("%.2f", winrate)}%"
+                    tvAccountWinrateNumberFilter.text = getString(R.string.percent_format, winrate)
                 }
             }
         }
