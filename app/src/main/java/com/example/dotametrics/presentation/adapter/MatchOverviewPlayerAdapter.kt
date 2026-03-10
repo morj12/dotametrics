@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dotametrics.R
-import com.example.dotametrics.domain.entity.remote.constants.items.ItemResult
-import com.example.dotametrics.domain.entity.remote.matches.Players
 import com.example.dotametrics.databinding.MatchOverviewItemBinding
 import com.example.dotametrics.domain.ConstData
+import com.example.dotametrics.domain.entity.remote.constants.items.ItemResult
+import com.example.dotametrics.domain.entity.remote.matches.Players
 import com.example.dotametrics.util.GlideManager
 import com.example.dotametrics.util.GlideManager.HEROES_URL
 import com.example.dotametrics.util.GlideManager.ITEMS_URL
@@ -56,7 +56,7 @@ class MatchOverviewPlayerAdapter :
             tvMatchOverviewLvl.text = item.level.toString()
             tvMatchOverviewName.text =
                 item.personaname ?: root.context.getString(R.string.anonymous)
-            tvMatchOverviewKda.text = root.context.getString(R.string.sample_kda_format, item.kills, item.deaths, item.assists)
+            tvMatchOverviewKda.text = root.context.getString(R.string.kda_format, item.kills, item.deaths, item.assists)
             setItems(item, this)
             setPartyColor(item, this)
 
