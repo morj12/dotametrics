@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,8 +14,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dotametrics.R
 import com.example.dotametrics.databinding.FragmentMatchesBinding
 import com.example.dotametrics.domain.ConstData
@@ -60,7 +61,7 @@ class MatchesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        initButtons()
+        initSpinnerListeners()
         observe()
         observeMatches()
     }
@@ -130,16 +131,27 @@ class MatchesFragment : Fragment() {
         }
     }
 
-    private fun initButtons() {
-        binding.btApplyFilter.setOnClickListener {
-            val position = binding.spinnerLobby.selectedItemPosition
-            val lobbyType = if (position == 0) null else ConstData.lobbies[position - 1].id
-            viewModel.lobbyType = lobbyType
-            val heroPosition = binding.spinnerHeroId.selectedItemPosition
-            val heroId = if (heroPosition == 0) null else ConstData.heroes[heroPosition - 1].id
-            viewModel.heroId = heroId
-            loadData()
+    private fun initSpinnerListeners() {
+        val itemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val lobbyPosition = binding.spinnerLobby.selectedItemPosition
+                viewModel.lobbyType = if (lobbyPosition > 0 && lobbyPosition <= ConstData.lobbies.size)
+                    ConstData.lobbies[lobbyPosition - 1].id
+                else null
+
+                val heroPosition = binding.spinnerHeroId.selectedItemPosition
+                viewModel.heroId = if (heroPosition > 0 && heroPosition <= ConstData.heroes.size)
+                    ConstData.heroes[heroPosition - 1].id
+                else null
+
+                loadData()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+
+        binding.spinnerLobby.onItemSelectedListener = itemSelectedListener
+        binding.spinnerHeroId.onItemSelectedListener = itemSelectedListener
     }
 
     private fun observe() {
