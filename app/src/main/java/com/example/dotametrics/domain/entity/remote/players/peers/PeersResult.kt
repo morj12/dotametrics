@@ -7,6 +7,6 @@ data class PeersResult(
     @SerializedName("last_played") var lastPlayed: Long? = null,
     @SerializedName("with_win") var withWin: Int? = null,
     @SerializedName("with_games") var withGames: Int? = null,
-    @SerializedName("personaname") var personaname: String? = null,
-    @SerializedName("avatarfull") var avatarfull: String? = null
+    @SerializedName("personaname") var name: String? = null,
+    @SerializedName("avatarfull") var avatar: String? = null
 )

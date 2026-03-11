@@ -17,7 +17,7 @@ data class HeroResult(
     @SerializedName("base_agi") var baseAgi: Double? = null,
     @SerializedName("base_int") var baseInt: Double? = null,
     @SerializedName("base_attack_time") var baseAttackTime: Double? = null,
-    @SerializedName("base_mr") var baseMr: Double? = null,
+    @SerializedName("base_mr") var basicMagicResist: Double? = null,
     @SerializedName("attack_range") var attackRange: Int? = null,
     @SerializedName("move_speed") var moveSpeed: Int? = null,
 ) : Parcelable

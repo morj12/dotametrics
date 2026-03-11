@@ -7,6 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.dotametrics.App
 import com.example.dotametrics.R
 import com.example.dotametrics.domain.ConstData
+import com.example.dotametrics.domain.entity.remote.constants.abilities.AbilityResult
+import com.example.dotametrics.domain.entity.remote.constants.abilities.HeroAbilitiesResult
+import com.example.dotametrics.domain.entity.remote.constants.aghs.AghsResult
+import com.example.dotametrics.domain.entity.remote.constants.heroes.HeroResult
+import com.example.dotametrics.domain.entity.remote.constants.items.ItemResult
+import com.example.dotametrics.domain.entity.remote.constants.lobbytypes.LobbyTypeResult
 import com.example.dotametrics.domain.repository.IOpenDotaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -24,50 +30,45 @@ class ConstViewModel @Inject constructor(
     private var loadingItems = false
     private var loadingAbilityIds = false
     private var loadingAbilities = false
-    private var loadingLore = false
     private var loadingAghs = false
     private var loadingHeroAbilities = false
 
-    private val _heroes = MutableLiveData<Unit>()
-    val heroes: LiveData<Unit>
+    private val _heroes = MutableLiveData<List<HeroResult>>(emptyList())
+    val heroes: LiveData<List<HeroResult>>
         get() = _heroes
 
-    private val _constLobbyTypes = MutableLiveData<Unit>()
-    val constLobbyTypes: LiveData<Unit>
+    private val _constLobbyTypes = MutableLiveData<List<LobbyTypeResult>>(emptyList())
+    val constLobbyTypes: LiveData<List<LobbyTypeResult>>
         get() = _constLobbyTypes
 
-    private val _constRegions = MutableLiveData<Unit>()
-    val constRegions: LiveData<Unit>
+    private val _constRegions = MutableLiveData<Map<Int, String>>(emptyMap())
+    val constRegions: LiveData<Map<Int, String>>
         get() = _constRegions
 
-    private val _constItems = MutableLiveData<Unit>()
-    val constItems: LiveData<Unit>
+    private val _constItems = MutableLiveData<Map<String, ItemResult>>(emptyMap())
+    val constItems: LiveData<Map<String, ItemResult>>
         get() = _constItems
 
-    private val _constAbilityIds = MutableLiveData<Unit>()
-    val constAbilityIds: LiveData<Unit>
+    private val _constAbilityIds = MutableLiveData<Map<String, String>>(emptyMap())
+    val constAbilityIds: LiveData<Map<String, String>>
         get() = _constAbilityIds
 
-    private val _constAbilities = MutableLiveData<Unit>()
-    val constAbilities: LiveData<Unit>
+    private val _constAbilities = MutableLiveData<Map<String, AbilityResult>>(emptyMap())
+    val constAbilities: LiveData<Map<String, AbilityResult>>
         get() = _constAbilities
 
-    private val _constLores = MutableLiveData<Unit>()
-    val constLores: LiveData<Unit>
-        get() = _constLores
-
-    private val _constAghs = MutableLiveData<Unit>()
-    val constAghs: LiveData<Unit>
+    private val _constAghs = MutableLiveData<List<AghsResult>>(emptyList())
+    val constAghs: LiveData<List<AghsResult>>
         get() = _constAghs
 
-    private val _constHeroAbilities = MutableLiveData<Unit>()
-    val constHeroAbilities: LiveData<Unit>
+    private val _constHeroAbilities = MutableLiveData<Map<String, HeroAbilitiesResult>>(emptyMap())
+    val constHeroAbilities: LiveData<Map<String, HeroAbilitiesResult>>
         get() = _constHeroAbilities
 
     fun loadHeroes() {
         if (loadingHeroes) return
         if (ConstData.heroes.isNotEmpty()) {
-            _heroes.value = Unit
+            _heroes.value = ConstData.heroes
             loadingHeroes = false
         } else {
             loadingHeroes = true
@@ -76,7 +77,7 @@ class ConstViewModel @Inject constructor(
                 if (result.error == "null") {
                     result.data?.let { heroMap ->
                         ConstData.heroes = heroMap.values.toList().sortedBy { it.localizedName }
-                        _heroes.value = Unit
+                        _heroes.value = ConstData.heroes
                     }
                 }
                 loadingHeroes = false
@@ -87,7 +88,7 @@ class ConstViewModel @Inject constructor(
     fun loadLobbyTypes() {
         if (loadingLobbies) return
         if (ConstData.lobbies.isNotEmpty()) {
-            _constLobbyTypes.value = Unit
+            _constLobbyTypes.value = ConstData.lobbies
             loadingLobbies = false
         } else {
             loadingLobbies = true
@@ -98,7 +99,7 @@ class ConstViewModel @Inject constructor(
                         val usefulLobbies = app.resources.getStringArray(R.array.lobbies_array)
                         ConstData.lobbies =
                             it.values.toList().filter { v -> usefulLobbies.contains(v.name) }
-                        _constLobbyTypes.value = Unit
+                        _constLobbyTypes.value = ConstData.lobbies
                     }
                 }
                 loadingLobbies = false
@@ -109,7 +110,7 @@ class ConstViewModel @Inject constructor(
     fun loadRegions() {
         if (loadingRegions) return
         if (ConstData.regions.isNotEmpty()) {
-            _constRegions.value = Unit
+            _constRegions.value = ConstData.regions
             loadingRegions = false
         } else {
             loadingRegions = true
@@ -118,7 +119,7 @@ class ConstViewModel @Inject constructor(
                 if (result.error == "null") {
                     result.data?.let {
                         ConstData.regions = it.mapKeys { k -> k.key.toInt() }
-                        _constRegions.value = Unit
+                        _constRegions.value = ConstData.regions
                     }
                 }
                 loadingRegions = false
@@ -129,7 +130,7 @@ class ConstViewModel @Inject constructor(
     fun loadItems() {
         if (loadingItems) return
         if (ConstData.items.isNotEmpty()) {
-            _constItems.value = Unit
+            _constItems.value = ConstData.items
             loadingItems = false
         } else {
             loadingItems = true
@@ -138,7 +139,7 @@ class ConstViewModel @Inject constructor(
                 if (result.error == "null") {
                     result.data?.let {
                         ConstData.items = it
-                        _constItems.value = Unit
+                        _constItems.value = ConstData.items
                     }
                 }
                 loadingItems = false
@@ -149,7 +150,7 @@ class ConstViewModel @Inject constructor(
     fun loadAbilityIds() {
         if (loadingAbilityIds) return
         if (ConstData.abilityIds.isNotEmpty()) {
-            _constAbilityIds.value = Unit
+            _constAbilityIds.value = ConstData.abilityIds
             loadingAbilityIds = false
         } else {
             loadingAbilityIds = true
@@ -158,7 +159,7 @@ class ConstViewModel @Inject constructor(
                 if (result.error == "null") {
                     result.data?.let {
                         ConstData.abilityIds = it
-                        _constAbilityIds.value = Unit
+                        _constAbilityIds.value = ConstData.abilityIds
                     }
                 }
                 loadingAbilityIds = false
@@ -169,7 +170,7 @@ class ConstViewModel @Inject constructor(
     fun loadAbilities() {
         if (loadingAbilities) return
         if (ConstData.abilities.isNotEmpty()) {
-            _constAbilities.value = Unit
+            _constAbilities.value = ConstData.abilities
             loadingAbilities = false
         } else {
             loadingAbilities = true
@@ -178,7 +179,7 @@ class ConstViewModel @Inject constructor(
                 if (result.error == "null") {
                     result.data?.let {
                         ConstData.abilities = it
-                        _constAbilities.value = Unit
+                        _constAbilities.value = ConstData.abilities
                     }
                 }
                 loadingAbilities = false
@@ -186,30 +187,10 @@ class ConstViewModel @Inject constructor(
         }
     }
 
-    fun loadLore() {
-        if (loadingLore) return
-        if (ConstData.lores.isNotEmpty()) {
-            _constLores.value = Unit
-            loadingLore = false
-        } else {
-            loadingLore = true
-            viewModelScope.launch {
-                val result = openDotaRepository.getHeroLore()
-                if (result.error == "null") {
-                    result.data?.let {
-                        ConstData.lores = it
-                        _constLores.value = Unit
-                    }
-                }
-                loadingLore = false
-            }
-        }
-    }
-
     fun loadAghs() {
         if (loadingAghs) return
         if (ConstData.aghs.isNotEmpty()) {
-            _constAghs.value = Unit
+            _constAghs.value = ConstData.aghs
             loadingAghs = false
         } else {
             loadingAghs = true
@@ -218,7 +199,7 @@ class ConstViewModel @Inject constructor(
                 if (result.error == "null") {
                     result.data?.let {
                         ConstData.aghs = it
-                        _constAghs.value = Unit
+                        _constAghs.value = ConstData.aghs
                     }
                 }
                 loadingAghs = false
@@ -229,7 +210,7 @@ class ConstViewModel @Inject constructor(
     fun loadHeroAbilities() {
         if (loadingHeroAbilities) return
         if (ConstData.heroAbilities.isNotEmpty()) {
-            _constHeroAbilities.value = Unit
+            _constHeroAbilities.value = ConstData.heroAbilities
             loadingHeroAbilities = false
         } else {
             loadingHeroAbilities = true
@@ -238,7 +219,7 @@ class ConstViewModel @Inject constructor(
                 if (result.error == "null") {
                     result.data?.let {
                         ConstData.heroAbilities = it
-                        _constHeroAbilities.value = Unit
+                        _constHeroAbilities.value = ConstData.heroAbilities
                     }
                 }
                 loadingHeroAbilities = false

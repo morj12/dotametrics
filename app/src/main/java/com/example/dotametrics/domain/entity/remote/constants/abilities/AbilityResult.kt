@@ -5,18 +5,18 @@ import com.google.gson.annotations.JsonAdapter
 import com.google.gson.annotations.SerializedName
 
 data class AbilityResult(
-    @SerializedName("dname") var dname: String? = null,
+    @SerializedName("dname") var name: String? = null,
     @JsonAdapter(value = StringJsonAdapter::class)
     @SerializedName("behavior")
     var behavior: CustomArrayList<String> = CustomArrayList(),
-    @SerializedName("desc") var desc: String? = null,
-    @SerializedName("attrib") var attrib: ArrayList<Attrib> = arrayListOf(),
+    @SerializedName("desc") var description: String? = null,
+    @SerializedName("attrib") var attributes: ArrayList<Attrib> = arrayListOf(),
     @JsonAdapter(value = StringJsonAdapter::class)
     @SerializedName("mc")
-    var mc: CustomArrayList<String> = CustomArrayList(),
+    var manaCost: CustomArrayList<String> = CustomArrayList(),
     @JsonAdapter(value = StringJsonAdapter::class)
     @SerializedName("cd")
-    var cd: CustomArrayList<String> = CustomArrayList(),
+    var coolDown: CustomArrayList<String> = CustomArrayList(),
     @SerializedName("img") var img: String? = null,
     @JsonAdapter(value = StringJsonAdapter::class)
     @SerializedName("bkbpierce")

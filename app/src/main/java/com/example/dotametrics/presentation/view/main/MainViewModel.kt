@@ -18,6 +18,10 @@ class MainViewModel @Inject constructor(
     val results: LiveData<List<SearchResult>>
         get() = _results
 
+    private val _error = MutableLiveData<String?>()
+    val error: LiveData<String?>
+        get() = _error
+
     val players = playerRepository.getPlayers().asLiveData()
 
     fun search(user: String) {
@@ -26,8 +30,14 @@ class MainViewModel @Inject constructor(
                 val result = openDotaRepository.getSearchResults(user)
                 if (result.error == "null") {
                     result.data?.let { _results.value = it }
+                } else if (result.error.contains("rate_limit_exceeded", ignoreCase = true)) {
+                    _error.value = "rate_limit_exceeded"
                 }
             }
         }
+    }
+
+    fun clearError() {
+        _error.value = null
     }
 }

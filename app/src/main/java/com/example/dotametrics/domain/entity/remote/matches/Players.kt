@@ -25,7 +25,7 @@ data class Players(
     @SerializedName("party_id") var partyId: Int? = null,
     @SerializedName("tower_damage") var towerDamage: Int? = null,
     @SerializedName("xp_per_min") var xpPerMin: Int? = null,
-    @SerializedName("personaname") var personaname: String? = null,
+    @SerializedName("personaname") var name: String? = null,
     @SerializedName("total_gold") var totalGold: Int? = null,
     @SerializedName("rank_tier") var rankTier: Int? = null
 )

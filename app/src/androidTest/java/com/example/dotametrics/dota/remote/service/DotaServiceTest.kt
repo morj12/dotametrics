@@ -1,8 +1,8 @@
 package com.example.dotametrics.dota.remote.service
 
+import com.example.dotametrics.data.remote.service.DotaService
 import com.example.dotametrics.domain.entity.remote.players.PlayersResult
 import com.example.dotametrics.domain.entity.remote.players.Profile
-import com.example.dotametrics.data.remote.service.DotaService
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
@@ -43,15 +43,15 @@ class DotaServiceTest {
             null,
             Profile(
                 accountId = 841150476,
-                personaname = "=)",
-                steamid = "76561198801416204"
+                name = "=)",
+                steamId = "76561198801416204"
             )
         )
 
         val actualResult = service.getPlayersResults("841150476").execute().body()
 
         assertEquals(
-            expectedResult.profile!!.steamid,
+            expectedResult.profile!!.steamId,
             actualResult?.profile!!.steamid
         )
     }
@@ -64,15 +64,15 @@ class DotaServiceTest {
             null,
             Profile(
                 accountId = 841150476,
-                personaname = "=)",
-                steamid = "abcd"
+                name = "=)",
+                steamId = "abcd"
             )
         )
 
         val actualResult = service.getPlayersResults("841150476").execute().body()
 
         assertNotEquals(
-            expectedResult.profile!!.steamid,
+            expectedResult.profile!!.steamId,
             actualResult?.profile!!.steamid
         )
     }
