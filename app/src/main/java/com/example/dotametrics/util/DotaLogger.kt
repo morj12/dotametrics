@@ -2,7 +2,6 @@ package com.example.dotametrics.util
 
 import android.util.Log
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 
 object DotaLogger {
     private const val TAG_API_ERROR = "DOTA_API_ERROR"
@@ -10,7 +9,6 @@ object DotaLogger {
     private const val TAG_CRASH = "DOTA_CRASH"
 
     private val _uiEvents = MutableSharedFlow<String>(extraBufferCapacity = 1)
-    val uiEvents = _uiEvents.asSharedFlow()
 
     fun logApiError(url: String, errorBody: String, isRateLimit: Boolean = false) {
         if (isRateLimit) {

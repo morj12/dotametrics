@@ -17,7 +17,6 @@ object ConstData {
     var abilityIds = mapOf<String, String>()
     var abilities = mapOf<String, AbilityResult>()
     var teams = listOf<TeamsResult>()
-    var lores = mapOf<String, String>()
     var aghs = listOf<AghsResult>()
     var heroAbilities = mapOf<String, HeroAbilitiesResult>()
 
