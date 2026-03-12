@@ -1,8 +1,6 @@
 package com.example.dotametrics.dota.remote.service
 
 import com.example.dotametrics.data.remote.service.DotaService
-import com.example.dotametrics.domain.entity.remote.players.PlayersResult
-import com.example.dotametrics.domain.entity.remote.players.Profile
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
@@ -38,42 +36,28 @@ class DotaServiceTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun getPlayerResultsReturnsCorrectInformation() = runTest {
-        val expectedResult = PlayersResult(
-            80,
-            null,
-            Profile(
-                accountId = 841150476,
-                name = "=)",
-                steamId = "76561198801416204"
-            )
-        )
+        val expectedSteamId = "76561198801416204"
 
-        val actualResult = service.getPlayersResults("841150476").execute().body()
+        val response = service.getPlayersResults("841150476")
+        val actualResult = response.body()
 
         assertEquals(
-            expectedResult.profile!!.steamId,
-            actualResult?.profile!!.steamid
+            expectedSteamId,
+            actualResult?.profile?.steamId
         )
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun getPlayerResultsReturnsIncorrectInformation() = runTest {
-        val expectedResult = PlayersResult(
-            80,
-            null,
-            Profile(
-                accountId = 841150476,
-                name = "=)",
-                steamId = "abcd"
-            )
-        )
+        val wrongSteamId = "abcd"
 
-        val actualResult = service.getPlayersResults("841150476").execute().body()
+        val response = service.getPlayersResults("841150476")
+        val actualResult = response.body()
 
         assertNotEquals(
-            expectedResult.profile!!.steamId,
-            actualResult?.profile!!.steamid
+            wrongSteamId,
+            actualResult?.profile?.steamId
         )
     }
 }
